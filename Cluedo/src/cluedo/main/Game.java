@@ -15,7 +15,7 @@ public class Game implements Runnable {
 	public static int width = 700;
 	public static int height = 525;
 	
-	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard and Jono";
+	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard the homo and Jono";
 	
 	private boolean running = true;
 	
