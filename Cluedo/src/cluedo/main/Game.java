@@ -20,7 +20,7 @@ public class Game implements Runnable {
 	private boolean running = true;
 	
 	private Screen screen;
-	private Render ren;
+	
 	
 	private Thread thread;
 	private JFrame frame;
@@ -31,7 +31,7 @@ public class Game implements Runnable {
 	
 	public Game(){		
 		screen = new Screen(width, height);
-		ren = new Render(width, height);
+		
 		frame = new JFrame();		
 	}
 	
@@ -87,7 +87,7 @@ public class Game implements Runnable {
 			lastTime = now;
 					
 
-			screen.render(ren);
+			screen.render();
 			frames++;
 
 			// This shows the fps of the rendering and how many times it calls

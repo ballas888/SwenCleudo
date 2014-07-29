@@ -9,6 +9,7 @@ import java.awt.image.DataBufferInt;
 import java.util.Random;
 
 public class Screen extends Canvas{
+	private Render ren;
 	
 	private BufferedImage image;// = new BufferedImage(width, height,
 			//BufferedImage.TYPE_INT_RGB);
@@ -19,6 +20,7 @@ public class Screen extends Canvas{
 	
 	public Screen(int width, int height){
 		Dimension size = new Dimension(width, height);
+		ren = new Render(width, height);
 		setPreferredSize(size);
 		setFocusable(true);
 		image = new BufferedImage(width, height,
@@ -26,7 +28,7 @@ public class Screen extends Canvas{
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	}
 	
-	public void render(Render ren){
+	public void render(){
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 
