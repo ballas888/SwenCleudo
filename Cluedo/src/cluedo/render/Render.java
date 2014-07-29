@@ -20,8 +20,8 @@ public class Render {
 		pixels = new int[width * height];
 		
 		for(int i = 0; i< MAP_SIZE*MAP_SIZE;i++){
-			int colorMinus = random.nextInt(50);
-			int color = 255 - colorMinus;
+			int colorMinus = random.nextInt(20);
+			int color = 0 + colorMinus;
 			tiles[i] = color << 16 | color << 8 | color;
 			//tiles[i] = //random.nextInt(0xffffff); //Sets a random color to the current tile being rendered.
 		}

@@ -1,11 +1,14 @@
 package cluedo.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import cluedo.render.Render;
 import cluedo.render.Screen;
@@ -108,9 +111,40 @@ public class Game implements Runnable {
 	
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.frame.setResizable(false);
+		game.frame.setResizable(true);
 		game.frame.setTitle(Game.title);
-		game.frame.add(game.screen);
+		//game.screen.setLocation(new Point(200,200));
+		JPanel panel = new JPanel(null);
+		panel.setPreferredSize(new Dimension(958,620));
+		//panel.setLocation(new Point(0,0));
+		game.frame.setContentPane(panel);
+		game.screen.setLocation((958/2)-(580/2), 40);
+		JPanel panel2 = new JPanel();
+		panel2.setBackground(Color.pink);
+		panel2.setSize(new Dimension(189,580));
+		panel2.setLocation(new Point(958-189,40));
+		
+		JPanel card = new JPanel();
+		card.setBackground(Color.blue);
+		card.setSize(new Dimension(87,156));
+		card.setLocation(new Point((int)panel2.getLocation().getX()+5,(int)panel2.getLocation().getY()+5));
+		
+		JPanel card2 = new JPanel();
+		card2.setBackground(Color.green);
+		card2.setSize(new Dimension(87,156));
+		card2.setLocation(new Point((int)card.getLocation().getX()+card.getWidth()+5,(int)card.getLocation().getY()));
+		
+		System.out.println(card.getWidth()*2+10);
+		
+		panel.add(game.screen);
+		panel.add(card2);
+		panel.add(card);
+		panel.add(panel2);
+		
+		
+		//game.frame.add(panel);
+		//game.frame.add(game.screen);
+		
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);

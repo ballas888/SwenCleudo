@@ -19,9 +19,10 @@ public class Screen extends Canvas{
 			//.getData();
 	
 	public Screen(int width, int height){
-		Dimension size = new Dimension(width, height);
+		Dimension size = new Dimension(580, 580);
 		ren = new Render(width, height);
-		setPreferredSize(size);
+		setSize(size);
+		//setPreferredSize(size);
 		setFocusable(true);
 		image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB); 
