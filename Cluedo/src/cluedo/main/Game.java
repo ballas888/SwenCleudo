@@ -107,6 +107,11 @@ public class Game implements Runnable {
 		stop();			
 	}
 	
+
+	public enum Room{
+		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
+		LIBRARY, LOUNGE, HALL, STUDY
+	}
 	//private int x = 0, y = 0;
 	
 	public static void main(String[] args) {
