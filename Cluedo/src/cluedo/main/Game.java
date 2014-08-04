@@ -10,19 +10,22 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import cluedo.load.Load;
 import cluedo.render.Render;
 import cluedo.render.Screen;
 
 public class Game implements Runnable {		
 	
-	public static int width = 700;
-	public static int height = 525;
+	public static int width = 16;
+	public static int height = 16;
+	private int scale = 2;
 	
 	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard the homo and Jono";
 	
 	private boolean running = true;
 	
 	private Screen screen;
+	private Load load;
 	
 	
 	private Thread thread;
@@ -32,8 +35,9 @@ public class Game implements Runnable {
 	
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
-	public Game(){		
-		screen = new Screen(width, height);
+	public Game(){
+		load = new Load("Map.csv");
+		screen = new Screen(width*24, height*25);
 		
 		frame = new JFrame();		
 	}
