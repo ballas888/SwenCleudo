@@ -1,5 +1,7 @@
 package cluedo.main;
 
+import java.awt.Point;
+
 import cluedo.main.Game.Room;
 
 public class Tile {
@@ -11,9 +13,22 @@ public class Tile {
 	private boolean can_right = true;
 	private Room in_room;
 	
+	
 	public Tile(int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void set_room(Room room){
+		this.in_room = room;
+	}
+	
+	public Room get_room(){
+		return this.in_room;
+	}
+	
+	public Point get_pos(){
+		return new Point(x,y);
 	}
 	
 	public void set_can_up(boolean bool){

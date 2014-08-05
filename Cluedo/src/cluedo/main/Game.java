@@ -36,7 +36,7 @@ public class Game implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
 	public Game(){
-		load = new Load("Map.csv");
+		load = new Load("MapCol", "MapRoom");
 		screen = new Screen(width*24, height*25);
 		
 		frame = new JFrame();		
