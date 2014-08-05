@@ -114,7 +114,7 @@ public class Game implements Runnable {
 
 	public enum Room{
 		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
-		LIBRARY, LOUNGE, HALL, STUDY
+		LIBRARY, LOUNGE, HALL, STUDY, FLOOR
 	}
 	//private int x = 0, y = 0;
 	

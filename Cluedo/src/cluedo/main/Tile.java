@@ -1,6 +1,8 @@
 package cluedo.main;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import cluedo.main.Game.Room;
 
@@ -11,12 +13,20 @@ public class Tile {
 	private boolean can_down = true;
 	private boolean can_left = true;
 	private boolean can_right = true;
-	private Room in_room;
-	
+	private List<Tile> neigh =new ArrayList<Tile>();
+	private Room in_room;	
 	
 	public Tile(int x, int y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void add_neigh(Tile tile){
+		neigh.add(tile);
+	}
+	
+	public List<Tile> get_neighs(){
+		return this.neigh;
 	}
 	
 	public void set_room(Room room){
