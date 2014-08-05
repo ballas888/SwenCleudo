@@ -15,7 +15,7 @@ public class Load {
 	private int layer_level = 0;
 	private int tile_count = 0;
 	private Tile[][] tiles;
-	
+
 	public Load(String col, String rooms){
 		try {
 			Scanner scan = new Scanner(new File(col));
@@ -31,13 +31,13 @@ public class Load {
 				tile_count++;
 			}
 			scan.close();
-			
+
 			scan = new Scanner(new File(rooms));
 			tile_count = 0;
 			while(scan.hasNext()){
 				String[] data = scan.nextLine().split(",");
 				for(int i = 0; i< width; i++){
-					tiles[tile_count][i].set_room(get_room(data[i])); 
+					tiles[tile_count][i].set_room(get_room(data[i]));
 				}
 				tile_count++;
 			}
@@ -48,11 +48,11 @@ public class Load {
 //				}
 //				System.out.println();
 //			}
-			
-		} catch (FileNotFoundException e) {			
+
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		for(int i = 0; i< tiles.length; i++){
 			for(int j = 0; j< tiles[0].length; j++){
 				Tile t = tiles[i][j];
@@ -69,17 +69,25 @@ public class Load {
 					tiles[i][j].add_neigh(tiles[i+1][j]);
 				}
 			}
-		}		
+		}
+		int posx = 5;
+		int posy = 1;
+
+		Tile tile = tiles[posy][posx];
+		System.out.println(tile.get_pos().getX()+","+tile.get_pos().getY()+" "+tile.get_room());
+		for(int i = 0; i<tile.get_neighs().size();i++){
+			System.out.println("	"+tile.get_neighs().get(i).get_pos().getX()+","+tile.get_neighs().get(i).get_pos().getY());
+		}
 	}
-	
+
 	public Tile[][] get_tiles(){
 		return this.tiles;
 	}
-	
+
 	private Room get_room(String data){
 		Room room = Room.FLOOR;
 		int d = Integer.parseInt(data);
-		
+
 		if(d == 1){
 			room = Room.KITCHEN;
 		}else if(d == 2){
@@ -99,10 +107,10 @@ public class Load {
 		}else if(d == 9){
 			room = Room.STUDY;
 		}
-		
+
 		return room;
 	}
-	
+
 	private Tile create_tile(int x, int y, String data){
 		int d = Integer.parseInt(data);
 		Tile tile = new Tile(x,y);
@@ -130,7 +138,7 @@ public class Load {
 				tile.set_can_left(false);
 			}
 		}
-		
+
 		return tile;
 	}
 }
