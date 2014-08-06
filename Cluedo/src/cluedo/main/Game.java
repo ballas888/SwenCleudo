@@ -10,44 +10,53 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import cluedo.load.Load;
+import cluedo.load.LoadImage;
+import cluedo.load.LoadMap;
 import cluedo.render.Render;
 import cluedo.render.Screen;
 
-public class Game implements Runnable {		
-	
+public class Game implements Runnable {
+
 	public static int width = 16;
 	public static int height = 16;
 	private int scale = 2;
-	
+
 	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard the homo and Jono";
-	
+
 	private boolean running = true;
-	
+
 	private Screen screen;
-	private Load load;
-	
-	
+	private LoadMap load_map;
+	private LoadImage load_image;
+	private BufferedImage map_image;
+
 	private Thread thread;
 	private JFrame frame;
-	
+
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	
+
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-	
+
 	public Game(){
-		load = new Load("MapCol", "MapRoom");
-		screen = new Screen(width*24, height*25);
-		
-		frame = new JFrame();		
+		load_map = new LoadMap("MapCol", "MapRoom");
+		load_image = new LoadImage();
+
+		width = load_map.get_width()*load_map.get_size();
+		height = load_map.get_height()*load_map.get_size();
+		System.out.println(width+" "+height);
+		screen = new Screen(width, height);
+
+		map_image = load_image.load_map_image("Cluedo.png");
+
+		frame = new JFrame();
 	}
-	
+
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "Display");
 		thread.start();
 	}
-	
+
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -56,7 +65,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void run() {
 		// Gets the time when the program is at this line.
 		long lastTime = System.nanoTime();
@@ -92,9 +101,10 @@ public class Game implements Runnable {
 			delta += (now - lastTime) / ns;
 			mobDelta += (now - lastTime) / mobNs;
 			lastTime = now;
-					
 
-			screen.render();
+
+			screen.render(map_image);
+
 			frames++;
 
 			// This shows the fps of the rendering and how many times it calls
@@ -108,16 +118,16 @@ public class Game implements Runnable {
 				mobUpdates = 0;
 			}
 		}
-		stop();			
+		stop();
 	}
-	
+
 
 	public enum Room{
 		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
 		LIBRARY, LOUNGE, HALL, STUDY, FLOOR
 	}
 	//private int x = 0, y = 0;
-	
+
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setResizable(true);
@@ -132,34 +142,34 @@ public class Game implements Runnable {
 		panel2.setBackground(Color.pink);
 		panel2.setSize(new Dimension(189,580));
 		panel2.setLocation(new Point(958-189,40));
-		
+
 		JPanel card = new JPanel();
 		card.setBackground(Color.blue);
 		card.setSize(new Dimension(87,156));
 		card.setLocation(new Point((int)panel2.getLocation().getX()+5,(int)panel2.getLocation().getY()+5));
-		
+
 		JPanel card2 = new JPanel();
 		card2.setBackground(Color.green);
 		card2.setSize(new Dimension(87,156));
 		card2.setLocation(new Point((int)card.getLocation().getX()+card.getWidth()+5,(int)card.getLocation().getY()));
-		
+
 		System.out.println(card.getWidth()*2+10);
-		
+
 		panel.add(game.screen);
 		panel.add(card2);
 		panel.add(card);
 		panel.add(panel2);
-		
-		
+
+
 		//game.frame.add(panel);
 		//game.frame.add(game.screen);
-		
+
 		game.frame.pack();
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
 		game.start();
-		
+
 	}
 
 }

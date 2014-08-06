@@ -1,13 +1,18 @@
 package cluedo.load;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import cluedo.main.Game.Room;
 import cluedo.main.Tile;
 
-public class Load {
+public class LoadMap {
 	private int width = 0;
 	private int height = 0;
 	private int size = 0;
@@ -15,8 +20,9 @@ public class Load {
 	private int layer_level = 0;
 	private int tile_count = 0;
 	private Tile[][] tiles;
+	private BufferedImage image;
 
-	public Load(String col, String rooms){
+	public LoadMap(String col, String rooms){
 		try {
 			Scanner scan = new Scanner(new File(col));
 			this.size = Integer.parseInt(scan.nextLine());
@@ -49,6 +55,8 @@ public class Load {
 //				System.out.println();
 //			}
 
+
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -78,6 +86,18 @@ public class Load {
 		for(int i = 0; i<tile.get_neighs().size();i++){
 			System.out.println("	"+tile.get_neighs().get(i).get_pos().getX()+","+tile.get_neighs().get(i).get_pos().getY());
 		}
+	}
+
+	public int get_width(){
+		return this.width;
+	}
+
+	public int get_height(){
+		return this.height;
+	}
+
+	public int get_size(){
+		return this.size;
 	}
 
 	public Tile[][] get_tiles(){
