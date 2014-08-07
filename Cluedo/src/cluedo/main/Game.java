@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
+import cluedo.render.Assets;
 import cluedo.render.Render;
 import cluedo.render.Screen;
 
@@ -32,6 +33,9 @@ public class Game implements Runnable {
 
 	private Thread thread;
 	private JFrame frame;
+	
+	private Tile[][] tiles;
+	private int grid_size;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -45,6 +49,8 @@ public class Game implements Runnable {
 		height = load_map.get_height()*load_map.get_size();
 		System.out.println(width+" "+height);
 		screen = new Screen(width, height);
+		grid_size = load_map.get_size();
+		tiles = load_map.get_tiles();
 
 		map_image = load_image.load_map_image("Cluedo.png");
 
@@ -102,8 +108,11 @@ public class Game implements Runnable {
 			mobDelta += (now - lastTime) / mobNs;
 			lastTime = now;
 
-
-			screen.render(map_image);
+			Assets as = new Assets();
+			as.image = map_image;
+			as.tiles = tiles;
+			as.grid_size = grid_size;
+			screen.render(as);
 
 			frames++;
 

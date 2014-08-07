@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 public class LoadImage {
 	public BufferedImage load_map_image(String map){
 		BufferedImage img = null;
-		InputStream in = this.getClass().getResourceAsStream(map);
+		ClassLoader classLoader = getClass().getClassLoader();		
+		InputStream in = classLoader.getResourceAsStream("cluedo/assets/"+map);
 		if(in == null){
-			System.out.println("Image not found");
+			System.out.println("Map Image not found");
+			System.exit(0);
 		}else{
 			try {
 				img = ImageIO.read(in);

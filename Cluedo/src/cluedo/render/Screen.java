@@ -1,75 +1,91 @@
 package cluedo.render;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Random;
 
+import cluedo.main.Tile;
+
 public class Screen extends Canvas{
-	private Render ren;
-
-
-	private BufferedImage image;// = new BufferedImage(width, height,
-			//BufferedImage.TYPE_INT_RGB);
-
-	// The pixels of the program
-	private int[] pixels;// = ((DataBufferInt) image.getRaster().getDataBuffer())
-			//.getData();
+	private Render ren;	
 
 	public Screen(int width, int height){
 		Dimension size = new Dimension(580, 580);
 		ren = new Render(width, height);
 		System.out.println("Dimension: "+width +" "+height);
-		setSize(size);
-		//setPreferredSize(size);
+		setSize(size);		
 		setFocusable(true);
-		image = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_RGB);
-		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+		setBackground(new Color(200,200,200));
 	}
 
-	public void render(BufferedImage img){
+	public void render(Assets as){
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-
 			// This sets the buffering to do Tripple buffering
-			createBufferStrategy(1);
+			createBufferStrategy(2);
 			return;
-		}
-
-		//ren.clear();
-		//ren.render(0, 0);
-		//ren.render_map(img);
-
-//		for (int i = 0; i < pixels.length; i++) {
-//			pixels[i] = ren.pixels[i];
-//		}
-
-		Graphics g = bs.getDrawGraphics();
-
-		render_map(g, img);
-		//g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		//g.dispose();
+		}	
+		
+		Graphics2D g = (Graphics2D)bs.getDrawGraphics();
+		
+		
+		render_map(g, as);	
+		render_grid(g, as);
+		
 		bs.show();
 	}
+	
+	private void render_grid(Graphics2D g, Assets as){
+		Tile[][] tiles = as.tiles;
+		double size = as.grid_size;
+		double w = getWidth();
+		double h = getHeight();
+		double t_w = tiles[0].length*size;
+		double t_h = tiles.length*size;
+		double width_ratio = w/t_w;
+		double height_ratio = h/t_h;
+		
+		double ratio = Math.min(width_ratio, height_ratio);
+		
+		double grid_width = t_w*ratio;
+		double grid_height = t_h*ratio;
+		
+		double pos_x = (getWidth()/2)-(grid_width/2);
+		double pos_y = (getHeight()/2)-(grid_height/2);
+		
+		size = size * ratio;
+		
+		g.setColor(Color.red);
+		for(int i = 0; i < tiles.length; i++){
+			for(int j = 0; j < tiles[0].length; j++){				
+				Rectangle2D r2 = new Rectangle2D.Double(pos_x+(j*size),pos_y+(i*size),size , size);
+				g.draw(r2);				
+			}
+		}
+		
+	}
 
-	private void render_map(Graphics g, BufferedImage img){
-		double width_ratio = getWidth()/img.getWidth();
-		double height_ration = getHeight()/img.getHeight();
-
-		System.out.println(getWidth() + " "+ img.getWidth());
-		System.out.println(getHeight() + " "+ img.getHeight());
-		double ratio = Math.min(width_ratio,height_ration);
-
-		//System.out.println(ratio);
-
+	private void render_map(Graphics2D g, Assets as){
+		BufferedImage img = as.image;
+		double w = getWidth();
+		double h = getHeight();
+		double width_ratio = w/img.getWidth();
+		double height_ration = h/img.getHeight();
+		double ratio = Math.min(width_ratio,height_ration);			
+		
 		int image_width = (int) Math.round(img.getWidth()*ratio);
 		int image_height = (int) Math.round(img.getHeight()*ratio);
-
-		g.drawImage(img, 0,0,image_width, image_height, null);
+		int pos_x = (int)Math.round((getWidth()>>1)-(image_width>>1));
+		int pos_y = (int)Math.round((getHeight()>>1)-(image_height>>1));		
+		
+		g.drawImage(img, pos_x, pos_y, image_width, image_height, null);		
 	}
 
-	}
+}
