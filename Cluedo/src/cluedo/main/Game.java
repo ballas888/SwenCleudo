@@ -25,13 +25,15 @@ public class Game implements Runnable {
 
 	private boolean running = true;
 
-	private Screen screen;
+	
 	private LoadMap load_map;
 	private LoadImage load_image;
 	private BufferedImage map_image;
 
 	private Thread thread;
 	private JFrame frame;
+	private JPanel main_panel;
+	private Screen screen;
 	
 	private Tile[][] tiles;
 	private int grid_size;
@@ -46,12 +48,12 @@ public class Game implements Runnable {
 
 		width = load_map.get_width()*load_map.get_size();
 		height = load_map.get_height()*load_map.get_size();
-		System.out.println(width+" "+height);
-		screen = new Screen(width, height);
+		//System.out.println(width+" "+height);
+		//screen = new Screen(width, height);
 		grid_size = load_map.get_size();
 		tiles = load_map.get_tiles();
 
-		map_image = load_image.load_map_image("Cluedo.png");
+		map_image = load_image.load_map_image("CluedoBigMod.png");
 
 		frame = new JFrame();
 	}
@@ -111,6 +113,16 @@ public class Game implements Runnable {
 			as.image = map_image;
 			as.tiles = tiles;
 			as.grid_size = grid_size;
+			
+			double m_w = main_panel.getWidth();
+			double m_h = main_panel.getHeight();
+			double w = m_w*0.605;
+			double h = m_h*0.935;
+			double x = m_w/2-(int)Math.round(h)/2;
+			double y = m_h*0.0645;
+			
+			screen.setSize(new Dimension((int)Math.round(w),(int)Math.round(h)) );
+			screen.setLocation(new Point((int)Math.round(x),(int)Math.round(y)));
 			screen.render(as);
 
 			frames++;
@@ -140,33 +152,41 @@ public class Game implements Runnable {
 		Game game = new Game();
 		game.frame.setResizable(true);
 		game.frame.setTitle(Game.title);
+		game.main_panel = new JPanel(null);
+		game.main_panel.setPreferredSize(new Dimension(958,620));
+		game.frame.setContentPane(game.main_panel);
+		game.screen = new Screen(958*0.605, 620*0.935);
+		game.screen.setLocation(958/2-game.screen.getWidth()/2,40);
+		game.main_panel.add(game.screen);
 		//game.screen.setLocation(new Point(200,200));
-		JPanel panel = new JPanel(null);
-		panel.setPreferredSize(new Dimension(958,620));
+		//JPanel panel = new JPanel(null);
+		//panel.setPreferredSize(new Dimension(958,620));
+		
+		//System.out.println(580.0/958+" "+580.0/620);
 		//panel.setLocation(new Point(0,0));
-		game.frame.setContentPane(panel);
-		game.screen.setLocation((958/2)-(580/2), 40);
-		JPanel panel2 = new JPanel();
-		panel2.setBackground(Color.pink);
-		panel2.setSize(new Dimension(189,580));
-		panel2.setLocation(new Point(958-189,40));
+		//game.frame.setContentPane(panel);
+		//game.screen.setLocation((958/2)-(580/2), 40);
+//		JPanel panel2 = new JPanel();
+//		panel2.setBackground(Color.pink);
+//		panel2.setSize(new Dimension(189,580));
+//		panel2.setLocation(new Point(958-189,40));
+//
+//		JPanel card = new JPanel();
+//		card.setBackground(Color.blue);
+//		card.setSize(new Dimension(87,156));
+//		card.setLocation(new Point((int)panel2.getLocation().getX()+5,(int)panel2.getLocation().getY()+5));
+//
+//		JPanel card2 = new JPanel();
+//		card2.setBackground(Color.green);
+//		card2.setSize(new Dimension(87,156));
+//		card2.setLocation(new Point((int)card.getLocation().getX()+card.getWidth()+5,(int)card.getLocation().getY()));
 
-		JPanel card = new JPanel();
-		card.setBackground(Color.blue);
-		card.setSize(new Dimension(87,156));
-		card.setLocation(new Point((int)panel2.getLocation().getX()+5,(int)panel2.getLocation().getY()+5));
+		//System.out.println(card.getWidth()*2+10);
 
-		JPanel card2 = new JPanel();
-		card2.setBackground(Color.green);
-		card2.setSize(new Dimension(87,156));
-		card2.setLocation(new Point((int)card.getLocation().getX()+card.getWidth()+5,(int)card.getLocation().getY()));
-
-		System.out.println(card.getWidth()*2+10);
-
-		panel.add(game.screen);
-		panel.add(card2);
-		panel.add(card);
-		panel.add(panel2);
+		//panel.add(game.screen);
+		//panel.add(card2);
+		//panel.add(card);
+		//panel.add(panel2);
 
 
 		//game.frame.add(panel);

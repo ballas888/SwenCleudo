@@ -16,8 +16,8 @@ import cluedo.main.Tile;
 public class Screen extends Canvas{
 		
 
-	public Screen(int width, int height){
-		Dimension size = new Dimension(580, 580);		
+	public Screen(double width, double height){
+		Dimension size = new Dimension((int)Math.round(width),(int)Math.round(height));		
 		System.out.println("Dimension: "+width +" "+height);
 		setSize(size);		
 		setFocusable(true);
@@ -27,7 +27,7 @@ public class Screen extends Canvas{
 	public void render(Assets as){
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			// This sets the buffering to do Tripple buffering
+			// This sets the buffering to do Double buffering
 			createBufferStrategy(2);
 			return;
 		}	
@@ -36,7 +36,7 @@ public class Screen extends Canvas{
 		
 		
 		render_map(g, as);	
-		render_grid(g, as);
+		//render_grid(g, as);
 		
 		bs.show();
 	}
