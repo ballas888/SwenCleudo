@@ -11,10 +11,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Random;
 
+import cluedo.character.PlayerKey;
+import cluedo.character.PlayerMouse;
 import cluedo.main.Tile;
 
 public class Screen extends Canvas{
-		
+	private PlayerKey key;
+	private PlayerMouse mouse;
 
 	public Screen(double width, double height){
 		Dimension size = new Dimension((int)Math.round(width),(int)Math.round(height));		
@@ -22,6 +25,18 @@ public class Screen extends Canvas{
 		setSize(size);		
 		setFocusable(true);
 		setBackground(new Color(200,200,200));
+		key = new PlayerKey();
+		mouse = new PlayerMouse();
+		addKeyListener(key);
+		addMouseListener(mouse);
+	}
+	
+	public PlayerKey get_key(){
+		return this.key;
+	}
+	
+	public PlayerMouse get_mouse(){
+		return this.mouse;
 	}
 
 	public void render(Assets as){
@@ -32,12 +47,9 @@ public class Screen extends Canvas{
 			return;
 		}	
 		
-		Graphics2D g = (Graphics2D)bs.getDrawGraphics();
-		
-		
+		Graphics2D g = (Graphics2D)bs.getDrawGraphics();			
 		render_map(g, as);	
-		//render_grid(g, as);
-		
+		render_grid(g, as);		
 		bs.show();
 	}
 	

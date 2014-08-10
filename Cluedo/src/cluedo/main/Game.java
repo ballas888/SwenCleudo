@@ -34,6 +34,7 @@ public class Game implements Runnable {
 	private JFrame frame;
 	private JPanel main_panel;
 	private Screen screen;
+	private Update update;
 	
 	private Tile[][] tiles;
 	private int grid_size;
@@ -52,6 +53,7 @@ public class Game implements Runnable {
 		//screen = new Screen(width, height);
 		grid_size = load_map.get_size();
 		tiles = load_map.get_tiles();
+		update = new Update();
 
 		map_image = load_image.load_map_image("CluedoBigMod.png");
 
@@ -109,6 +111,14 @@ public class Game implements Runnable {
 			mobDelta += (now - lastTime) / mobNs;
 			lastTime = now;
 
+			while (delta >= 1) {
+				Assets as = new Assets();
+				as.screen = screen;				
+				update.update(as);
+				updates++;
+				delta--;
+			}
+			
 			Assets as = new Assets();
 			as.image = map_image;
 			as.tiles = tiles;
