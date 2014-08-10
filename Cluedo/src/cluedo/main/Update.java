@@ -11,19 +11,35 @@ public class Update {
 			int targetX = mouse.point.x;
 			int targetY = mouse.point.y;
 			
-			int t_w = as.tiles.length;
-			int t_h = as.tiles[0].length;
+			int t_w = as.tiles[0].length;
+			int t_h = as.tiles.length;
 			
 			int t_w_s = as.grid_size*t_w;
 			int t_h_s = as.grid_size*t_h;
 			
-			int ofset_x = as.screen.getWidth()/2-t_w_s/2;
-			int ofset_y = as.screen.getHeight()/2-t_h_s/2;
+			System.out.println(t_w_s+" t_s "+t_h_s);
 			
-			int tile_x = (int)((targetX)/(double)as.tiles.length);
-			int tile_y = (int)((targetY)/(double)as.tiles[0].length);
+			double w = as.screen.getWidth();
+			double h = as.screen.getHeight();
+			double width_ratio = w/t_w_s;
+			double height_ratio = h/t_h_s;
 			
-			System.out.println(tile_x+" "+tile_y);
+			double ratio = Math.min(width_ratio, height_ratio);
+			double size = as.grid_size*ratio;
+			
+			double grid_width = t_w*ratio;
+			double grid_height = t_h*ratio;
+			
+			double pos_x = Math.round((as.screen.getWidth()/2)-(grid_width/2));
+			double pos_y = Math.round((as.screen.getHeight()/2)-(grid_height/2));
+			
+			
+			double tile_x = ((targetX - pos_x)/(double)as.tiles[0].length);
+			double tile_y = ((targetY - pos_y)/(double)as.tiles.length);
+			
+			System.out.println(as.grid_size);
+			System.out.println(targetX+ "=x    y: " + targetY);
+		    System.out.println(tile_x+" "+tile_y + "     offsetX: " + pos_x + "   offsetY: " + pos_y);
 		}
 	}
 }
