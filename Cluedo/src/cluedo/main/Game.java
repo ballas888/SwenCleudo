@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
 import cluedo.render.Assets;
-import cluedo.render.Render;
 import cluedo.render.Screen;
 
 public class Game implements Runnable {

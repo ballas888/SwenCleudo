@@ -14,11 +14,10 @@ import java.util.Random;
 import cluedo.main.Tile;
 
 public class Screen extends Canvas{
-	private Render ren;	
+		
 
 	public Screen(int width, int height){
-		Dimension size = new Dimension(580, 580);
-		ren = new Render(width, height);
+		Dimension size = new Dimension(580, 580);		
 		System.out.println("Dimension: "+width +" "+height);
 		setSize(size);		
 		setFocusable(true);
@@ -62,11 +61,24 @@ public class Screen extends Canvas{
 		
 		size = size * ratio;
 		
-		g.setColor(Color.red);
+		
 		for(int i = 0; i < tiles.length; i++){
-			for(int j = 0; j < tiles[0].length; j++){				
+			for(int j = 0; j < tiles[0].length; j++){
+				g.setColor(Color.red);
+				Tile tile = tiles[i][j];
 				Rectangle2D r2 = new Rectangle2D.Double(pos_x+(j*size),pos_y+(i*size),size , size);
-				g.draw(r2);				
+				if(tile.is_trap()){
+					int tx = tile.get_trap_loc().x;
+					int ty = tile.get_trap_loc().y;
+					Rectangle2D r1 = new Rectangle2D.Double(pos_x+(tx*size),pos_y+(ty*size),size , size);					
+					g.fill(r2);	
+					g.setColor(Color.blue);
+					g.fill(r1);
+				}else{
+					g.draw(r2);
+				}
+				
+							
 			}
 		}
 		
