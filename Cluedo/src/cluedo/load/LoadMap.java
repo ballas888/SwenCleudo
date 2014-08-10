@@ -18,7 +18,7 @@ public class LoadMap {
 	private int size = 0;
 	private int tile_count = 0;
 	private Tile[][] tiles;
-	private List<Chars> chars = new ArrayList<Chars>();
+	private ArrayList<Chars> chars = new ArrayList<Chars>();
 
 	public LoadMap(String col, String rooms){
 		try {
@@ -191,5 +191,8 @@ public class LoadMap {
 		}
 
 		return tile;
+	}
+	public ArrayList<Chars> getChars(){
+		return this.chars;
 	}
 }

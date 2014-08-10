@@ -6,10 +6,12 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import cluedo.character.Chars;
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
 import cluedo.render.Assets;
@@ -21,7 +23,7 @@ public class Game implements Runnable {
 	public static int height = 16;
 	private int scale = 2;
 
-	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard and Jono the homo ";
+	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard and Jono ";
 
 	private boolean running = true;
 
@@ -35,6 +37,9 @@ public class Game implements Runnable {
 	private JPanel main_panel;
 	private Screen screen;
 	private Update update;
+	private ArrayList<Chars> allChars = new ArrayList<Chars>();
+	private ArrayList<Chars> choosenChars = new ArrayList<Chars>();
+
 	
 	private Tile[][] tiles;
 	private int grid_size;
@@ -53,11 +58,14 @@ public class Game implements Runnable {
 		//screen = new Screen(width, height);
 		grid_size = load_map.get_size();
 		tiles = load_map.get_tiles();
+		allChars = load_map.getChars();
 		update = new Update();
 
 		map_image = load_image.load_map_image("CluedoBigMod.png");
 
 		frame = new JFrame();
+		ChooseChars ch = new ChooseChars(allChars, frame);
+
 	}
 
 	public synchronized void start() {
