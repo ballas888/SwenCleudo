@@ -3,7 +3,12 @@ package cluedo.load;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import cluedo.character.Chars;
+import cluedo.character.CharsName;
 import cluedo.main.Game.Room;
 import cluedo.main.Tile;
 
@@ -13,6 +18,7 @@ public class LoadMap {
 	private int size = 0;
 	private int tile_count = 0;
 	private Tile[][] tiles;
+	private List<Chars> chars = new ArrayList<Chars>();
 
 	public LoadMap(String col, String rooms){
 		try {
@@ -35,7 +41,25 @@ public class LoadMap {
 			while(scan.hasNext()){
 				String[] data = scan.nextLine().split(",");
 				for(int i = 0; i< width; i++){
-					if(data[i].equalsIgnoreCase("a")){
+					if(data[i].equalsIgnoreCase("MW")){
+						Chars c = new Chars(CharsName.MRS_WHITE,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("RG")){
+						Chars c = new Chars(CharsName.REVEREND_GREEN,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("MP")){
+						Chars c = new Chars(CharsName.MRS_PEACOCK,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("CM")){
+						Chars c = new Chars(CharsName.COLONEL_MUSTARD,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("PP")){
+						Chars c = new Chars(CharsName.PROFESSOR_PLUM,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("MS")){
+						Chars c = new Chars(CharsName.MISS_SCARLET,new Point(i,tile_count));
+						chars.add(c);
+					}else if(data[i].equalsIgnoreCase("a")){
 						tiles[tile_count][i].set_room(Room.KITCHEN);
 						tiles[tile_count][i].set_trap(true);
 						tiles[tile_count][i].set_trap_location(new Point(22,21));
@@ -79,6 +103,11 @@ public class LoadMap {
 					tiles[i][j].add_neigh(tiles[i+1][j],"down");
 				}
 			}
+		}
+		
+		for(int i = 0; i < chars.size();i++){
+			System.out.println(chars.get(i).get_name());
+			System.out.println(chars.get(i).get_start_pos().x+" "+chars.get(i).get_start_pos().y);
 		}
 //		int posx = 5;
 //		int posy = 1;
