@@ -43,21 +43,27 @@ public class LoadMap {
 				for(int i = 0; i< width; i++){
 					if(data[i].equalsIgnoreCase("MW")){
 						Chars c = new Chars(CharsName.MRS_WHITE,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("RG")){
 						Chars c = new Chars(CharsName.REVEREND_GREEN,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("MP")){
 						Chars c = new Chars(CharsName.MRS_PEACOCK,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("CM")){
 						Chars c = new Chars(CharsName.COLONEL_MUSTARD,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("PP")){
 						Chars c = new Chars(CharsName.PROFESSOR_PLUM,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("MS")){
 						Chars c = new Chars(CharsName.MISS_SCARLET,new Point(i,tile_count));
+						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
 					}else if(data[i].equalsIgnoreCase("a")){
 						tiles[tile_count][i].set_room(Room.KITCHEN);
@@ -107,7 +113,7 @@ public class LoadMap {
 		
 		for(int i = 0; i < chars.size();i++){
 			System.out.println(chars.get(i).get_name());
-			System.out.println(chars.get(i).get_start_pos().x+" "+chars.get(i).get_start_pos().y);
+			System.out.println(chars.get(i).getPosition().x+" "+chars.get(i).getPosition().y);
 		}
 //		int posx = 5;
 //		int posy = 1;
@@ -164,7 +170,7 @@ public class LoadMap {
 
 	private Tile create_tile(int x, int y, String data){
 		int d = Integer.parseInt(data);
-		Tile tile = new Tile(x,y);
+		Tile tile = new Tile();
 		if(d == 14){
 			tile.set_can_down(true);
 			tile.set_can_left(true);

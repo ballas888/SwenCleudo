@@ -1,14 +1,14 @@
 package cluedo.main;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import cluedo.main.Game.Room;
 
 public class Tile {
-	private int x;
-	private int y;
+	private Point2D pos;
 	private boolean can_up = true;
 	private boolean can_down = true;
 	private boolean can_left = true;
@@ -19,11 +19,19 @@ public class Tile {
 	private Tile down_neigh;
 	private Room in_room;
 	private boolean is_trap = false;
-	private Point trap_location;	
+	private Point trap_location;
+	private double ratio;
 	
-	public Tile(int x, int y){
-		this.x = x;
-		this.y = y;
+	public void setRatio(double ratio){
+		this.ratio = ratio;
+	}
+	
+	public double getRatio(){
+		return this.ratio;
+	}
+
+	public void setPosition(Point2D p){
+		this.pos = p;
 	}
 	
 	public void set_trap_location(Point p){
@@ -74,8 +82,8 @@ public class Tile {
 		return this.in_room;
 	}
 	
-	public Point get_pos(){
-		return new Point(x,y);
+	public Point2D getPos(){
+		return pos;
 	}
 	
 	public void set_can_up(boolean bool){

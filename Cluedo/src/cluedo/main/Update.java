@@ -1,5 +1,6 @@
 package cluedo.main;
 
+import cluedo.character.PlayerKey;
 import cluedo.character.PlayerMouse;
 import cluedo.render.Assets;
 
@@ -44,5 +45,11 @@ public class Update {
 			
 			System.out.println(tile_x+" "+tile_y);
 		}
+		as.screen.get_key().update();
+		PlayerKey key = as.screen.get_key();
+		if(key.up){
+			System.out.println("HERE");
+			key.up = false;
+			}
 	}
 }

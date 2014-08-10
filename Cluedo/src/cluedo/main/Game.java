@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
@@ -51,6 +52,8 @@ public class Game implements Runnable {
 	public Game(){
 		load_map = new LoadMap("MapCol", "MapRoom");
 		load_image = new LoadImage();
+		
+		screen = new Screen(958*0.605, 620*0.935);
 
 		width = load_map.get_width()*load_map.get_size();
 		height = load_map.get_height()*load_map.get_size();
@@ -62,9 +65,34 @@ public class Game implements Runnable {
 		update = new Update();
 
 		map_image = load_image.load_map_image("CluedoBigMod.png");
+		
+		double size = grid_size;
+		double w = screen.getWidth();
+		double h = screen.getHeight();
+		double t_w = tiles[0].length*size;
+		double t_h = tiles.length*size;
+		double width_ratio = w/t_w;
+		double height_ratio = h/t_h;
+		
+		double ratio = Math.min(width_ratio, height_ratio);
+		
+		double grid_width = t_w*ratio;
+		double grid_height = t_h*ratio;
+		
+		double pos_x = (screen.getWidth()/2)-(grid_width/2);
+		double pos_y = (screen.getHeight()/2)-(grid_height/2);
+		
+		size = size * ratio;
+		
+		for(int i = 0;i < tiles.length; i++){
+			for(int j = 0;j<tiles[0].length;j++){
+				tiles[i][j].setPosition(new Point2D.Double(pos_x+(j*size),pos_y+(i*size)));
+				tiles[i][j].setRatio(size);
+			}
+		}
 
 		frame = new JFrame();
-		ChooseChars ch = new ChooseChars(allChars, frame);
+		//ChooseChars ch = new ChooseChars(allChars, frame);
 
 	}
 
@@ -133,6 +161,7 @@ public class Game implements Runnable {
 			as.image = map_image;
 			as.tiles = tiles;
 			as.grid_size = grid_size;
+			as.chars = allChars;
 			
 			//resizing screen
 			double m_w = main_panel.getWidth();
@@ -172,12 +201,11 @@ public class Game implements Runnable {
 
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.frame.setResizable(true);
+		game.frame.setResizable(false);
 		game.frame.setTitle(Game.title);
 		game.main_panel = new JPanel(null);
 		game.main_panel.setPreferredSize(new Dimension(958,620));
 		game.frame.setContentPane(game.main_panel);
-		game.screen = new Screen(958*0.605, 620*0.935);
 		game.screen.setLocation(958/2-game.screen.getWidth()/2,40);
 		game.main_panel.add(game.screen);
 		//game.screen.setLocation(new Point(200,200));
