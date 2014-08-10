@@ -21,7 +21,7 @@ public class Game implements Runnable {
 	public static int height = 16;
 	private int scale = 2;
 
-	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard the homo and Jono";
+	public static String title = "Cluedo";//"Cluedo Assignment 1 Swen222 Richard and Jono the homo ";
 
 	private boolean running = true;
 
@@ -114,15 +114,16 @@ public class Game implements Runnable {
 			as.tiles = tiles;
 			as.grid_size = grid_size;
 			
+			//resizing screen
 			double m_w = main_panel.getWidth();
 			double m_h = main_panel.getHeight();
 			double w = m_w*0.605;
 			double h = m_h*0.935;
 			double x = m_w/2-(int)Math.round(h)/2;
-			double y = m_h*0.0645;
-			
+			double y = m_h*0.0645;			
 			screen.setSize(new Dimension((int)Math.round(w),(int)Math.round(h)) );
 			screen.setLocation(new Point((int)Math.round(x),(int)Math.round(y)));
+			
 			screen.render(as);
 
 			frames++;
