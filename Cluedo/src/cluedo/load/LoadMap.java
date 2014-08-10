@@ -9,7 +9,8 @@ import java.util.Scanner;
 
 import cluedo.character.Chars;
 import cluedo.character.CharsName;
-import cluedo.main.Game.Room;
+import cluedo.main.Gms.Room;
+import cluedo.main.Tile.Direction;
 import cluedo.main.Tile;
 
 public class LoadMap {
@@ -20,7 +21,7 @@ public class LoadMap {
 	private Tile[][] tiles;
 	private ArrayList<Chars> chars = new ArrayList<Chars>();
 
-	public LoadMap(String col, String rooms){
+	public void loadMap(String col, String rooms){
 		try {
 			Scanner scan = new Scanner(new File(col));
 			this.size = Integer.parseInt(scan.nextLine());
@@ -45,26 +46,32 @@ public class LoadMap {
 						Chars c = new Chars(CharsName.MRS_WHITE,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("RG")){
 						Chars c = new Chars(CharsName.REVEREND_GREEN,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("MP")){
 						Chars c = new Chars(CharsName.MRS_PEACOCK,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("CM")){
 						Chars c = new Chars(CharsName.COLONEL_MUSTARD,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("PP")){
 						Chars c = new Chars(CharsName.PROFESSOR_PLUM,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("MS")){
 						Chars c = new Chars(CharsName.MISS_SCARLET,new Point(i,tile_count));
 						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
 						chars.add(c);
+						tiles[tile_count][i].set_room(Room.FLOOR);
 					}else if(data[i].equalsIgnoreCase("a")){
 						tiles[tile_count][i].set_room(Room.KITCHEN);
 						tiles[tile_count][i].set_trap(true);
@@ -97,16 +104,16 @@ public class LoadMap {
 			for(int j = 0; j< tiles[0].length; j++){
 				Tile t = tiles[i][j];
 				if(t.can_move_left()){
-					tiles[i][j].add_neigh(tiles[i][j-1],"left");
+					tiles[i][j].add_neigh(tiles[i][j-1],Direction.LEFT);
 				}
 				if(t.can_move_up()){
-					tiles[i][j].add_neigh(tiles[i-1][j],"up");
+					tiles[i][j].add_neigh(tiles[i-1][j],Direction.UP);
 				}
 				if(t.can_move_right()){
-					tiles[i][j].add_neigh(tiles[i][j+1],"right");
+					tiles[i][j].add_neigh(tiles[i][j+1],Direction.RIGHT);
 				}
 				if(t.can_move_down()){
-					tiles[i][j].add_neigh(tiles[i+1][j],"down");
+					tiles[i][j].add_neigh(tiles[i+1][j],Direction.DOWN);
 				}
 			}
 		}
@@ -115,14 +122,27 @@ public class LoadMap {
 			System.out.println(chars.get(i).get_name());
 			System.out.println(chars.get(i).getPosition().x+" "+chars.get(i).getPosition().y);
 		}
-//		int posx = 5;
-//		int posy = 1;
-//
-//		Tile tile = tiles[posy][posx];
-//		System.out.println(tile.get_pos().getX()+","+tile.get_pos().getY()+" "+tile.get_room());
-//		for(int i = 0; i<tile.get_neighs().size();i++){
-//			System.out.println("	"+tile.get_neighs().get(i).get_pos().getX()+","+tile.get_neighs().get(i).get_pos().getY());
-//		}
+		int posx = 7;
+		int posy = 24;
+
+		Tile tile = tiles[posy][posx];
+		System.out.println(tile.getArrayPos().x+","+tile.getArrayPos().y+" "+tile.get_room());
+		if(tile.get_neigh(Direction.UP) != null){
+			System.out.println("UpNeig:		"+tile.get_neigh(Direction.UP).getArrayPos().x+" "+tile.get_neigh(Direction.UP).getArrayPos().y);
+		}
+		if(tile.get_neigh(Direction.DOWN) != null){
+			System.out.println("DownNeig:	"+tile.get_neigh(Direction.DOWN).getArrayPos().x+" "+tile.get_neigh(Direction.DOWN).getArrayPos().y);
+		}
+		if(tile.get_neigh(Direction.LEFT) != null){
+			System.out.println("LeftNeig:	"+tile.get_neigh(Direction.LEFT).getArrayPos().x+" "+tile.get_neigh(Direction.LEFT).getArrayPos().y);
+		}
+		if(tile.get_neigh(Direction.RIGHT) != null){
+			System.out.println("RightNeig:	"+tile.get_neigh(Direction.RIGHT).getArrayPos().x+" "+tile.get_neigh(Direction.RIGHT).getArrayPos().y);
+		}
+		
+		
+		
+		
 	}
 
 	public int get_width(){
@@ -170,7 +190,7 @@ public class LoadMap {
 
 	private Tile create_tile(int x, int y, String data){
 		int d = Integer.parseInt(data);
-		Tile tile = new Tile();
+		Tile tile = new Tile(new Point(x,y));
 		if(d == 14){
 			tile.set_can_down(true);
 			tile.set_can_left(true);
@@ -182,10 +202,10 @@ public class LoadMap {
 			tile.set_can_up(false);
 			tile.set_can_right(false);
 		}else{
-			if(d == 1 || d == 7 || d == 8 || d == 9 || d == 10 || d == 11 || d == 12 || d == 16){
+			if(d == 1 || d == 7 || d == 8 || d == 9 || d == 10 || d == 11 || d == 13 || d == 16){
 				tile.set_can_up(false);
 			}
-			if(d == 1 || d == 2 || d == 3 || d == 9 || d == 10 || d == 12 || d == 13 || d == 14){
+			if(d == 1 || d == 2 || d == 3 || d == 9 || d == 10 || d == 12 || d == 13 || d == 15){
 				tile.set_can_right(false);
 			}
 			if(d == 3 || d == 4 || d == 5 || d == 9 || d == 11 || d == 12 || d == 13 || d == 16 ){

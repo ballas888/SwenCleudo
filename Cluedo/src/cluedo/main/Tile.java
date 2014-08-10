@@ -5,10 +5,11 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import cluedo.main.Game.Room;
+import cluedo.main.Gms.Room;
 
 public class Tile {
 	private Point2D pos;
+	private Point arrayPos;
 	private boolean can_up = true;
 	private boolean can_down = true;
 	private boolean can_left = true;
@@ -22,18 +23,26 @@ public class Tile {
 	private Point trap_location;
 	private double ratio;
 	
-	public void setRatio(double ratio){
+	public Tile(Point p){
+		this.arrayPos = p;
+	}
+	
+	public Point getArrayPos(){
+		return this.arrayPos;
+	}
+	
+	public void setTileSize(double ratio){
 		this.ratio = ratio;
 	}
 	
-	public double getRatio(){
+	public double getTileSize(){
 		return this.ratio;
 	}
 
 	public void setPosition(Point2D p){
 		this.pos = p;
 	}
-	
+		
 	public void set_trap_location(Point p){
 		this.trap_location = p;
 	}
@@ -46,28 +55,33 @@ public class Tile {
 		this.is_trap = bool;
 	}
 	
-	public void add_neigh(Tile neigh,String dir){
-		if(dir.equals("left")){
+	public enum Direction{
+		UP, DOWN, LEFT, RIGHT;
+	}
+	
+	public void add_neigh(Tile neigh,Direction dir){
+		if(dir == Direction.LEFT){
 			left_neigh = neigh;
-		}else if(dir.equals("right")){
+		}else if(dir == Direction.RIGHT){
 			right_neigh = neigh;
-		}else if(dir.equals("up")){
+		}else if(dir == Direction.UP){
 			up_neigh = neigh;
-		}else if(dir.equals("down")){
+		}else if(dir == Direction.DOWN){
 			down_neigh = neigh;
 		}
 	}
 	
-	public Tile get_neigh(String dir){
-		if(dir.equals("left")){
+	public Tile get_neigh(Direction dir){
+		if(dir == Direction.LEFT){
 			return left_neigh;
-		}else if(dir.equals("right")){
+		}else if(dir == Direction.RIGHT){
 			return right_neigh;
-		}else if(dir.equals("up")){
+		}else if(dir == Direction.UP){
 			return up_neigh;
-		}else{
+		}else if(dir == Direction.DOWN){
 			return down_neigh;
 		}
+		return null;
 	}
 	
 	public boolean is_trap(){
