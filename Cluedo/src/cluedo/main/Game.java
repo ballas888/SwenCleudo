@@ -113,7 +113,9 @@ public class Game implements Runnable {
 
 			while (delta >= 1) {
 				Assets as = new Assets();
-				as.screen = screen;				
+				as.screen = screen;	
+				as.tiles = tiles;
+				as.grid_size = grid_size;
 				update.update(as);
 				updates++;
 				delta--;
