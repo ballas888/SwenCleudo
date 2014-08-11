@@ -1,6 +1,7 @@
 package cluedo.main;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -88,6 +89,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
+		data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 	
 	
@@ -110,9 +112,41 @@ public class Game implements KeyListener, MouseListener, Runnable{
 
 	public void mouseClicked(MouseEvent e) {
 		
+		int targetX = e.getX();
+		int targetY = e.getY();
+		Tile[][] tiles = data.getTiles();
+		double size = data.getTileSize();		
+		double w = screenWidth;
+		double h = screenHeight;
+		double t_w = tiles[0].length*size;
+		double t_h = tiles.length*size;
+		double width_ratio = w/t_w;
+		double height_ratio = h/t_h;
+		
+		double ratio = Math.min(width_ratio, height_ratio);
+					
+		size =size * ratio;
+		int t_w_i = tiles[0].length;
+		int t_h_i = tiles.length;
+	
+		double t_w_s = size*t_w_i;
+		double t_h_s = size*t_h_i;
+		
+		double ofset_x = (screenWidth/2-(double)t_w_s/2);
+		double ofset_y = (screenHeight/2-(double)t_h_s/2);
+		
+		double tileX = ((targetX-ofset_x)/size);
+		double tileY = ((targetY-ofset_y)/size);
+		
+		if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
+			int x =(int) tileX;
+			int y = (int) tileY;
+			updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
+		}
+		
 	}
 	
-	public void keyReleased(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_UP){
 			updatePlayerMove.updatePlayerMove(mFunc.MOVE_UP, data);
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -124,18 +158,18 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		}
 		
 		screen.render(data);
-	}
+	}	
 	
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.start();		
 	}	
 		
-	public void mouseEntered(MouseEvent e) {}	
+	public void mouseEntered(MouseEvent e) {}
+	public void keyReleased(KeyEvent e) {}
 	public void mouseExited(MouseEvent e) {}	
 	public void mousePressed(MouseEvent e) {}	
-	public void mouseReleased(MouseEvent e) {}	
-	public void keyPressed(KeyEvent arg0) {}	
+	public void mouseReleased(MouseEvent e) {}		
 	public void keyTyped(KeyEvent arg0) {}
 
 		

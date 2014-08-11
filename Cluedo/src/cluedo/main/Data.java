@@ -15,6 +15,15 @@ public class Data {
 	public final LoadMap loadMap = new LoadMap();
 	private Tile[][] tiles;
 	private int tileSize;
+	private Chars currentPlayer;
+	
+	public void setCurrentPlayer(Chars ch){
+		this.currentPlayer = ch;
+	}
+	
+	public Chars getCurrentPlayer(){
+		return this.currentPlayer;
+	}
 	
 	public int getTileSize() {
 		return tileSize;
