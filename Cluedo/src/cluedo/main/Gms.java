@@ -48,7 +48,7 @@ public class Gms implements Runnable {
 	private int grid_size;	
 
 	public Gms(){
-		load_map = new LoadMap("MapCol", "MapRoom");
+		///load_map = new LoadMap("MapCol", "MapRoom");
 		load_image = new LoadImage();
 		
 		screen = new Screen(580, 580);
@@ -90,7 +90,7 @@ public class Gms implements Runnable {
 		for(int i = 0;i < tiles.length; i++){
 			for(int j = 0;j<tiles[0].length;j++){
 				tiles[i][j].setPosition(new Point2D.Double(pos_x+(j*size),pos_y+(i*size)));
-				tiles[i][j].setRatio(size);
+				//tiles[i][j].setRatio(size);
 			}
 		}		
 	}

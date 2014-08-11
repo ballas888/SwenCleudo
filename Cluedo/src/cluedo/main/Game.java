@@ -111,39 +111,42 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		if(data.isSearching()){
+			System.out.println("Busy sreaching");
+		}else{
+			int targetX = e.getX();
+			int targetY = e.getY();
+			Tile[][] tiles = data.getTiles();
+			double size = data.getTileSize();		
+			double w = screenWidth;
+			double h = screenHeight;
+			double t_w = tiles[0].length*size;
+			double t_h = tiles.length*size;
+			double width_ratio = w/t_w;
+			double height_ratio = h/t_h;
+			
+			double ratio = Math.min(width_ratio, height_ratio);
+						
+			size =size * ratio;
+			int t_w_i = tiles[0].length;
+			int t_h_i = tiles.length;
 		
-		int targetX = e.getX();
-		int targetY = e.getY();
-		Tile[][] tiles = data.getTiles();
-		double size = data.getTileSize();		
-		double w = screenWidth;
-		double h = screenHeight;
-		double t_w = tiles[0].length*size;
-		double t_h = tiles.length*size;
-		double width_ratio = w/t_w;
-		double height_ratio = h/t_h;
-		
-		double ratio = Math.min(width_ratio, height_ratio);
-					
-		size =size * ratio;
-		int t_w_i = tiles[0].length;
-		int t_h_i = tiles.length;
-	
-		double t_w_s = size*t_w_i;
-		double t_h_s = size*t_h_i;
-		
-		double ofset_x = (screenWidth/2-(double)t_w_s/2);
-		double ofset_y = (screenHeight/2-(double)t_h_s/2);
-		
-		double tileX = ((targetX-ofset_x)/size);
-		double tileY = ((targetY-ofset_y)/size);
-		
-		if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
-			int x =(int) tileX;
-			int y = (int) tileY;
-			updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
-		}
-		
+			double t_w_s = size*t_w_i;
+			double t_h_s = size*t_h_i;
+			
+			double ofset_x = (screenWidth/2-(double)t_w_s/2);
+			double ofset_y = (screenHeight/2-(double)t_h_s/2);
+			
+			double tileX = ((targetX-ofset_x)/size);
+			double tileY = ((targetY-ofset_y)/size);
+			
+			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
+				int x =(int) tileX;
+				int y = (int) tileY;
+				updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
+			}
+			screen.render(data);
+		}		
 	}
 	
 	public void keyPressed(KeyEvent e) {

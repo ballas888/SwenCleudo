@@ -1,5 +1,6 @@
 package cluedo.main;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -16,6 +17,16 @@ public class Data {
 	private Tile[][] tiles;
 	private int tileSize;
 	private Chars currentPlayer;
+	private ArrayList<Point> mousePath = new ArrayList<Point>();
+	private boolean isSearching = false;
+	
+	public void setMousePath(ArrayList<Point> points){
+		this.mousePath = points;
+	}
+	
+	public ArrayList<Point> getMousePath(){
+		return this.mousePath;
+	}
 	
 	public void setCurrentPlayer(Chars ch){
 		this.currentPlayer = ch;
@@ -54,6 +65,14 @@ public class Data {
 	}
 	public void setMap_image(BufferedImage map_image) {
 		this.map_image = map_image;
+	}
+
+	public boolean isSearching() {
+		return isSearching;
+	}
+
+	public void setSearching(boolean isSearching) {
+		this.isSearching = isSearching;
 	}
 	
 }

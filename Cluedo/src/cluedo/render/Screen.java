@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -60,10 +61,11 @@ public class Screen extends Canvas{
 //		}	
 		
 		Graphics2D g = (Graphics2D)bs.getDrawGraphics();	
-		System.out.println("here");
+		//System.out.println("here");
 		render_map(g, as);	
 		render_grid(g, as);
 		render_chars(g,as);
+		render_path(g,as);
 		bs.show();
 	}
 	
@@ -79,6 +81,23 @@ public class Screen extends Canvas{
 			}
 		}
 		
+	}
+	private void render_path(Graphics2D g, Data da){
+		ArrayList<Point> points = da.getMousePath();
+		Tile[][] tiles = da.getTiles();
+		int pSize = da.getTileSize()/2;
+		if(points.size()>0){
+			for(int i = 0; i < points.size();i++){
+				Point point = points.get(i);
+				Tile tile = tiles[point.y][point.x];
+				double ox = tile.getPos().getX();
+				double oy = tile.getPos().getY();
+				double p = da.getTileSize()/2-pSize/2;				
+				g.setColor(Color.GREEN);
+				Rectangle2D r2 = new Rectangle2D.Double(p+ox,p+oy,pSize,pSize);
+				g.fill(r2);				
+			}
+		}		
 	}
 
 	private void render_map(Graphics2D g, Data as){
@@ -100,7 +119,7 @@ public class Screen extends Canvas{
 	private void render_chars(Graphics2D g, Data as){
 		ArrayList<Chars> chars = as.getAllChars();
 		Tile[][] tiles = as.getTiles();
-		System.out.println("here render char");
+		//System.out.println("here render char");
 		for(Chars c : chars){
 			if(!c.isPlayable()){
 				Tile t = tiles[c.getPosition().y][c.getPosition().x];

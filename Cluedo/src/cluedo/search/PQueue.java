@@ -3,7 +3,7 @@ package cluedo.search;
 public class PQueue {
 	private QNode[] priorityQ;
 	private int maxSize = 100;
-	private int tNumber;
+	private int tNumber;	
 
 	public PQueue() {
 		priorityQ = new QNode[maxSize];
@@ -41,6 +41,14 @@ public class PQueue {
 
 	public QNode dequeue() {
 		return priorityQ[--tNumber];
+	}
+	
+	public QNode peek(){
+		return priorityQ[tNumber-1];
+	}
+	
+	public int getSize(){
+		return this.tNumber;
 	}
 
 	public boolean isEmpty() {

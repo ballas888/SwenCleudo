@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cluedo.character.Chars;
 import cluedo.main.Tile.Direction;
+import cluedo.search.Search;
 
 public class UpdatePlayer {
 	public enum mFunc {
@@ -12,9 +13,16 @@ public class UpdatePlayer {
 	}
 	
 	public void updatePlayerMove(mFunc func, Data data,Point point){
+		Search search = new Search();
 		Tile[][] tiles = data.getTiles();
+		//System.out.println("CurPlayer: "+data.getCurrentPlayer().get_name());
+		//System.out.println(data.getCurrentPlayer().getPosition().x+" "+data.getCurrentPlayer().getPosition().y);		
 		if(func == mFunc.MOVE_MOUSE){
-			Tile tile = tiles[point.y][point.x];			
+			Tile goal = tiles[point.y][point.x];
+			int x = data.getCurrentPlayer().getPosition().x;
+			int y = data.getCurrentPlayer().getPosition().y;
+			Tile from = tiles[y][x];
+			search.search(from, goal, data);			
 		}
 	}
 
