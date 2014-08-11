@@ -121,7 +121,7 @@ public class Screen extends Canvas{
 		Tile[][] tiles = as.getTiles();
 		//System.out.println("here render char");
 		for(Chars c : chars){
-			if(!c.isPlayable()){
+			if(c.isPlayable()){
 				Tile t = tiles[c.getPosition().y][c.getPosition().x];
 				g.drawImage(c.getSprite(),(int)t.getPos().getX(),(int)t.getPos().getY(),(int)t.getTileSize(),(int)t.getTileSize(),null);
 			}

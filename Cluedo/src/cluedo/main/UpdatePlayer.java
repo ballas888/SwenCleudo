@@ -27,9 +27,10 @@ public class UpdatePlayer {
 	}
 
 	public void updatePlayerMove(mFunc func, Data data) {
-		ArrayList<Chars> chars = data.getAllChars();
+		ArrayList<Chars> chars = data.getPlayChars();
 		Tile[][] tiles = data.getTiles();
 		for (Chars c : chars) {
+			if(c.isPlaying()){
 			int oldX = c.getPosition().x;
 			int oldY = c.getPosition().y;
 			Tile tileOld = tiles[oldY][oldX];
@@ -70,6 +71,7 @@ public class UpdatePlayer {
 					}
 				}
 			}
+		}
 		}
 	}
 

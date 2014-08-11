@@ -8,7 +8,20 @@ public class Chars {
 	private CharsName name;
 	private String playName;
 	private Boolean playable = false;
+	private Boolean playing = false;
 	private BufferedImage sprite;
+	
+	public void nowPlaying(){
+		this.playing = true;
+	}
+	
+	public void notPlaying(){
+		this.playing = false;
+	}
+	
+	public boolean isPlaying(){
+		return this.playing;
+	}
 	
 	public Chars(CharsName name,Point pos){
 		this.name = name;

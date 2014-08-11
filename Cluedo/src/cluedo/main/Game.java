@@ -1,6 +1,7 @@
 package cluedo.main;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,10 +9,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import cluedo.main.UpdatePlayer.mFunc;
+import cluedo.render.CardHUD;
+import cluedo.render.HUD;
+import cluedo.render.InfoHud;
+import cluedo.render.MenuBar;
 import cluedo.render.Screen;
 
 public class Game implements KeyListener, MouseListener, Runnable{
@@ -21,6 +29,24 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	private int screenWidth = 580;
 	private int screenHeight = 580;
 	
+	//hud math
+	private int hudHeight = screenHeight/2;
+	private int hudWidth = (mainWidth - screenWidth)/2;
+	private int hudX = 0;
+	private int hudY = mainHeight - hudHeight;
+	
+	//card hud math
+	private int cardHudHeight = screenHeight;
+	private int cardHudWidth = (mainWidth - screenWidth)/2;
+	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
+	private int cardHudY = mainHeight - cardHudHeight;
+	
+	//infoHud math
+	private int infoHudHeight = screenHeight/2;
+	private int infoHudWidth = (mainWidth - screenWidth)/2;
+	private int infoHudX = 0;
+	private int infoHudY = mainHeight - screenHeight;
+	
 	private Thread thread;
 	private JFrame mainFrame;
 	private JPanel mainPanel;
@@ -28,25 +54,59 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	private UpdatePlayer updatePlayerMove;
 	private static Data data;
 	
+	//Hud panels
+	private JPanel hud;
+	private JPanel cardHud;
+	private JPanel infoHud;
+	private JMenuBar menu;
+
+	
 	public Game(){		
 		data = new Data();
 		updatePlayerMove = new UpdatePlayer();
 		mainFrame = new JFrame();
 		mainFrame.setResizable(false);
-		mainFrame.setTitle("TiTle");
+		mainFrame.setTitle("Cluedo");
 		
 		mainPanel = new JPanel(null);
 		mainPanel.setPreferredSize(new Dimension(mainWidth,mainHeight));
 		
-		mainFrame.setContentPane(mainPanel);		
+		mainFrame.setContentPane(mainPanel);	
 		screen = new Screen(screenWidth, screenHeight);
 		screen.setLocation(mainWidth/2-screenWidth/2,40);
 		screen.addKeyListener(this);
 		screen.addMouseListener(this);
 		
-		mainPanel.add(screen);		
+		//HUD
+		hud = new HUD(hudWidth,hudHeight,new GridLayout(0,1,1,1),data,screen);
+		hud.setLocation(hudX, hudY);
 		
+		//Pass through card data, which will have chars, which have the cards
+		cardHud = new CardHUD(cardHudWidth, cardHudHeight, data, screen);
+		cardHud.setLocation(cardHudX, cardHudY);
+		
+		infoHud = new InfoHud(cardHudWidth, cardHudHeight, data, screen);
+		infoHud.setLocation(infoHudX, infoHudY);
+		
+		menu = new MenuBar();
+		
+		
+		mainFrame.add(hud);
+		mainFrame.add(cardHud);
+		mainFrame.add(infoHud);
+		mainFrame.setJMenuBar(menu);
+
+		mainPanel.add(screen);	
+
+		//wtf
 		setUpLoad();
+		
+		//let users select their players
+		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
+		//populate the playable list with the choosen ones
+		data.populateChoosen();
+		
+		//wtf
 		setUpTilesPos();	
 		
 		mainFrame.pack();		
@@ -54,6 +114,10 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);	
 		screen.createBStrategy();
+		
+		screen.requestFocus();
+		screen.render(data);
+		
 		
 	}
 	
@@ -89,7 +153,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
-		data.setCurrentPlayer(data.getAllChars().get(0));
+		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 	
 	

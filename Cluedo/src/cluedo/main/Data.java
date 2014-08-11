@@ -16,53 +16,81 @@ public class Data {
 	public final LoadMap loadMap = new LoadMap();
 	private Tile[][] tiles;
 	private int tileSize;
-	private Chars currentPlayer;
+	private int currentPlayer = 0;
 	private ArrayList<Point> mousePath = new ArrayList<Point>();
 	private boolean isSearching = false;
-	
-	public void setMousePath(ArrayList<Point> points){
+
+	public void setMousePath(ArrayList<Point> points) {
 		this.mousePath = points;
 	}
 	
-	public ArrayList<Point> getMousePath(){
+	public void populateChoosen(){
+		for(int i = 0;i < allChars.size(); i++){
+			if(allChars.get(i).isPlayable()){
+				playChars.add(allChars.get(i));
+			}
+		}
+		playChars.get(0).nowPlaying();
+	}
+
+	public ArrayList<Point> getMousePath() {
 		return this.mousePath;
 	}
-	
-	public void setCurrentPlayer(Chars ch){
-		this.currentPlayer = ch;
+
+	public void nextPlayer() {
+		//set current player to not playing
+		playChars.get(currentPlayer).notPlaying();
+		
+		//move to next player
+		if(this.currentPlayer + 1 >= playChars.size()){
+			this.currentPlayer = 0;
+		}else{
+			this.currentPlayer++;
+		}
+		//set current player to playing
+		playChars.get(currentPlayer).nowPlaying();
 	}
-	
-	public Chars getCurrentPlayer(){
-		return this.currentPlayer;
+
+	public Chars getCurrentPlayer() {
+		return playChars.get(currentPlayer);
 	}
-	
+
 	public int getTileSize() {
 		return tileSize;
 	}
+
 	public void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}
+
 	public Tile[][] getTiles() {
 		return tiles;
 	}
+
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
+
 	public ArrayList<Chars> getPlayChars() {
 		return playChars;
 	}
+
 	public void setPlayChars(ArrayList<Chars> playChars) {
 		this.playChars = playChars;
 	}
+
 	public ArrayList<Chars> getAllChars() {
 		return allChars;
 	}
+
 	public void setAllChars(ArrayList<Chars> allChars) {
 		this.allChars = allChars;
 	}
+
 	public BufferedImage getMap_image() {
 		return map_image;
 	}
+
 	public void setMap_image(BufferedImage map_image) {
 		this.map_image = map_image;
 	}
@@ -74,5 +102,5 @@ public class Data {
 	public void setSearching(boolean isSearching) {
 		this.isSearching = isSearching;
 	}
-	
+
 }
