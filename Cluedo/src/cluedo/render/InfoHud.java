@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import cluedo.main.Data;
 
@@ -12,6 +13,8 @@ public class InfoHud extends JPanel{
 	private Data data;
 	private Screen screen;
 	private int width;
+	private JTextField current = new JTextField(50);
+
 	
 	public InfoHud(int width, int height, Data data, Screen screen){
 		this.data = data;
@@ -22,8 +25,12 @@ public class InfoHud extends JPanel{
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
 		setBackground((Color.red));
-		
+		//this.add(current);
 		this.validate();
 		this.setVisible(true);
 	}
+	
+//	public void updatePlayer(){
+//		current.setText(data.getCurrentPlayer().getPlayName());
+//	}
 }

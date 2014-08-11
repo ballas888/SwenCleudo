@@ -22,6 +22,7 @@ public class HUD extends JPanel{
 	private final JButton sugg = new JButton("Make Suggestion");
 	private final JButton accu = new JButton("Make Accusation");
 	private final JButton vir = new JButton("Virtual Girl");
+	
 
 	private Data data;
 	private Screen screen;

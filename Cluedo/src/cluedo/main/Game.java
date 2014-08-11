@@ -171,7 +171,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	}	
 	
 	public void run() {		
-			screen.render(data);		
+			screen.render(data);
 	}
 
 	public void mouseClicked(MouseEvent e) {
