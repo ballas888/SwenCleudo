@@ -174,8 +174,8 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	public void run() {
 			screen.render(data);
 	}
-
-	public void mouseClicked(MouseEvent e) {
+	
+	public void mouseReleased(MouseEvent e) {
 		if(data.isSearching()){
 			System.out.println("Busy sreaching");
 		}else{
@@ -237,7 +237,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	public void keyReleased(KeyEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mousePressed(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
 	public void keyTyped(KeyEvent arg0) {}
 
 
