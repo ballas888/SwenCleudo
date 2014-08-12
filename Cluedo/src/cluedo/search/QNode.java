@@ -7,31 +7,30 @@ public class QNode {
 	private QNode from;
 	private Double costToHere;
 	private Double totalCostToGoal;
-	private boolean isVisited = false;
-	
+
 	public QNode(Tile tile, QNode from, Double costToHere, Double totalCostToGoal){
 		this.tile = tile;
 		this.from = from;
 		this.costToHere = costToHere;
 		this.totalCostToGoal = totalCostToGoal;
 	}
-	
+
 	public Tile getTile(){
 		return this.tile;
 	}
-	
+
 	public void setTile(Tile tile){
 		this.tile = tile;
 	}
-	
+
 	public QNode getFrom(){
 		return this.from;
 	}
-	
+
 	public void setFrom(QNode from){
 		this.from = from;
 	}
-	
+
 	public Double getCostToHere() {
 		return costToHere;
 	}
@@ -48,13 +47,4 @@ public class QNode {
 		this.totalCostToGoal = totalCostToGoal;
 	}
 
-	public boolean isVisited() {
-		return isVisited;
-	}
-
-	public void setVisited(boolean isVisited) {
-		this.isVisited = isVisited;
-	}
-
-	
 }

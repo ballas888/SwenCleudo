@@ -23,104 +23,104 @@ import cluedo.render.MenuBar;
 import cluedo.render.Screen;
 
 public class Game implements KeyListener, MouseListener, Runnable{
-	
+
 	private int mainWidth = 958;
 	private int mainHeight = 620;
 	private int screenWidth = 580;
 	private int screenHeight = 580;
-	
+
 	//hud math
 	private int hudHeight = screenHeight/2;
 	private int hudWidth = (mainWidth - screenWidth)/2;
 	private int hudX = 0;
 	private int hudY = mainHeight - hudHeight;
-	
+
 	//card hud math
 	private int cardHudHeight = screenHeight;
 	private int cardHudWidth = (mainWidth - screenWidth)/2;
 	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
 	private int cardHudY = mainHeight - cardHudHeight;
-	
+
 	//infoHud math
 	private int infoHudHeight = screenHeight/2;
 	private int infoHudWidth = (mainWidth - screenWidth)/2;
 	private int infoHudX = 0;
 	private int infoHudY = mainHeight - screenHeight;
-	
+
 	private Thread thread;
 	private JFrame mainFrame;
 	private JPanel mainPanel;
 	private Screen screen;
 	private UpdatePlayer updatePlayerMove;
 	private static Data data;
-	
+
 	//Hud panels
 	private JPanel hud;
 	private JPanel cardHud;
 	private JPanel infoHud;
 	private JMenuBar menu;
 
-	
-	public Game(){		
+
+	public Game(){
 		data = new Data();
 		updatePlayerMove = new UpdatePlayer();
 		mainFrame = new JFrame();
 		mainFrame.setResizable(false);
 		mainFrame.setTitle("Cluedo");
-		
+
 		mainPanel = new JPanel(null);
 		mainPanel.setPreferredSize(new Dimension(mainWidth,mainHeight));
-		
-		mainFrame.setContentPane(mainPanel);	
+
+		mainFrame.setContentPane(mainPanel);
 		screen = new Screen(screenWidth, screenHeight);
 		screen.setLocation(mainWidth/2-screenWidth/2,40);
 		screen.addKeyListener(this);
 		screen.addMouseListener(this);
-		
+
 		//HUD
 		hud = new HUD(hudWidth,hudHeight,new GridLayout(0,1,1,1),data,screen);
 		hud.setLocation(hudX, hudY);
-		
+
 		//Pass through card data, which will have chars, which have the cards
 		cardHud = new CardHUD(cardHudWidth, cardHudHeight, data, screen);
 		cardHud.setLocation(cardHudX, cardHudY);
-		
+
 		infoHud = new InfoHud(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
-		
+
 		menu = new MenuBar();
-		
-		
+
+
 		mainFrame.add(hud);
 		mainFrame.add(cardHud);
 		mainFrame.add(infoHud);
 		mainFrame.setJMenuBar(menu);
 
-		mainPanel.add(screen);	
+		mainPanel.add(screen);
 
 		//wtf
 		setUpLoad();
-		
+
 		//let users select their players
 		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
 		//populate the playable list with the choosen ones
 		data.populateChoosen();
-		
+
 		//wtf
-		setUpTilesPos();	
-		
-		mainFrame.pack();		
+		setUpTilesPos();
+
+		mainFrame.pack();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocationRelativeTo(null);
-		mainFrame.setVisible(true);	
+		mainFrame.setVisible(true);
 		screen.createBStrategy();
-		
+
 		screen.requestFocus();
 		screen.render(data);
-		
-		
+
+
 	}
-	
+
 	private void setUpTilesPos() {
 		Tile[][] tiles = data.getTiles();
 		double size = data.getTileSize();
@@ -128,23 +128,24 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		double t_h = tiles.length*size;
 		double width_ratio = screenWidth/t_w;
 		double height_ratio = screenHeight/t_h;
-		
+
 		double ratio = Math.min(width_ratio, height_ratio);
-		
+
 		double grid_width = t_w*ratio;
 		double grid_height = t_h*ratio;
-		
+
 		double posX = (screenWidth/2)-(grid_width/2);
 		double posY = (screenHeight/2)-(grid_height/2);
-		
+
 		size = size * ratio;
-		
+		data.setTileSize(size);
+
 		for(int i = 0; i < tiles.length;i++){
 			for(int j = 0; j < tiles[0].length; j++){
 				tiles[i][j].setPosition(new Point2D.Double(posX+(j*size),posY+(i*size)));
 				tiles[i][j].setTileSize(size);
 			}
-		}		
+		}
 	}
 
 	private void setUpLoad() {
@@ -155,8 +156,8 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
-	
-	
+
+
 	public synchronized void start() {
 		thread = new Thread(this, "Display");
 		thread.start();
@@ -168,9 +169,9 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}	
-	
-	public void run() {		
+	}
+
+	public void run() {
 			screen.render(data);
 	}
 
@@ -181,38 +182,38 @@ public class Game implements KeyListener, MouseListener, Runnable{
 			int targetX = e.getX();
 			int targetY = e.getY();
 			Tile[][] tiles = data.getTiles();
-			double size = data.getTileSize();		
+			double size = data.getTileSize();
 			double w = screenWidth;
 			double h = screenHeight;
 			double t_w = tiles[0].length*size;
 			double t_h = tiles.length*size;
 			double width_ratio = w/t_w;
 			double height_ratio = h/t_h;
-			
+
 			double ratio = Math.min(width_ratio, height_ratio);
-						
+
 			size =size * ratio;
 			int t_w_i = tiles[0].length;
 			int t_h_i = tiles.length;
-		
+
 			double t_w_s = size*t_w_i;
 			double t_h_s = size*t_h_i;
-			
+
 			double ofset_x = (screenWidth/2-(double)t_w_s/2);
 			double ofset_y = (screenHeight/2-(double)t_h_s/2);
-			
+
 			double tileX = ((targetX-ofset_x)/size);
 			double tileY = ((targetY-ofset_y)/size);
-			
+
 			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
 				int x =(int) tileX;
 				int y = (int) tileY;
 				updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
 			}
 			screen.render(data);
-		}		
+		}
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_UP){
 			updatePlayerMove.updatePlayerMove(mFunc.MOVE_UP, data);
@@ -223,21 +224,21 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		}else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 			updatePlayerMove.updatePlayerMove(mFunc.MOVE_RIGHT, data);
 		}
-		
+
 		screen.render(data);
-	}	
-	
+	}
+
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.start();		
-	}	
-		
+		game.start();
+	}
+
 	public void mouseEntered(MouseEvent e) {}
 	public void keyReleased(KeyEvent e) {}
-	public void mouseExited(MouseEvent e) {}	
-	public void mousePressed(MouseEvent e) {}	
-	public void mouseReleased(MouseEvent e) {}		
+	public void mouseExited(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
 	public void keyTyped(KeyEvent arg0) {}
 
-		
+
 }

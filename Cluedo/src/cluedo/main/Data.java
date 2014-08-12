@@ -15,7 +15,7 @@ public class Data {
 	public final LoadImage loadImage = new LoadImage();
 	public final LoadMap loadMap = new LoadMap();
 	private Tile[][] tiles;
-	private int tileSize;
+	private double tileSize;
 	private int currentPlayer = 0;
 	private ArrayList<Point> mousePath = new ArrayList<Point>();
 	private boolean isSearching = false;
@@ -23,7 +23,7 @@ public class Data {
 	public void setMousePath(ArrayList<Point> points) {
 		this.mousePath = points;
 	}
-	
+
 	public void populateChoosen(){
 		for(int i = 0;i < allChars.size(); i++){
 			if(allChars.get(i).isPlayable()){
@@ -40,7 +40,7 @@ public class Data {
 	public void nextPlayer() {
 		//set current player to not playing
 		playChars.get(currentPlayer).notPlaying();
-		
+
 		//move to next player
 		if(this.currentPlayer + 1 >= playChars.size()){
 			this.currentPlayer = 0;
@@ -55,11 +55,11 @@ public class Data {
 		return playChars.get(currentPlayer);
 	}
 
-	public int getTileSize() {
+	public double getTileSize() {
 		return tileSize;
 	}
 
-	public void setTileSize(int tileSize) {
+	public void setTileSize(double tileSize) {
 		this.tileSize = tileSize;
 	}
 
