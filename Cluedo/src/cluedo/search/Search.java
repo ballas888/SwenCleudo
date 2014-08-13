@@ -2,6 +2,8 @@ package cluedo.search;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import cluedo.main.Data;
 import cluedo.main.Tile;
@@ -11,9 +13,9 @@ public class Search {
 	private double totalCostToGoal;
 	private QNode currentObj = null;
 	private QNode goal;
-	private ArrayList<Point> points = new ArrayList<Point>();
+	private Set<Point> points = new HashSet<Point>();
 
-	public void search(Tile from, Tile to, Data data){
+	public Set<Point> search(Tile from, Tile to, Data data){
 		data.setSearching(true);
 		clearTile(data);
 		PQueue fringe = new PQueue();
@@ -74,8 +76,10 @@ public class Search {
 			}
 		}
 		getStartNode(currentObj);
-		data.setMousePath(points);
+		//data.setMousePath(points);
 		data.setSearching(false);
+		return points;
+
 	}
 
 	public void clearTile(Data data){

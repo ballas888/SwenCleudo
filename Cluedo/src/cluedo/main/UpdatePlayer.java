@@ -2,6 +2,7 @@ package cluedo.main;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Set;
 
 import cluedo.character.Chars;
 import cluedo.main.Tile.Direction;
@@ -11,18 +12,25 @@ public class UpdatePlayer {
 	public enum mFunc {
 		MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_MOUSE
 	}
-	
+
 	public void updatePlayerMove(mFunc func, Data data,Point point){
+		ArrayList<Point> pnts = new ArrayList<Point>();
 		Search search = new Search();
 		Tile[][] tiles = data.getTiles();
 		//System.out.println("CurPlayer: "+data.getCurrentPlayer().get_name());
-		//System.out.println(data.getCurrentPlayer().getPosition().x+" "+data.getCurrentPlayer().getPosition().y);		
+		//System.out.println(data.getCurrentPlayer().getPosition().x+" "+data.getCurrentPlayer().getPosition().y);
 		if(func == mFunc.MOVE_MOUSE){
 			Tile goal = tiles[point.y][point.x];
 			int x = data.getCurrentPlayer().getPosition().x;
 			int y = data.getCurrentPlayer().getPosition().y;
 			Tile from = tiles[y][x];
-			search.search(from, goal, data);			
+			Set<Point> points = search.search(from, goal, data);
+			for(Point p : points){
+				pnts.add(p);
+			}
+			data.setMousePath(pnts);
+
+
 		}
 	}
 
