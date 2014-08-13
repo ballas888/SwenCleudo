@@ -72,7 +72,7 @@ public class Search {
 					}
 
 				}
-				System.out.println("At The Top: "+fringe.peek().getTile().getArrayPos().x+" "+fringe.peek().getTile().getArrayPos().y);
+				//System.out.println("At The Top: "+fringe.peek().getTile().getArrayPos().x+" "+fringe.peek().getTile().getArrayPos().y);
 			}
 		}
 		getStartNode(currentObj);
@@ -96,11 +96,11 @@ public class Search {
 
 		while(node.getFrom() != null){
 			Tile cTile = node.getTile();
-			System.out.println(cTile.getArrayPos().x+" "+cTile.getArrayPos().y);
+			//System.out.println(cTile.getArrayPos().x+" "+cTile.getArrayPos().y);
 			points.add(new Point(cTile.getArrayPos().x,cTile.getArrayPos().y));
 			node = node.getFrom();
 		}
-		System.out.println("Done with search");
+		//System.out.println("Done with search");
 	}
 
 	public boolean isTheSame(QNode from,Tile to){
