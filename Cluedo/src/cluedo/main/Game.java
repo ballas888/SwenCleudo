@@ -8,6 +8,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -174,7 +178,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	public void run() {
 			screen.render(data);
 	}
-	
+
 	public void mouseReleased(MouseEvent e) {
 		if(data.isSearching()){
 			System.out.println("Busy sreaching");
@@ -204,11 +208,35 @@ public class Game implements KeyListener, MouseListener, Runnable{
 
 			double tileX = ((targetX-ofset_x)/size);
 			double tileY = ((targetY-ofset_y)/size);
-
+			Stack<Point> points = new Stack<Point>();
+			ArrayList<Point> pnts = new ArrayList<Point>();
 			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
 				int x =(int) tileX;
 				int y = (int) tileY;
-				updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
+				points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
+				for(Point p : points){
+					pnts.add(p);
+				}
+				data.setMousePath(pnts);
+				pnts = new ArrayList<Point>();
+				while(!points.isEmpty()){
+					Point p = points.pop();
+					//System.out.println("Here");
+					data.getCurrentPlayer().setPosition(p);
+					for(Point pn : points){
+						pnts.add(pn);
+					}
+					data.setMousePath(pnts);
+					pnts = new ArrayList<Point>();
+					screen.render(data);
+					try {
+						thread.sleep(100);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
 			}
 			screen.render(data);
 		}

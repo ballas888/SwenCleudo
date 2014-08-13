@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 import cluedo.main.Data;
 import cluedo.main.Tile;
@@ -13,9 +14,9 @@ public class Search {
 	private double totalCostToGoal;
 	private QNode currentObj = null;
 	private QNode goal;
-	private Set<Point> points = new HashSet<Point>();
+	private Stack<Point> points = new Stack<Point>();
 
-	public Set<Point> search(Tile from, Tile to, Data data){
+	public Stack<Point> search(Tile from, Tile to, Data data){
 		data.setSearching(true);
 		clearTile(data);
 		PQueue fringe = new PQueue();
