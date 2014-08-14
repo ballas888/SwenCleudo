@@ -29,7 +29,7 @@ import cluedo.render.Screen;
 public class Game implements KeyListener, MouseListener{
 
 	private int mainWidth = 958;
-	private int mainHeight = 620;
+	private int mainHeight = 580;
 	private int screenWidth = 580;
 	private int screenHeight = 580;
 
@@ -37,19 +37,19 @@ public class Game implements KeyListener, MouseListener{
 	private int hudHeight = screenHeight/2;
 	private int hudWidth = (mainWidth - screenWidth)/2;
 	private int hudX = 0;
-	private int hudY = mainHeight - hudHeight;
+	private int hudY = screenHeight/2;
 
 	//card hud math
 	private int cardHudHeight = screenHeight;
 	private int cardHudWidth = (mainWidth - screenWidth)/2;
 	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
-	private int cardHudY = mainHeight - cardHudHeight;
+	private int cardHudY = 0;//mainHeight - cardHudHeight;
 
 	//infoHud math
 	private int infoHudHeight = screenHeight/2;
 	private int infoHudWidth = (mainWidth - screenWidth)/2;
 	private int infoHudX = 0;
-	private int infoHudY = mainHeight - screenHeight;
+	private int infoHudY = 0;//mainHeight - screenHeight;
 
 	private Thread thread;
 	private JFrame mainFrame;
@@ -117,7 +117,7 @@ public class Game implements KeyListener, MouseListener{
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
-		
+
 		screen.createBStrategy();
 		screen.requestFocus();
 		screen.render(data);
@@ -158,8 +158,8 @@ public class Game implements KeyListener, MouseListener{
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
-	
-	public void mouseReleased(MouseEvent e) {			
+
+	public void mouseReleased(MouseEvent e) {
 			int targetX = e.getX();
 			int targetY = e.getY();
 			Tile[][] tiles = data.getTiles();
@@ -211,8 +211,8 @@ public class Game implements KeyListener, MouseListener{
 
 			}
 			screen.render(data);
-		
-		
+
+
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -228,7 +228,7 @@ public class Game implements KeyListener, MouseListener{
 
 		screen.render(data);
 	}
-	
+
 
 	public enum Room{
 		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
@@ -236,7 +236,8 @@ public class Game implements KeyListener, MouseListener{
 	}
 
 	public static void main(String[] args) {
-		Game game = new Game();		
+		Game game = new Game();
+		game.screen.render(game.data);
 	}
 
 	public void mouseEntered(MouseEvent e) {}
