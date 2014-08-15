@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import cluedo.main.Gms.Room;
+import cluedo.main.Game.Room;
 
 public class Tile {
 	private Point2D pos;

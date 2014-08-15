@@ -4,12 +4,11 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import cluedo.character.Chars;
 import cluedo.character.CharsName;
-import cluedo.main.Gms.Room;
+import cluedo.main.Game.Room;
 import cluedo.main.Tile.Direction;
 import cluedo.main.Tile;
 
@@ -116,33 +115,7 @@ public class LoadMap {
 					tiles[i][j].add_neigh(tiles[i+1][j],Direction.DOWN);
 				}
 			}
-		}
-		
-		for(int i = 0; i < chars.size();i++){
-			System.out.println(chars.get(i).get_name());
-			System.out.println(chars.get(i).getPosition().x+" "+chars.get(i).getPosition().y);
-		}
-		int posx = 7;
-		int posy = 24;
-
-		Tile tile = tiles[posy][posx];
-		System.out.println(tile.getArrayPos().x+","+tile.getArrayPos().y+" "+tile.get_room());
-		if(tile.get_neigh(Direction.UP) != null){
-			System.out.println("UpNeig:		"+tile.get_neigh(Direction.UP).getArrayPos().x+" "+tile.get_neigh(Direction.UP).getArrayPos().y);
-		}
-		if(tile.get_neigh(Direction.DOWN) != null){
-			System.out.println("DownNeig:	"+tile.get_neigh(Direction.DOWN).getArrayPos().x+" "+tile.get_neigh(Direction.DOWN).getArrayPos().y);
-		}
-		if(tile.get_neigh(Direction.LEFT) != null){
-			System.out.println("LeftNeig:	"+tile.get_neigh(Direction.LEFT).getArrayPos().x+" "+tile.get_neigh(Direction.LEFT).getArrayPos().y);
-		}
-		if(tile.get_neigh(Direction.RIGHT) != null){
-			System.out.println("RightNeig:	"+tile.get_neigh(Direction.RIGHT).getArrayPos().x+" "+tile.get_neigh(Direction.RIGHT).getArrayPos().y);
-		}
-		
-		
-		
-		
+		}		
 	}
 
 	public int get_width(){
@@ -215,7 +188,6 @@ public class LoadMap {
 				tile.set_can_left(false);
 			}
 		}
-
 		return tile;
 	}
 	public ArrayList<Chars> getChars(){

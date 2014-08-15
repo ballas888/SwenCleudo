@@ -26,7 +26,7 @@ import cluedo.render.InfoHud;
 import cluedo.render.MenuBar;
 import cluedo.render.Screen;
 
-public class Game implements KeyListener, MouseListener, Runnable{
+public class Game implements KeyListener, MouseListener{
 
 	private int mainWidth = 958;
 	private int mainHeight = 620;
@@ -77,7 +77,7 @@ public class Game implements KeyListener, MouseListener, Runnable{
 
 		mainFrame.setContentPane(mainPanel);
 		screen = new Screen(screenWidth, screenHeight);
-		screen.setLocation(mainWidth/2-screenWidth/2,40);
+		screen.setLocation(mainWidth/2-screenWidth/2,0);
 		screen.addKeyListener(this);
 		screen.addMouseListener(this);
 
@@ -117,12 +117,10 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
+		
 		screen.createBStrategy();
-
 		screen.requestFocus();
 		screen.render(data);
-
-
 	}
 
 	private void setUpTilesPos() {
@@ -160,29 +158,8 @@ public class Game implements KeyListener, MouseListener, Runnable{
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
-
-
-	public synchronized void start() {
-		thread = new Thread(this, "Display");
-		thread.start();
-	}
-
-	public synchronized void stop() {
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void run() {
-			screen.render(data);
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		if(data.isSearching()){
-			System.out.println("Busy sreaching");
-		}else{
+	
+	public void mouseReleased(MouseEvent e) {			
 			int targetX = e.getX();
 			int targetY = e.getY();
 			Tile[][] tiles = data.getTiles();
@@ -214,10 +191,6 @@ public class Game implements KeyListener, MouseListener, Runnable{
 				int x =(int) tileX;
 				int y = (int) tileY;
 				points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
-				for(Point p : points){
-					pnts.add(p);
-				}
-				data.setMousePath(pnts);
 				pnts = new ArrayList<Point>();
 				while(!points.isEmpty()){
 					Point p = points.pop();
@@ -230,16 +203,16 @@ public class Game implements KeyListener, MouseListener, Runnable{
 					pnts = new ArrayList<Point>();
 					screen.render(data);
 					try {
-						thread.sleep(100);
+						Thread.sleep(100);
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 
 			}
 			screen.render(data);
-		}
+		
+		
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -255,10 +228,15 @@ public class Game implements KeyListener, MouseListener, Runnable{
 
 		screen.render(data);
 	}
+	
+
+	public enum Room{
+		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
+		LIBRARY, LOUNGE, HALL, STUDY, FLOOR
+	}
 
 	public static void main(String[] args) {
-		Game game = new Game();
-		game.start();
+		Game game = new Game();		
 	}
 
 	public void mouseEntered(MouseEvent e) {}
@@ -267,6 +245,4 @@ public class Game implements KeyListener, MouseListener, Runnable{
 	public void mousePressed(MouseEvent e) {}
 	public void mouseClicked(MouseEvent e) {}
 	public void keyTyped(KeyEvent arg0) {}
-
-
 }
