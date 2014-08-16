@@ -1,5 +1,6 @@
 package cluedo.main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -18,13 +19,15 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import cluedo.character.Chars;
 import cluedo.load.LoadCards;
 import cluedo.main.UpdatePlayer.mFunc;
 import cluedo.render.CardHUD;
 import cluedo.render.HUD;
-import cluedo.render.InfoHud;
+import cluedo.render.HUDData;
+import cluedo.render.InfoHUD;
 import cluedo.render.MenuBar;
 import cluedo.render.Screen;
 
@@ -46,12 +49,15 @@ public class Game implements KeyListener, MouseListener{
 	private int cardHudWidth = (mainWidth - screenWidth)/2;
 	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
 	private int cardHudY = 0;//mainHeight - cardHudHeight;
+	private JScrollPane scroll;
 
 	//infoHud math
 	private int infoHudHeight = screenHeight/2;
 	private int infoHudWidth = (mainWidth - screenWidth)/2;
 	private int infoHudX = 0;
 	private int infoHudY = 0;//mainHeight - screenHeight;
+	
+	private static HUDData hudData;
 
 	private Thread thread;
 	private JFrame mainFrame;
@@ -82,6 +88,8 @@ public class Game implements KeyListener, MouseListener{
 		screen.setLocation(mainWidth/2-screenWidth/2,0);
 		screen.addKeyListener(this);
 		screen.addMouseListener(this);
+		
+		hudData = new HUDData();
 
 		//HUD
 		hud = new HUD(hudWidth,hudHeight,new GridLayout(0,1,1,1),data,screen);
@@ -89,16 +97,37 @@ public class Game implements KeyListener, MouseListener{
 
 		//Pass through card data, which will have chars, which have the cards
 		cardHud = new CardHUD(cardHudWidth, cardHudHeight, data, screen);
-		cardHud.setLocation(cardHudX, cardHudY);
+		//cardHud.setLocation(cardHudX, cardHudY);
+		
+		scroll = new JScrollPane();
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setViewportView(cardHud);
+		scroll.setLocation(cardHudX, cardHudY);
+		//scroll.setPreferredSize(new Dimension(cardHudWidth, cardHudHeight));
+		scroll.setSize(new Dimension(cardHudWidth, cardHudHeight));
+		
+//		JPanel cardPanel = new JPanel();
+//		cardPanel.add(scroll);
+//		cardPanel.setBackground(Color.orange);
+//		cardPanel.setSize(new Dimension(cardHudWidth, cardHudHeight));
+//		cardPanel.setLocation(cardHudX, cardHudY);
 
-		infoHud = new InfoHud(cardHudWidth, cardHudHeight, data, screen);
+		infoHud = new InfoHUD(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
+		
+		hudData.setHUD(hud);
+		hudData.setCardHUD(cardHud);
+		hudData.setInfoHud(infoHud);
+		
+		((HUD) hud).setHudData(hudData);
 
 		menu = new MenuBar();
 
 
 		mainFrame.add(hud);
-		mainFrame.add(cardHud);
+		mainFrame.add(scroll);
+		//mainFrame.add(cardHud);
 		mainFrame.add(infoHud);
 		mainFrame.setJMenuBar(menu);
 
@@ -113,6 +142,7 @@ public class Game implements KeyListener, MouseListener{
 		data.populateChoosen(data);
 		
 		new LoadCards().loadCard(data);
+		this.updateCardHud();
 		//wtf
 		setUpTilesPos();
 
@@ -124,6 +154,10 @@ public class Game implements KeyListener, MouseListener{
 		screen.createBStrategy();
 		screen.requestFocus();
 		screen.render(data);
+	}
+	
+	public void updateCardHud(){
+		((CardHUD) cardHud).drawCards();
 	}
 
 	private void setUpTilesPos() {

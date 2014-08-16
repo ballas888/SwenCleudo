@@ -112,10 +112,6 @@ public class ChooseChars {
 							c.setPlayable(true);
 						}
 					}
-					for(Chars c : charList){
-						System.out.println(c.getPlayName() + " " + c.get_name());
-					}
-					System.out.println("HERE");
 					dialog.dispose();
 				} else {
 					doneError();

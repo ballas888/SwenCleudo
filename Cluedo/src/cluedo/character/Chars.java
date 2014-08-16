@@ -45,6 +45,7 @@ public class Chars {
 	public String getPlayName(){
 		return this.playName;
 	}
+	
 	public void setPlayable(boolean play){
 		playable = play;
 	}

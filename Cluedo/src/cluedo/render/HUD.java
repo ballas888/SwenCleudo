@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import cluedo.main.Data;
+import cluedo.main.Game;
 
 public class HUD extends JPanel{
 
@@ -27,6 +28,8 @@ public class HUD extends JPanel{
 	private Data data;
 	private Screen screen;
 	private int width;
+	
+	private HUDData hudData;
 
 
 	public HUD(int width, int height, GridLayout layout, Data data, Screen screen){
@@ -62,6 +65,10 @@ public class HUD extends JPanel{
 		this.add(vir);
 	}
 
+	public void setHudData(HUDData hudData){
+		this.hudData = hudData;
+	}
+	
 	private void setUpEndTurn() {
 
 //		endTurn.setForeground(Color.BLACK);
@@ -76,6 +83,7 @@ public class HUD extends JPanel{
 		endTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				data.nextPlayer();
+				hudData.updateCards();
 				//otherwise screen loses focus
 				screen.requestFocus();
 
