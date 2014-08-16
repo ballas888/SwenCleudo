@@ -105,6 +105,7 @@ public class HUD extends JPanel{
 			public void actionPerformed(ActionEvent ev) {
 				data.nextPlayer();
 				hudData.updateCards();
+				hudData.updateInfo();
 				//otherwise screen loses focus
 				screen.requestFocus();
 

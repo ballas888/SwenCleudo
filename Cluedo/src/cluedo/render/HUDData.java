@@ -31,6 +31,10 @@ public class HUDData {
 		((CardHUD) CardHUD).drawCards();
 	}
 	
+	public void updateInfo(){
+		((InfoHUD) InfoHud).drawInfo();
+	}
+	
 	public void setInfoHud(JPanel infoHud) {
 		InfoHud = infoHud;
 	}

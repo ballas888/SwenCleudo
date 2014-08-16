@@ -61,7 +61,9 @@ public class LoadCards {
 		ArrayList<Chars> chars = data.getPlayChars();
 		while(!cards.isEmpty()){
 			for(int i = 0; i < chars.size();i++){
-				chars.get(i).getCards().add(cards.remove(cards.size()-1));
+				if(!cards.isEmpty()){
+					chars.get(i).getCards().add(cards.remove(cards.size()-1));
+				}
 			}
 		}
 		

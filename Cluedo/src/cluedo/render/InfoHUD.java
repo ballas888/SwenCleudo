@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import cluedo.character.CharsName;
 import cluedo.main.Data;
 
 public class InfoHUD extends JPanel{
@@ -30,7 +31,27 @@ public class InfoHUD extends JPanel{
 		this.setVisible(true);
 	}
 	
-//	public void updatePlayer(){
-//		current.setText(data.getCurrentPlayer().getPlayName());
-//	}
+	public void drawInfo(){
+		this.setVisible(false);
+		this.removeAll();
+		changeColor();
+		this.repaint();
+		this.setVisible(true);
+	}
+
+	private void changeColor() {
+		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
+			this.setBackground(new Color(238, 0, 0));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
+			this.setBackground(new Color(233, 165, 6));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_WHITE){
+			this.setBackground(Color.white);
+		}else if(data.getCurrentPlayer().get_name() == CharsName.REVEREND_GREEN){
+			this.setBackground(new Color(1, 120, 64));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_PEACOCK){
+			this.setBackground(new Color(107, 150, 200));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.PROFESSOR_PLUM){
+			this.setBackground(new Color(145, 115, 157));
+		}
+	}
 }

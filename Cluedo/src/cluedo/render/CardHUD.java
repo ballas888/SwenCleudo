@@ -31,7 +31,7 @@ public class CardHUD extends JPanel{
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
 		this.setBackground(Color.white);
-		this.setLayout(new GridLayout(9,2,10,10));
+		this.setLayout(new GridLayout(0,2,10,10));
 		this.validate();
 		this.setVisible(true);
 	}
