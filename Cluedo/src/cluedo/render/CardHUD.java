@@ -49,5 +49,6 @@ public class CardHUD extends JPanel{
 			this.add(card);
 		}
 		this.repaint();
+		//slkadjflkasjdf
 	}
 }
