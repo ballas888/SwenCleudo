@@ -39,6 +39,10 @@ public class HUDData {
 		((HUD) HUD).updateHUD();
 	}
 	
+	public void updateHUDButtons(boolean die, boolean sugg, boolean accu){
+		((HUD) HUD).updateHUDButtons(die,sugg,accu);
+	}
+	
 	public void setInfoHud(JPanel infoHud) {
 		InfoHud = infoHud;
 	}

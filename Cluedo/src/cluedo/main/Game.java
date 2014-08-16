@@ -157,6 +157,9 @@ public class Game implements KeyListener, MouseListener{
 		th = new Thread(new renderThread());
 		
 	}
+	public void updateHUDButtons(boolean die, boolean sugg, boolean accu){
+		((HUD) hud).updateHUDButtons(die,sugg,accu);
+	}
 	
 	public void updateHUD(){
 		((HUD) hud).updateHUD();
@@ -270,16 +273,25 @@ public class Game implements KeyListener, MouseListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
+		boolean updated = false;
 		if(e.getKeyCode() == KeyEvent.VK_UP){
-			updatePlayerMove.updatePlayerMove(mFunc.MOVE_UP, data);
+			updated = updatePlayerMove.updatePlayerMove(mFunc.MOVE_UP, data);
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			updatePlayerMove.updatePlayerMove(mFunc.MOVE_DOWN, data);
+			updated = updatePlayerMove.updatePlayerMove(mFunc.MOVE_DOWN, data);
 		}else if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			updatePlayerMove.updatePlayerMove(mFunc.MOVE_LEFT, data);
+			updated = updatePlayerMove.updatePlayerMove(mFunc.MOVE_LEFT, data);
 		}else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			updatePlayerMove.updatePlayerMove(mFunc.MOVE_RIGHT, data);
+			updated = updatePlayerMove.updatePlayerMove(mFunc.MOVE_RIGHT, data);
 		}
-
+		if(updated){
+			Tile[][] tiles = data.getTiles();
+			Chars c = data.getCurrentPlayer();
+			if(tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.FLOOR || tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.NULL){
+				this.updateHUDButtons(true, false, false);
+			}else{
+				this.updateHUDButtons(true, true, true);
+			}
+		}
 		screen.render(data);
 	}
 

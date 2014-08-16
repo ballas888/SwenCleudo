@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import cluedo.character.Chars;
+import cluedo.main.Game.Room;
 import cluedo.main.Tile.Direction;
 import cluedo.search.Search;
 
@@ -32,11 +33,14 @@ public class UpdatePlayer {
 		return points;
 	}
 
-	public void updatePlayerMove(mFunc func, Data data) {
+	public boolean updatePlayerMove(mFunc func, Data data) {
+		boolean updated = false;
+		Tile currTile = null;
 		ArrayList<Chars> chars = data.getPlayChars();
 		Tile[][] tiles = data.getTiles();
-		for (Chars c : chars) {
-			if(c.isPlaying()){
+//		for (Chars c : chars) {
+//			if(c.isPlaying()){
+		Chars c = data.getCurrentPlayer();
 			int oldX = c.getPosition().x;
 			int oldY = c.getPosition().y;
 			Tile tileOld = tiles[oldY][oldX];
@@ -49,6 +53,8 @@ public class UpdatePlayer {
 						c.setPosition(tileNew.getArrayPos());
 						tileOld.setHasChar(false);
 						tileNew.setHasChar(true);
+						updated = true;
+						currTile = tileNew;
 					}
 				}
 			} else if (func == mFunc.MOVE_DOWN) {
@@ -60,6 +66,8 @@ public class UpdatePlayer {
 						c.setPosition(tileNew.getArrayPos());
 						tileOld.setHasChar(false);
 						tileNew.setHasChar(true);
+						updated = true;
+						currTile = tileNew;
 					}
 				}
 			} else if (func == mFunc.MOVE_RIGHT) {
@@ -71,6 +79,8 @@ public class UpdatePlayer {
 						c.setPosition(tileNew.getArrayPos());
 						tileOld.setHasChar(false);
 						tileNew.setHasChar(true);
+						updated = true;
+						currTile = tileNew;
 					}
 				}
 			} else if (func == mFunc.MOVE_LEFT) {
@@ -83,11 +93,14 @@ public class UpdatePlayer {
 						c.setPosition(tileNew.getArrayPos());
 						tileOld.setHasChar(false);
 						tileNew.setHasChar(true);
+						updated = true;
+						currTile = tileNew;
 					}
 				}
 			}
-		}
-		}
+		//}
+		//}
+			return updated;
 	}
 
 }
