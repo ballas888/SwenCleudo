@@ -22,7 +22,7 @@ public class HUD extends JPanel{
 	private final JButton endTurn = new JButton("End Turn");
 	private final JButton sugg = new JButton("Make Suggestion");
 	private final JButton accu = new JButton("Make Accusation");
-	private final JButton vir = new JButton("UnkNown");
+	private final JButton roll = new JButton("Roll Dice");
 
 
 	private Data data;
@@ -32,37 +32,58 @@ public class HUD extends JPanel{
 	private HUDData hudData;
 
 
-	public HUD(int width, int height, GridLayout layout, Data data, Screen screen){
+	public HUD(int width, int height, Data data, Screen screen){
 		this.data = data;
 		this.screen = screen;
 		this.width = width;
 		Dimension size = new Dimension(width,height);
 		setSize(size);
+		this.setLayout(new GridLayout(4,1));
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
-		setBackground((Color.blue));
+		setBackground((Color.white));
 
+		setUpRoll();
 		setUpSugg();
 		setUpAccu();
-		setUpVir();
 		setUpEndTurn();
 		this.validate();
 		this.setVisible(true);
 	}
+	
+	private void setUpRoll(){
+		roll.setPreferredSize(new Dimension(this.width-2,60));
+		roll.setContentAreaFilled(false);
+		roll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				screen.requestFocus();
+
+			}
+		});
+		this.add(roll);
+	}
 
 	private void setUpSugg(){
-		sugg.setPreferredSize(new Dimension(this.width-2,50));
+		sugg.setPreferredSize(new Dimension(this.width-2,60));
+		sugg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				
+				screen.requestFocus();
+
+			}
+		});
 		this.add(sugg);
 	}
 
 	private void setUpAccu(){
-		accu.setPreferredSize(new Dimension(this.width-2,50));
-		this.add(accu);
-	}
+		accu.setPreferredSize(new Dimension(this.width-2,60));
+		accu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				screen.requestFocus();
 
-	private void setUpVir(){
-		vir.setPreferredSize(new Dimension(this.width-2,50));
-		this.add(vir);
+			}
+		});
+		this.add(accu);
 	}
 
 	public void setHudData(HUDData hudData){
@@ -78,7 +99,7 @@ public class HUD extends JPanel{
 //		  Border compound = new CompoundBorder(line, margin);
 //		  endTurn.setBorder(compound);
 
-		  endTurn.setPreferredSize(new Dimension(this.width-2,50));
+		  endTurn.setPreferredSize(new Dimension(this.width-2,60));
 
 		endTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {

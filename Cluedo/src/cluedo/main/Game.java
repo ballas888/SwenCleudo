@@ -71,6 +71,9 @@ public class Game implements KeyListener, MouseListener{
 	private JPanel cardHud;
 	private JPanel infoHud;
 	private JMenuBar menu;
+	
+	//Thread
+	private Thread th;
 
 
 	public Game(){
@@ -92,7 +95,7 @@ public class Game implements KeyListener, MouseListener{
 		hudData = new HUDData();
 
 		//HUD
-		hud = new HUD(hudWidth,hudHeight,new GridLayout(0,1,1,1),data,screen);
+		hud = new HUD(hudWidth,hudHeight,data,screen);
 		hud.setLocation(hudX, hudY);
 
 		//Pass through card data, which will have chars, which have the cards
@@ -107,11 +110,6 @@ public class Game implements KeyListener, MouseListener{
 		//scroll.setPreferredSize(new Dimension(cardHudWidth, cardHudHeight));
 		scroll.setSize(new Dimension(cardHudWidth, cardHudHeight));
 		
-//		JPanel cardPanel = new JPanel();
-//		cardPanel.add(scroll);
-//		cardPanel.setBackground(Color.orange);
-//		cardPanel.setSize(new Dimension(cardHudWidth, cardHudHeight));
-//		cardPanel.setLocation(cardHudX, cardHudY);
 
 		infoHud = new InfoHUD(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
@@ -149,11 +147,14 @@ public class Game implements KeyListener, MouseListener{
 		mainFrame.pack();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocationRelativeTo(null);
+		screen.setVisible(true);
 		mainFrame.setVisible(true);
-
+	
 		screen.createBStrategy();
 		screen.requestFocus();
-		screen.render(data);
+		th = new Thread(new renderThread());
+		//th.start();
+		//screen.render(data);
 	}
 	
 	public void updateCardHud(){
@@ -281,7 +282,24 @@ public class Game implements KeyListener, MouseListener{
 
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.screen.render(game.data);
+		//game.screen.render(game.data);
+		game.th.start();
+	}
+	
+	public class renderThread implements Runnable{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			long time = System.currentTimeMillis();
+			while(true){
+			screen.render(data);
+			long newTime = System.currentTimeMillis() - time;
+			System.out.println("RENDER");
+			if(newTime > 600){break;}
+			}
+		}
+		
 	}
 
 	public void mouseEntered(MouseEvent e) {}

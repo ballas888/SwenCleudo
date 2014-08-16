@@ -30,13 +30,14 @@ public class CardHUD extends JPanel{
 		setSize(size);		
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
-		setBackground((Color.green));
-		this.setLayout(new GridLayout(5,2,10,10));
+		this.setBackground(Color.white);
+		this.setLayout(new GridLayout(9,2,10,10));
 		this.validate();
 		this.setVisible(true);
 	}
 	
 	public void drawCards(){
+		this.setVisible(false);
 		this.removeAll();
 		ArrayList<Card> cards = data.getCurrentPlayer().getCards();
 		for(int i = 0; i < cards.size(); i++){
@@ -45,10 +46,10 @@ public class CardHUD extends JPanel{
 			Image scale = printS.getScaledInstance(261/4, 468/4, java.awt.Image.SCALE_SMOOTH);
 			print = new ImageIcon(scale);
 			JLabel card = new JLabel(print);
-			System.out.println("Drawing: " + cards.get(i).getName());
 			this.add(card);
 		}
 		this.repaint();
+		this.setVisible(true);
 		//slkadjflkasjdf
 	}
 }
