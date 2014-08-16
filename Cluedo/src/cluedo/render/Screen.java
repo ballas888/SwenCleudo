@@ -85,17 +85,28 @@ public class Screen extends Canvas{
 	private void render_path(Graphics2D g, Data da){
 		ArrayList<Point> points = da.getMousePath();
 		Tile[][] tiles = da.getTiles();
-		double pSize = da.getTileSize()/2;
+		
 		if(points.size()>0){
 			for(int i = 0; i < points.size();i++){
 				Point point = points.get(i);
 				Tile tile = tiles[point.y][point.x];
 				double ox = tile.getPos().getX();
-				double oy = tile.getPos().getY();
-				double p = da.getTileSize()/2-pSize/2;
-				g.setColor(Color.GREEN);
-				Rectangle2D r2 = new Rectangle2D.Double(p+ox,p+oy,pSize,pSize);
-				g.fill(r2);
+				double oy = tile.getPos().getY();				
+				if(i == 0){
+					double pSize = da.getTileSize()/2;
+					g.setColor(Color.BLUE);
+					double p = da.getTileSize()/2-pSize/2;
+					Rectangle2D r2 = new Rectangle2D.Double(p+ox,p+oy,pSize,pSize);
+					g.fill(r2);
+				}else{
+					double pSize = da.getTileSize()/3;
+					g.setColor(Color.GREEN);					
+					double p = da.getTileSize()/2-pSize/2;
+					Rectangle2D r2 = new Rectangle2D.Double(p+ox,p+oy,pSize,pSize);
+					g.fill(r2);
+				}
+				
+				
 			}
 		}
 	}
@@ -123,7 +134,9 @@ public class Screen extends Canvas{
 		for(Chars c : chars){
 			if(c.isPlayable()){
 				Tile t = tiles[c.getPosition().y][c.getPosition().x];
-				g.drawImage(c.getSprite(),(int)t.getPos().getX(),(int)t.getPos().getY(),(int)t.getTileSize(),(int)t.getTileSize(),null);
+				int x = (int)Math.round(t.getPos().getX());
+				int y = (int)Math.round(t.getPos().getY());
+				g.drawImage(c.getSprite(),x,y,(int)as.getTileSize(),(int)as.getTileSize(),null);
 			}
 		}
 	}
