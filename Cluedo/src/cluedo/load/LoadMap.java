@@ -43,37 +43,37 @@ public class LoadMap {
 				for(int i = 0; i< width; i++){
 					if(data[i].equalsIgnoreCase("MW")){
 						Chars c = new Chars(CharsName.MRS_WHITE,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						//tiles[tile_count][i].setHasChar(true);
 					}else if(data[i].equalsIgnoreCase("RG")){
 						Chars c = new Chars(CharsName.REVEREND_GREEN,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						//tiles[tile_count][i].setHasChar(true);
 					}else if(data[i].equalsIgnoreCase("MP")){
 						Chars c = new Chars(CharsName.MRS_PEACOCK,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						//tiles[tile_count][i].setHasChar(true);
 					}else if(data[i].equalsIgnoreCase("CM")){
 						Chars c = new Chars(CharsName.COLONEL_MUSTARD,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						//tiles[tile_count][i].setHasChar(true);
 					}else if(data[i].equalsIgnoreCase("PP")){
 						Chars c = new Chars(CharsName.PROFESSOR_PLUM,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						///tiles[tile_count][i].setHasChar(true);
 					}else if(data[i].equalsIgnoreCase("MS")){
 						Chars c = new Chars(CharsName.MISS_SCARLET,new Point(i,tile_count));
-						c.setSprite(new LoadImage().load_chars_image(c.get_name()));
+						c.setSprite(new LoadImage().load_image(c.get_name()));
 						chars.add(c);
 						tiles[tile_count][i].set_room(Room.FLOOR);
 						//tiles[tile_count][i].setHasChar(true);

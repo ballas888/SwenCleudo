@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import cluedo.character.CardName;
 import cluedo.character.CharsName;
 
 public class LoadImage {
@@ -27,7 +28,25 @@ public class LoadImage {
 		return img;
 	}
 	
-	public BufferedImage load_chars_image(CharsName name){
+	public BufferedImage load_image(CharsName name){
+		BufferedImage img = null;
+		ClassLoader classLoader = getClass().getClassLoader();
+		InputStream in = classLoader.getResourceAsStream("cluedo/assets/"+name+".png");
+		if(in == null){
+			System.out.println("Map Image not found");
+			System.exit(0);
+		}else{
+			try {
+				img = ImageIO.read(in);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return img;
+	}
+	
+	public BufferedImage load_image(CardName name){
 		BufferedImage img = null;
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream in = classLoader.getResourceAsStream("cluedo/assets/"+name+".png");

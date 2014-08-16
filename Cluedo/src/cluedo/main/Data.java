@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import cluedo.character.Card;
 import cluedo.character.Chars;
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
@@ -19,6 +20,15 @@ public class Data {
 	private int currentPlayer = 0;
 	private ArrayList<Point> mousePath = new ArrayList<Point>();
 	private boolean isSearching = false;
+	private ArrayList<Card> cards = new ArrayList<Card>();
+	
+	public void setCards(ArrayList<Card> cards){
+		this.cards = cards;
+	}
+	
+	public ArrayList<Card> getCards(){
+		return this.cards;
+	}
 
 	public void setMousePath(ArrayList<Point> points) {
 		this.mousePath = points;

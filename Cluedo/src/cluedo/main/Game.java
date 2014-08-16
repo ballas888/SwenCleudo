@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import cluedo.character.Chars;
+import cluedo.load.LoadCards;
 import cluedo.main.UpdatePlayer.mFunc;
 import cluedo.render.CardHUD;
 import cluedo.render.HUD;
@@ -157,6 +158,7 @@ public class Game implements KeyListener, MouseListener{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
+		data.setCards(new LoadCards().LoadCards());
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 
