@@ -109,7 +109,7 @@ public class Game implements KeyListener, MouseListener{
 		//let users select their players
 		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
 		//populate the playable list with the choosen ones
-		data.populateChoosen();
+		data.populateChoosen(data);
 
 		//wtf
 		setUpTilesPos();

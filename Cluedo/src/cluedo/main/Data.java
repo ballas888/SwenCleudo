@@ -24,9 +24,12 @@ public class Data {
 		this.mousePath = points;
 	}
 
-	public void populateChoosen(){
+	public void populateChoosen(Data data){
+		Tile[][] tiles = data.getTiles();
 		for(int i = 0;i < allChars.size(); i++){
 			if(allChars.get(i).isPlayable()){
+				Chars c = allChars.get(i);
+				tiles[c.getPosition().y][c.getPosition().x].setHasChar(true);
 				playChars.add(allChars.get(i));
 			}
 		}
