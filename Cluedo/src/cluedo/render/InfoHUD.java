@@ -25,7 +25,7 @@ public class InfoHUD extends JPanel{
 		setSize(size);		
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
-		setBackground((Color.red));
+		//setBackground((Color.red));
 		//this.add(current);
 		this.validate();
 		this.setVisible(true);
@@ -34,24 +34,27 @@ public class InfoHUD extends JPanel{
 	public void drawInfo(){
 		this.setVisible(false);
 		this.removeAll();
+		
 		changeColor();
+		
 		this.repaint();
 		this.setVisible(true);
 	}
 
 	private void changeColor() {
+		int alpha = 120;
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
-			this.setBackground(new Color(238, 0, 0));
+			this.setBackground(new Color(238, 0, 0,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
-			this.setBackground(new Color(233, 165, 6));
+			this.setBackground(new Color(233, 165, 6,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_WHITE){
-			this.setBackground(Color.white);
+			this.setBackground(new Color(255,255,255,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.REVEREND_GREEN){
-			this.setBackground(new Color(1, 120, 64));
+			this.setBackground(new Color(1, 120, 64,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_PEACOCK){
-			this.setBackground(new Color(107, 150, 200));
+			this.setBackground(new Color(107, 150, 200,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.PROFESSOR_PLUM){
-			this.setBackground(new Color(145, 115, 157));
+			this.setBackground(new Color(145, 115, 157,alpha));
 		}
 	}
 }

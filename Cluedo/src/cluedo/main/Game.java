@@ -141,6 +141,7 @@ public class Game implements KeyListener, MouseListener{
 		
 		new LoadCards().loadCard(data);
 		this.updateCardHud();
+		this.updateInfoHud();
 		//wtf
 		setUpTilesPos();
 
@@ -159,6 +160,10 @@ public class Game implements KeyListener, MouseListener{
 	
 	public void updateCardHud(){
 		((CardHUD) cardHud).drawCards();
+	}
+	
+	public void updateInfoHud(){
+		((InfoHUD) infoHud).drawInfo();
 	}
 
 	private void setUpTilesPos() {
