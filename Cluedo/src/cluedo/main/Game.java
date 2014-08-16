@@ -154,8 +154,7 @@ public class Game implements KeyListener, MouseListener{
 		screen.createBStrategy();
 		screen.requestFocus();
 		th = new Thread(new renderThread());
-		//th.start();
-		//screen.render(data);
+		
 	}
 	
 	public void updateCardHud(){
