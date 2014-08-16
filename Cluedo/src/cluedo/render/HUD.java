@@ -65,6 +65,7 @@ public class HUD extends JPanel{
 
 	private void setUpSugg(){
 		sugg.setPreferredSize(new Dimension(this.width-2,60));
+		sugg.setContentAreaFilled(false);
 		sugg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				
@@ -77,6 +78,7 @@ public class HUD extends JPanel{
 
 	private void setUpAccu(){
 		accu.setPreferredSize(new Dimension(this.width-2,60));
+		accu.setContentAreaFilled(false);
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				screen.requestFocus();
@@ -100,6 +102,7 @@ public class HUD extends JPanel{
 //		  endTurn.setBorder(compound);
 
 		  endTurn.setPreferredSize(new Dimension(this.width-2,60));
+			endTurn.setContentAreaFilled(false);
 
 		endTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
