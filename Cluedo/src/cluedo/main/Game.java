@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import cluedo.character.Chars;
 import cluedo.main.UpdatePlayer.mFunc;
 import cluedo.render.CardHUD;
 import cluedo.render.HUD;
@@ -189,26 +190,32 @@ public class Game implements KeyListener, MouseListener{
 			ArrayList<Point> pnts = new ArrayList<Point>();
 			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
 				int x =(int) tileX;
-				int y = (int) tileY;
-				points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
-				pnts = new ArrayList<Point>();
-				while(!points.isEmpty()){
-					Point p = points.pop();
-					//System.out.println("Here");
-					data.getCurrentPlayer().setPosition(p);
-					for(Point pn : points){
-						pnts.add(pn);
-					}
-					data.setMousePath(pnts);
+				int y = (int) tileY;								
+				if(tiles[y][x].get_room()!= Room.NULL && !tiles[y][x].HasChar()){
+					points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
 					pnts = new ArrayList<Point>();
-					screen.render(data);
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
+					while(!points.isEmpty()){
+						Point p = points.pop();
+						//System.out.println("Here");
+						Chars c = data.getCurrentPlayer();
+						tiles[c.getPosition().y][c.getPosition().x].setHasChar(false);
+						data.getCurrentPlayer().setPosition(p);
+						c = data.getCurrentPlayer();
+						tiles[c.getPosition().y][c.getPosition().x].setHasChar(true);
+						
+						for(Point pn : points){
+							pnts.add(pn);
+						}
+						data.setMousePath(pnts);
+						pnts = new ArrayList<Point>();
+						screen.render(data);
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
-
 			}
 			screen.render(data);
 
@@ -232,7 +239,7 @@ public class Game implements KeyListener, MouseListener{
 
 	public enum Room{
 		KITCHEN, BALL_ROOM, CONSERVATORY, DINING_ROOM, BILLARD_ROOM,
-		LIBRARY, LOUNGE, HALL, STUDY, FLOOR
+		LIBRARY, LOUNGE, HALL, STUDY, FLOOR, NULL
 	}
 
 	public static void main(String[] args) {

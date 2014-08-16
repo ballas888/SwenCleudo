@@ -23,6 +23,7 @@ public class Tile {
 	private Point trap_location;
 	private double ratio;
 	private boolean isVisited = false;
+	private boolean hasChar = false;
 
 	public Tile(Point p){
 		this.arrayPos = p;
@@ -139,5 +140,13 @@ public class Tile {
 
 	public void setVisited(boolean isVisited) {
 		this.isVisited = isVisited;
+	}
+
+	public boolean HasChar() {
+		return hasChar;
+	}
+
+	public void setHasChar(boolean hasChar) {
+		this.hasChar = hasChar;
 	}
 }

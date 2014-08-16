@@ -35,7 +35,7 @@ public class Search {
 				Tile curTile = currentObj.getTile();
 				if(curTile.can_move_up()){
 					Tile nTile = curTile.get_neigh(Direction.UP);
-					if(!nTile.isVisited()){
+					if(!nTile.isVisited() && !nTile.HasChar()){
 						double costToNeigh = currentObj.getCostToHere()+1; // The on represents the distance to the next tile
 						double estTotal = costToNeigh + estimate(nTile, to);
 						QNode n = new QNode(nTile, currentObj, costToNeigh, estTotal);
@@ -45,7 +45,7 @@ public class Search {
 				}
 				if(curTile.can_move_down()){
 					Tile nTile = curTile.get_neigh(Direction.DOWN);
-					if(!nTile.isVisited()){
+					if(!nTile.isVisited() && !nTile.HasChar()){
 						double costToNeigh = currentObj.getCostToHere()+1; // The on represents the distance to the next tile
 						double estTotal = costToNeigh + estimate(nTile, to);
 						QNode n = new QNode(nTile, currentObj, costToNeigh, estTotal);
@@ -55,7 +55,7 @@ public class Search {
 				}
 				if(curTile.can_move_right()){
 					Tile nTile = curTile.get_neigh(Direction.RIGHT);
-					if(!nTile.isVisited()){
+					if(!nTile.isVisited() && !nTile.HasChar()){
 						double costToNeigh = currentObj.getCostToHere()+1; // The on represents the distance to the next tile
 						double estTotal = costToNeigh + estimate(nTile, to);
 						QNode n = new QNode(nTile, currentObj, costToNeigh, estTotal);
@@ -65,7 +65,7 @@ public class Search {
 				}
 				if(curTile.can_move_left()){
 					Tile nTile = curTile.get_neigh(Direction.LEFT);
-					if(!nTile.isVisited()){
+					if(!nTile.isVisited() && !nTile.HasChar()){
 						double costToNeigh = currentObj.getCostToHere()+1; // The on represents the distance to the next tile
 						double estTotal = costToNeigh + estimate(nTile, to);
 						QNode n = new QNode(nTile, currentObj, costToNeigh, estTotal);

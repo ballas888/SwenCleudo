@@ -63,7 +63,7 @@ public class Screen extends Canvas{
 		Graphics2D g = (Graphics2D)bs.getDrawGraphics();
 		//System.out.println("here");
 		render_map(g, as);
-		render_grid(g, as);
+		//render_grid(g, as);
 		render_chars(g,as);
 		render_path(g,as);
 		bs.show();

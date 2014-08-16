@@ -45,8 +45,10 @@ public class UpdatePlayer {
 					Tile tileNew = tileOld.get_neigh(Direction.UP);
 					if (tileNew == null) {
 						System.out.println("TileNew is null  25 UpdatePlayer");
-					} else {
+					} else if(!tileNew.HasChar()){
 						c.setPosition(tileNew.getArrayPos());
+						tileOld.setHasChar(false);
+						tileNew.setHasChar(true);
 					}
 				}
 			} else if (func == mFunc.MOVE_DOWN) {
@@ -54,8 +56,10 @@ public class UpdatePlayer {
 					Tile tileNew = tileOld.get_neigh(Direction.DOWN);
 					if (tileNew == null) {
 						System.out.println("TileNew is null  25 UpdatePlayer");
-					} else {
+					} else if(!tileNew.HasChar()){
 						c.setPosition(tileNew.getArrayPos());
+						tileOld.setHasChar(false);
+						tileNew.setHasChar(true);
 					}
 				}
 			} else if (func == mFunc.MOVE_RIGHT) {
@@ -63,17 +67,22 @@ public class UpdatePlayer {
 					Tile tileNew = tileOld.get_neigh(Direction.RIGHT);
 					if (tileNew == null) {
 						System.out.println("TileNew is null  25 UpdatePlayer");
-					} else {
+					} else if(!tileNew.HasChar()){
 						c.setPosition(tileNew.getArrayPos());
+						tileOld.setHasChar(false);
+						tileNew.setHasChar(true);
 					}
 				}
 			} else if (func == mFunc.MOVE_LEFT) {
 				if (tileOld.can_move_left()) {
 					Tile tileNew = tileOld.get_neigh(Direction.LEFT);
 					if (tileNew == null) {
-						System.out.println("TileNew is null  25 UpdatePlayer");
-					} else {
+						System.out.println("Direction Blocked");
+						
+					} else if(!tileNew.HasChar()){
 						c.setPosition(tileNew.getArrayPos());
+						tileOld.setHasChar(false);
+						tileNew.setHasChar(true);
 					}
 				}
 			}
