@@ -14,6 +14,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import cluedo.character.CharsName;
 import cluedo.main.Data;
 import cluedo.main.Game;
 
@@ -41,7 +42,7 @@ public class HUD extends JPanel{
 		this.setLayout(new GridLayout(4,1));
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
-		setBackground((Color.white));
+		setBackground((Color.black));
 
 		setUpRoll();
 		setUpSugg();
@@ -49,6 +50,27 @@ public class HUD extends JPanel{
 		setUpEndTurn();
 		this.validate();
 		this.setVisible(true);
+	}
+	
+	public void updateHUD(){
+		changeColor();
+	}
+	
+	private void changeColor() {
+		int alpha = 120;
+		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
+			this.setBackground(new Color(238, 0, 0,alpha));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
+			this.setBackground(new Color(233, 165, 6,alpha));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_WHITE){
+			this.setBackground(new Color(255,255,255,alpha));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.REVEREND_GREEN){
+			this.setBackground(new Color(1, 120, 64,alpha));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_PEACOCK){
+			this.setBackground(new Color(107, 150, 200,alpha));
+		}else if(data.getCurrentPlayer().get_name() == CharsName.PROFESSOR_PLUM){
+			this.setBackground(new Color(145, 115, 157,alpha));
+		}
 	}
 	
 	private void setUpRoll(){

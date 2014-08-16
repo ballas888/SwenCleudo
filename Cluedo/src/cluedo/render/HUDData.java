@@ -28,11 +28,15 @@ public class HUDData {
 	}
 	
 	public void updateCards(){
-		((CardHUD) CardHUD).drawCards();
+		((CardHUD) CardHUD).updateCards();
 	}
 	
 	public void updateInfo(){
 		((InfoHUD) InfoHud).drawInfo();
+	}
+	
+	public void updateHUD(){
+		((HUD) HUD).updateHUD();
 	}
 	
 	public void setInfoHud(JPanel infoHud) {
