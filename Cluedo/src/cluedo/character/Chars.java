@@ -12,8 +12,8 @@ public class Chars {
 	private Boolean playing = false;
 	private BufferedImage sprite;
 	private ArrayList<Card> cards = new ArrayList<Card>();
-	private int die1rolled = 6;
-	private int die2rolled = 6;
+	private int die1rolled = 60;
+	private int die2rolled = 60;
 	
 	public void nowPlaying(){
 		this.playing = true;

@@ -97,7 +97,7 @@ public class HUD extends JPanel{
 		sugg.setContentAreaFilled(false);
 		sugg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				
+				AccSugg as = new AccSugg(data);
 				screen.requestFocus();
 
 			}
@@ -111,7 +111,6 @@ public class HUD extends JPanel{
 		accu.setContentAreaFilled(false);
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AccSugg as = new AccSugg(data);
 				screen.requestFocus();
 			}
 		});
