@@ -32,7 +32,7 @@ public class AccSuggHUD extends JPanel{
 		setUpChoices();
 		setUpSuggest();
 		setUpCancel();
-		this.setVisible(true);
+		this.setVisible(false);
 	}
 	
 	private void setUpChoices() {

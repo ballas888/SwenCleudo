@@ -12,6 +12,8 @@ public class Chars {
 	private Boolean playing = false;
 	private BufferedImage sprite;
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private int die1rolled = 3;
+	private int die2rolled = 5;
 	
 	public void nowPlaying(){
 		this.playing = true;
@@ -65,5 +67,22 @@ public class Chars {
 
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
+	}
+
+	public int getDieRolled(int die) {
+		if(die == 1){
+			return die1rolled;
+		}else{
+			return die2rolled;
+		}
+		
+	}
+
+	public void setDieRolled(int rolled, int die) {
+		if(die == 1){
+			this.die1rolled = rolled;
+		}else{
+			this.die2rolled = rolled;
+		}
 	}
 }

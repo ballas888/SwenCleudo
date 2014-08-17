@@ -12,6 +12,7 @@ public class Dice {
 	private BufferedImage die4;
 	private BufferedImage die5;
 	private BufferedImage die6;
+	private BufferedImage die0;
 	
 	public Dice(){
 		createDice();
@@ -24,18 +25,20 @@ public class Dice {
 		die4 = new LoadImage().load_image(DiceType.DIE_4);
 		die5 = new LoadImage().load_image(DiceType.DIE_5);
 		die6 = new LoadImage().load_image(DiceType.DIE_6);
+		die0 = new LoadImage().load_image(DiceType.DIE_0);
 	}
 	
 	public BufferedImage getDie(int num){
-		assert(num >=1 && num <=6);
-		Class<? extends Dice> c = this.getClass();
-		try {
-			Field f = c.getDeclaredField("die"+num);
-			return (BufferedImage) f.get(this);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
+		if(num >=1 && num <=6){
+			Class<? extends Dice> c = this.getClass();
+			try {
+				Field f = c.getDeclaredField("die"+num);
+				return (BufferedImage) f.get(this);
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}	
 		}
-		return null;
+		return die0;		
 	}
 	
 }
