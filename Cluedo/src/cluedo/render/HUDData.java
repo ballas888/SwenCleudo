@@ -6,6 +6,9 @@ public class HUDData {
 	private JPanel HUD;
 	private JPanel CardHUD;
 	private JPanel InfoHud;
+	private JPanel AccSuggHUD;
+	private boolean revealed = false;
+	
 	
 	public JPanel getHUD() {
 		return HUD;
@@ -39,12 +42,32 @@ public class HUDData {
 		((HUD) HUD).updateHUD();
 	}
 	
-	public void updateHUDButtons(boolean die, boolean sugg, boolean accu){
-		((HUD) HUD).updateHUDButtons(die,sugg,accu);
+	public void updateHUDButtons(boolean die, boolean sugg, boolean accu, boolean end){
+		((HUD) HUD).updateHUDButtons(die,sugg,accu,end);
+	}
+	
+	public boolean getRevealed(){
+		return revealed;
+	}
+	
+	public void setRevealed(boolean reveal){
+		this.revealed = reveal;
+	}
+	
+	public void updateAccSugg(boolean reveal){
+		((AccSuggHUD) AccSuggHUD).updateAccSugg(reveal);
 	}
 	
 	public void setInfoHud(JPanel infoHud) {
 		InfoHud = infoHud;
+	}
+
+	public JPanel getAccSuggHUD() {
+		return AccSuggHUD;
+	}
+
+	public void setAccSuggHUD(JPanel accSuggHUD) {
+		AccSuggHUD = accSuggHUD;
 	}
 	
 	

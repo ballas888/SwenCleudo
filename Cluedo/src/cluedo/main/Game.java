@@ -1,6 +1,7 @@
 package cluedo.main;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,6 +20,7 @@ import javax.swing.JScrollPane;
 import cluedo.character.Chars;
 import cluedo.load.LoadCards;
 import cluedo.main.UpdatePlayer.mFunc;
+import cluedo.render.AccSuggHUD;
 import cluedo.render.CardHUD;
 import cluedo.render.HUD;
 import cluedo.render.HUDData;
@@ -54,6 +56,12 @@ public class Game implements KeyListener, MouseListener{
 	private int infoHudX = 0;
 	private int infoHudY = 0;//mainHeight - screenHeight;
 	
+	//asHUD math
+	private int asHudHeight = screenHeight;
+	private int asHudWidth = (mainWidth - screenWidth)/2;
+	private int asHudX = 0;
+	private int asHudY = 0;
+	
 	private static HUDData hudData;
 
 	private Thread thread;
@@ -67,6 +75,7 @@ public class Game implements KeyListener, MouseListener{
 	private JPanel hud;
 	private JPanel cardHud;
 	private JPanel infoHud;
+	private JPanel asHud;
 	private JMenuBar menu;
 	
 	//Thread
@@ -113,25 +122,30 @@ public class Game implements KeyListener, MouseListener{
 		cardName.add(name);
 		cardName.setSize(cardHudWidth, infoSize);
 		cardName.setLocation(cardHudX, cardHudY);
-
+		
+		//InfoHUD
 		infoHud = new InfoHUD(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
+		
+		//AccSuggHUD
+		asHud = new AccSuggHUD(asHudWidth, asHudHeight, data);
 		
 		
 		hudData.setHUD(hud);
 		hudData.setCardHUD(cardHud);
 		hudData.setInfoHud(infoHud);
+		hudData.setAccSuggHUD(asHud);
 		
 		((HUD) hud).setHudData(hudData);
 
 		menu = new MenuBar();
 
-
-		mainFrame.add(hud);
-		mainFrame.add(scroll);
-		mainFrame.add(cardName);
+		mainPanel.add(asHud);
+		mainPanel.add(hud);
+		mainPanel.add(scroll);
+		mainPanel.add(cardName);
 		//mainFrame.add(cardHud);
-		mainFrame.add(infoHud);
+		mainPanel.add(infoHud);
 		mainFrame.setJMenuBar(menu);
 
 		mainPanel.add(screen);
@@ -162,8 +176,8 @@ public class Game implements KeyListener, MouseListener{
 		th = new Thread(new renderThread());
 		
 	}
-	public void updateHUDButtons(boolean die, boolean sugg, boolean accu){
-		((HUD) hud).updateHUDButtons(die,sugg,accu);
+	public void updateHUDButtons(boolean die, boolean sugg, boolean accu, boolean end){
+		((HUD) hud).updateHUDButtons(die,sugg,accu,end);
 	}
 	
 	public void updateHUD(){
@@ -292,9 +306,9 @@ public class Game implements KeyListener, MouseListener{
 			Tile[][] tiles = data.getTiles();
 			Chars c = data.getCurrentPlayer();
 			if(tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.FLOOR || tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.NULL){
-				this.updateHUDButtons(true, false, false);
+				this.updateHUDButtons(true, false, false,true);
 			}else{
-				this.updateHUDButtons(true, true, true);
+				this.updateHUDButtons(true, true, true,true);
 			}
 		}
 		screen.render(data);

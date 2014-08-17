@@ -56,10 +56,11 @@ public class HUD extends JPanel{
 		changeColor();
 	}
 	
-	public void updateHUDButtons(boolean die, boolean sug, boolean acc){
+	public void updateHUDButtons(boolean die, boolean sug, boolean acc,boolean end){
 		roll.setEnabled(die);
 		sugg.setEnabled(sug);
 		accu.setEnabled(acc);
+		endTurn.setEnabled(end);
 	}
 	
 	private void changeColor() {
@@ -110,8 +111,17 @@ public class HUD extends JPanel{
 		accu.setContentAreaFilled(false);
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
+				if(hudData.getRevealed() == true){
+					//screen.setFocusable(true);
+					hudData.updateAccSugg(false);
+					hudData.setRevealed(false);
+				}else{
+					//screen.setFocusable(false);
+					hudData.updateHUDButtons(false, false, false, false);
+					hudData.updateAccSugg(true);
+					hudData.setRevealed(true);
+				}
 				screen.requestFocus();
-
 			}
 		});
 		this.add(accu);
@@ -122,13 +132,6 @@ public class HUD extends JPanel{
 	}
 	
 	private void setUpEndTurn() {
-
-//		endTurn.setForeground(Color.BLACK);
-//		  endTurn.setBackground(Color.WHITE);
-//		  Border line = new LineBorder(Color.BLACK);
-//		  Border margin = new EmptyBorder(5, 15, 5, 15);
-//		  Border compound = new CompoundBorder(line, margin);
-//		  endTurn.setBorder(compound);
 
 		  endTurn.setPreferredSize(new Dimension(this.width-2,60));
 		endTurn.setContentAreaFilled(false);

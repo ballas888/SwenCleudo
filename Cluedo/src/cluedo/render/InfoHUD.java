@@ -52,7 +52,6 @@ public class InfoHUD extends JPanel{
 		//current.removeAll();
         StringBuilder sb = new StringBuilder(64);
         sb.append("<html><div style=\"text-align: center;\">" + data.getCurrentPlayer().getPlayName()).append("<br>Playing As:<br>").append(data.getCurrentPlayer().get_name()+"</html>");
-		//current.setText("<html" + data.getCurrentPlayer().getPlayName() + " Playing As: " + data.getCurrentPlayer().get_name()+"</html>");
 		current.setText(sb.toString());
         current.setVisible(true);
 	}
