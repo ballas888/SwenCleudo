@@ -87,6 +87,8 @@ public class Game implements KeyListener, MouseListener{
 		mainFrame = new JFrame();
 		mainFrame.setResizable(false);
 		mainFrame.setTitle("Cluedo");
+		
+		data.setFrame(mainFrame);
 
 		mainPanel = new JPanel(null);
 		mainPanel.setPreferredSize(new Dimension(mainWidth,mainHeight));
