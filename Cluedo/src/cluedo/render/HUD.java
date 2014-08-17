@@ -111,16 +111,7 @@ public class HUD extends JPanel{
 		accu.setContentAreaFilled(false);
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				if(hudData.getRevealed() == true){
-					//screen.setFocusable(true);
-					hudData.updateAccSugg(false);
-					hudData.setRevealed(false);
-				}else{
-					//screen.setFocusable(false);
-					hudData.updateHUDButtons(false, false, false, false);
-					hudData.updateAccSugg(true);
-					hudData.setRevealed(true);
-				}
+				AccSugg as = new AccSugg(data);
 				screen.requestFocus();
 			}
 		});
