@@ -41,20 +41,20 @@ public class CardHUD extends JPanel{
 		drawCards();
 		changeColor();
 	}
+	
 	private void changeColor() {
-		int alpha = 120;
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
-			this.setBackground(new Color(238, 0, 0,alpha));
+			this.setBackground(new Color(246, 135, 135));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
-			this.setBackground(new Color(233, 165, 6,alpha));
+			this.setBackground(new Color(244, 212, 137));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_WHITE){
-			this.setBackground(new Color(255,255,255,alpha));
+			this.setBackground(new Color(255,255,255));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.REVEREND_GREEN){
-			this.setBackground(new Color(1, 120, 64,alpha));
+			this.setBackground(new Color(135, 191, 165));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_PEACOCK){
-			this.setBackground(new Color(107, 150, 200,alpha));
+			this.setBackground(new Color(185, 205, 228));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.PROFESSOR_PLUM){
-			this.setBackground(new Color(145, 115, 157,alpha));
+			this.setBackground(new Color(202, 188, 208));
 		}
 	}
 	

@@ -131,7 +131,7 @@ public class Game implements KeyListener, MouseListener{
 
 		mainPanel.add(screen);
 
-		//wtf
+		
 		setUpLoad();
 
 		//let users select their players
@@ -143,7 +143,7 @@ public class Game implements KeyListener, MouseListener{
 		this.updateCardHud();
 		this.updateInfoHud();
 		this.updateHUD();
-		//wtf
+		
 		setUpTilesPos();
 
 		mainFrame.pack();
@@ -316,7 +316,6 @@ public class Game implements KeyListener, MouseListener{
 			while(true){
 			screen.render(data);
 			long newTime = System.currentTimeMillis() - time;
-			System.out.println("RENDER");
 			if(newTime > 600){break;}
 			}
 		}
