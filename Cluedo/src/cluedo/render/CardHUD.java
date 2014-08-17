@@ -32,7 +32,7 @@ public class CardHUD extends JPanel{
 		setFocusable(true);
 		//setBackground(new Color(200,200,200));
 		this.setBackground(Color.white);
-		this.setLayout(new GridLayout(0,2,10,10));
+		this.setLayout(new GridLayout(18,1,5,5));
 		this.validate();
 		this.setVisible(true);
 	}
@@ -65,7 +65,7 @@ public class CardHUD extends JPanel{
 		for(int i = 0; i < cards.size(); i++){
 			ImageIcon print = new ImageIcon(cards.get(i).getImage());
 			Image printS = print.getImage();
-			Image scale = printS.getScaledInstance(261/4, 468/4, java.awt.Image.SCALE_SMOOTH);
+			Image scale = printS.getScaledInstance(261/2, 468/2, java.awt.Image.SCALE_SMOOTH);
 			print = new ImageIcon(scale);
 			JLabel card = new JLabel(print);
 			this.add(card);

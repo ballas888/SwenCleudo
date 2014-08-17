@@ -104,6 +104,7 @@ public class Game implements KeyListener, MouseListener{
 		
 		scroll = new JScrollPane();
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.getVerticalScrollBar().setUnitIncrement(16);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setViewportView(cardHud);
 		scroll.setLocation(cardHudX, cardHudY);
