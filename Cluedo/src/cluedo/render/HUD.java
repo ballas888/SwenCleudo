@@ -88,7 +88,6 @@ public class HUD extends JPanel{
 				roll.setEnabled(false);
 				hudData.updateInfo();
 				screen.requestFocus();
-
 			}
 		});
 		this.add(roll);

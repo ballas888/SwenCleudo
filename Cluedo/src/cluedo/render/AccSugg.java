@@ -18,8 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
+import cluedo.character.CardName;
+import cluedo.character.Chars;
 import cluedo.character.CharsName;
 import cluedo.main.Data;
+import cluedo.main.Game.Room;
+import cluedo.main.Tile;
 
 public class AccSugg{
 	
@@ -47,10 +51,23 @@ public class AccSugg{
 	private JPanel chars = new JPanel(new GridLayout(0,1,1,1));	
 	private JPanel weapons = new JPanel(new GridLayout(0,1,1,1));
 	
+	private final JRadioButtonMenuItem MS = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem CM = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem MW = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem RG = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem MP = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem PP = new JRadioButtonMenuItem();
+	
+	private final JRadioButtonMenuItem Dagger = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem Candlestick =  new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem LeadPipe = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem Revolver = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem Rope = new JRadioButtonMenuItem();
+	private final JRadioButtonMenuItem Spanner = new JRadioButtonMenuItem();
+	
 	private JPanel title1 = new JPanel();
 	private JPanel title2 = new JPanel();
 	
-	private JPanel buttonPanel = new JPanel();
 	private JLabel car = new JLabel("Characters");
 	private JLabel wep = new JLabel("Weapons");
 
@@ -59,33 +76,12 @@ public class AccSugg{
 		acc.setSize(new Dimension(width, height));
 		acc.setLocationRelativeTo(null);
 		
-		JPanel tempPanel = new JPanel();
+		this.data = data;
 		
-		//car.setEditable(false);
-		//wep.setEditable(false);
-		
-		//buttonPanel.setBounds(0, 250, 249, 38);
-//		buttonPanel.setLocation(0, 250);
-//		buttonPanel.setBackground(Color.white);
-//		buttonPanel.setBorder(BorderFactory.createCompoundBorder(
-//				BorderFactory.createLineBorder(Color.gray, 1),
-//				BorderFactory.createEmptyBorder()));
-		
-		//title1.setBounds(0, 0, 124, 30);
 		title1.add(car);
-		//title1.setBackground(Color.white);
-		//car.setBackground(Color.white);
 		
-		//title2.setBounds(125,0,124,30);
 		title2.add(wep);
-		//title2.setBackground(Color.white);
-		//wep.setBackground(Color.white);
-		//wep.setBounds(175, 0, 200, 200);
-		//weapons.setBounds(175,32,200,200);
-		//car.setBounds(0, 0, 200, 200);
-		//chars.setBounds(0, 32, 200, 200);
-
-		 
+		setUpButtons();
 		setUpWeapons();
 		setUpChars();
 		
@@ -97,7 +93,6 @@ public class AccSugg{
 		pan1.add(title2);
 		pan2.add(weapons);
 		pan2.add(chars);
-		//selection.add(buttonPanel);
 		pan3.add(cancel);
 		pan3.add(suggest);
 		selection.add(pan1);
@@ -108,18 +103,69 @@ public class AccSugg{
 	}
 
 
+	private void setUpButtons() {
+		suggest.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CardName chars = CardName.MISS_SCARLET_C;
+				CardName weap = CardName.CANDLESTICK;
+				
+				if(MS.isSelected()){
+					chars = CardName.MISS_SCARLET_C;
+				}else if(CM.isSelected()){
+					chars = CardName.COLONEL_MUSTARD_C;
+				}else if(MW.isSelected()){
+					chars = CardName.MRS_WHITE_C;
+				}else if(RG.isSelected()){
+					chars = CardName.REVEREND_GREEN_C;
+				}else if(MP.isSelected()){
+					chars = CardName.MRS_PEACOCK_C;
+				}else if(PP.isSelected()){
+					chars = CardName.PROFESSOR_PLUM_C;
+				}
+				
+				if(Dagger.isSelected()){
+					weap = CardName.DAGGER;
+				}else if(Candlestick.isSelected()){
+					weap = CardName.CANDLESTICK;
+				}else if(LeadPipe.isSelected()){
+					weap = CardName.LEAD_PIPE;
+				}else if(Revolver.isSelected()){
+					weap = CardName.REVOLVER;
+				}else if(Rope.isSelected()){
+					weap = CardName.ROPE;
+				}else if(Spanner.isSelected()){
+					weap = CardName.SPANNER;
+				}
+				Chars c = data.getCurrentPlayer();
+				Tile[][] tiles = data.getTiles();
+				Tile tile = tiles[c.getPosition().y][c.getPosition().x];
+				Room rm = tile.get_room();
+				CardName room = CardName.BALL_ROOM;
+				room = room.valueOf(rm.toString());
+				System.out.println(room + " " + chars + " " + weap);
+			}
+			
+		});
+		
+		cancel.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				acc.dispose();
+			}
+			
+		});
+	}
+
+
 	private void setUpChars() {
-		final JRadioButtonMenuItem MS = new JRadioButtonMenuItem();
 		MS.setText("Miss Scarlet");
-		final JRadioButtonMenuItem CM = new JRadioButtonMenuItem();
 		CM.setText("Colonel Mustard");
-		final JRadioButtonMenuItem MW = new JRadioButtonMenuItem();
 		MW.setText("Mrs. White");
-		final JRadioButtonMenuItem RG = new JRadioButtonMenuItem();
 		RG.setText("The Reverend Green");
-		final JRadioButtonMenuItem MP = new JRadioButtonMenuItem();
 		MP.setText("Mrs. Peacock");
-		final JRadioButtonMenuItem PP = new JRadioButtonMenuItem();
 		PP.setText("Professor Plum");
 		
 		charsGroup.add(MS);
@@ -145,17 +191,11 @@ public class AccSugg{
 
 
 	private void setUpWeapons() {
-		final JRadioButtonMenuItem Dagger = new JRadioButtonMenuItem();
 		Dagger.setText("Dagger");
-		final JRadioButtonMenuItem Candlestick =  new JRadioButtonMenuItem();
 		Candlestick.setText("Candlestick");
-		final JRadioButtonMenuItem LeadPipe = new JRadioButtonMenuItem();
 		LeadPipe.setText("LeadPipe");
-		final JRadioButtonMenuItem Revolver = new JRadioButtonMenuItem();
 		Revolver.setText("Revolver");
-		final JRadioButtonMenuItem Rope = new JRadioButtonMenuItem();
 		Rope.setText("Rope");
-		final JRadioButtonMenuItem Spanner = new JRadioButtonMenuItem();
 		Spanner.setText("Spanner");
 		
 		weaponsGroup.add(Dagger);
