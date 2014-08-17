@@ -63,7 +63,7 @@ public class HUD extends JPanel{
 	}
 	
 	private void changeColor() {
-		int alpha = 120;
+		int alpha = 255;
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
 			this.setBackground(new Color(238, 0, 0,alpha));
 		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
@@ -81,7 +81,7 @@ public class HUD extends JPanel{
 	
 	private void setUpRoll(){
 		roll.setPreferredSize(new Dimension(this.width-2,60));
-		roll.setContentAreaFilled(false);
+		//roll.setContentAreaFilled(false);
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				screen.requestFocus();
@@ -92,8 +92,12 @@ public class HUD extends JPanel{
 	}
 
 	private void setUpSugg(){
+		sugg.setEnabled(false);
 		sugg.setPreferredSize(new Dimension(this.width-2,60));
-		sugg.setContentAreaFilled(false);
+		//sugg.setContentAreaFilled(false);
+		sugg.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.gray, 1),
+				BorderFactory.createEmptyBorder()));
 		sugg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				
@@ -105,8 +109,12 @@ public class HUD extends JPanel{
 	}
 
 	private void setUpAccu(){
+		accu.setEnabled(false);
 		accu.setPreferredSize(new Dimension(this.width-2,60));
-		accu.setContentAreaFilled(false);
+		//accu.setContentAreaFilled(false);
+		accu.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.gray, 1),
+				BorderFactory.createEmptyBorder()));
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				screen.requestFocus();
