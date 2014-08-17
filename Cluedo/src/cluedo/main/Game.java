@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import cluedo.character.Chars;
 import cluedo.load.LoadCards;
 import cluedo.main.UpdatePlayer.mFunc;
-import cluedo.render.AccSuggHUD;
+import cluedo.render.AccSugg;
 import cluedo.render.CardHUD;
 import cluedo.render.HUD;
 import cluedo.render.HUDData;
@@ -75,7 +75,6 @@ public class Game implements KeyListener, MouseListener{
 	private JPanel hud;
 	private JPanel cardHud;
 	private JPanel infoHud;
-	private JPanel asHud;
 	private JMenuBar menu;
 	
 	//Thread
@@ -128,19 +127,16 @@ public class Game implements KeyListener, MouseListener{
 		infoHud.setLocation(infoHudX, infoHudY);
 		
 		//AccSuggHUD
-		asHud = new AccSuggHUD(asHudWidth, asHudHeight, data);
 		
 		
 		hudData.setHUD(hud);
 		hudData.setCardHUD(cardHud);
 		hudData.setInfoHud(infoHud);
-		hudData.setAccSuggHUD(asHud);
 		
 		((HUD) hud).setHudData(hudData);
 
 		menu = new MenuBar();
 
-		mainPanel.add(asHud);
 		mainPanel.add(hud);
 		mainPanel.add(scroll);
 		mainPanel.add(cardName);

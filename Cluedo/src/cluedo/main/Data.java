@@ -4,12 +4,15 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import cluedo.character.Card;
 import cluedo.character.Chars;
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
 
 public class Data {
+	private JFrame frame;
 	private BufferedImage map_image;
 	private ArrayList<Chars> allChars = new ArrayList<Chars>();
 	private ArrayList<Chars> playChars = new ArrayList<Chars>();
@@ -24,6 +27,14 @@ public class Data {
 	private Card middleRoomCard;
 	private Card middleCharCard;
 	private Card middleWeapCard;
+	
+	public void setFrame(JFrame frame){
+		this.frame = frame;
+	}
+	
+	public JFrame getFrame(){
+		return this.frame;
+	}
 	
 	public void setCards(ArrayList<Card> cards){
 		this.cards = cards;
