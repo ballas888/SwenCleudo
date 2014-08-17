@@ -30,7 +30,6 @@ public class CardHUD extends JPanel{
 		Dimension size = new Dimension(width,height);	
 		setSize(size);		
 		setFocusable(true);
-		//setBackground(new Color(200,200,200));
 		this.setBackground(Color.white);
 		this.setLayout(new GridLayout(0,1,5,5));
 		this.validate();
