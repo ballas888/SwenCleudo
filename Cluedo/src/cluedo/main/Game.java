@@ -1,8 +1,6 @@
 package cluedo.main;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,13 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -50,6 +45,8 @@ public class Game implements KeyListener, MouseListener{
 	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
 	private int cardHudY = 0;//mainHeight - cardHudHeight;
 	private JScrollPane scroll;
+	
+	private int infoSize = 25;
 
 	//infoHud math
 	private int infoHudHeight = screenHeight/2;
@@ -107,13 +104,19 @@ public class Game implements KeyListener, MouseListener{
 		scroll.getVerticalScrollBar().setUnitIncrement(16);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setViewportView(cardHud);
-		scroll.setLocation(cardHudX, cardHudY);
+		scroll.setLocation(cardHudX, cardHudY+infoSize);
 		//scroll.setPreferredSize(new Dimension(cardHudWidth, cardHudHeight));
-		scroll.setSize(new Dimension(cardHudWidth, cardHudHeight));
+		scroll.setSize(new Dimension(cardHudWidth, cardHudHeight-infoSize));
 		
+		JPanel cardName = new JPanel();
+		JLabel name = new JLabel("Cards In Hand:");
+		cardName.add(name);
+		cardName.setSize(cardHudWidth, infoSize);
+		cardName.setLocation(cardHudX, cardHudY);
 
 		infoHud = new InfoHUD(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
+		
 		
 		hudData.setHUD(hud);
 		hudData.setCardHUD(cardHud);
@@ -126,6 +129,7 @@ public class Game implements KeyListener, MouseListener{
 
 		mainFrame.add(hud);
 		mainFrame.add(scroll);
+		mainFrame.add(cardName);
 		//mainFrame.add(cardHud);
 		mainFrame.add(infoHud);
 		mainFrame.setJMenuBar(menu);

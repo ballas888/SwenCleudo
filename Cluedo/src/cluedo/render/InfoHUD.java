@@ -3,6 +3,7 @@ package cluedo.render;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -14,18 +15,22 @@ public class InfoHUD extends JPanel{
 	private Data data;
 	private Screen screen;
 	private int width;
-	private JTextField current = new JTextField(50);
+	private JPanel title = new JPanel();
+	private JLabel current = new JLabel("INITIAL");
 
 	
 	public InfoHUD(int width, int height, Data data, Screen screen){
 		this.data = data;
 		this.screen = screen;
 		this.width = width;
+		this.setLayout(null);
 		Dimension size = new Dimension(width,height);	
 		setSize(size);		
 		setFocusable(true);
-		//setBackground(new Color(200,200,200));
-		//setBackground((Color.red));
+		title.setSize(new Dimension(width, 60));
+		title.add(current);
+		this.add(title);
+		//title.setBackground((Color.black));
 		//this.add(current);
 		this.validate();
 		this.setVisible(true);
@@ -33,12 +38,23 @@ public class InfoHUD extends JPanel{
 	
 	public void drawInfo(){
 		this.setVisible(false);
-		this.removeAll();
+		//this.removeAll();
 		
 		changeColor();
+		updateName();
 		
 		this.repaint();
 		this.setVisible(true);
+	}
+	
+	private void updateName(){
+		current.setVisible(false);
+		//current.removeAll();
+        StringBuilder sb = new StringBuilder(64);
+        sb.append("<html><div style=\"text-align: center;\">" + data.getCurrentPlayer().getPlayName()).append("<br>Playing As:<br>").append(data.getCurrentPlayer().get_name()+"</html>");
+		//current.setText("<html" + data.getCurrentPlayer().getPlayName() + " Playing As: " + data.getCurrentPlayer().get_name()+"</html>");
+		current.setText(sb.toString());
+        current.setVisible(true);
 	}
 
 	private void changeColor() {
