@@ -111,7 +111,8 @@ public class Game implements KeyListener, MouseListener{
 		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
 		//populate the playable list with the choosen ones
 		data.populateChoosen(data);
-
+		
+		new LoadCards().loadCard(data);
 		//wtf
 		setUpTilesPos();
 
@@ -158,7 +159,7 @@ public class Game implements KeyListener, MouseListener{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
-		new LoadCards().loadCard(data);
+		
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 

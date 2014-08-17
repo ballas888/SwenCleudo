@@ -1,11 +1,13 @@
 package cluedo.load;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import cluedo.character.Card;
 import cluedo.character.CardName;
 import cluedo.character.CardType;
+import cluedo.character.Chars;
 import cluedo.main.Data;
 
 public class LoadCards {
@@ -44,10 +46,34 @@ public class LoadCards {
 		data.setMCharCard(middleCharCard);
 		data.setMWeapCard(middleWeaponCard);
 		
-		data.setRoomCards(rooms);
-		data.setCharCards(chars);
-		data.setWeapChard(weapons);
+		ArrayList<Card> cards = new ArrayList<Card>();
+		cards.addAll(rooms);
+		cards.addAll(chars);
+		cards.addAll(weapons);
+		Collections.shuffle(cards, new Random(System.currentTimeMillis()));
+		Collections.shuffle(cards, new Random(System.currentTimeMillis()));
+		divideCards(data, cards);
 		
+		
+	}
+	
+	private void divideCards(Data data, ArrayList<Card> cards){
+		ArrayList<Chars> chars = data.getPlayChars();
+		while(!cards.isEmpty()){
+			for(int i = 0; i < chars.size();i++){
+				chars.get(i).getCards().add(cards.remove(cards.size()-1));
+			}
+		}
+		
+		for(int i = 0; i < chars.size();i++){
+			Chars c = chars.get(i);
+			System.out.println(c.get_name());
+			ArrayList<Card> cs = c.getCards();
+			for(int j = 0; j < cs.size();j++){
+				Card crd = cs.get(j);
+				System.out.println("	"+crd.getName());
+			}
+		}
 	}
 	
 	

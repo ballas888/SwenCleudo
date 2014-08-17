@@ -25,10 +25,6 @@ public class Data {
 	private Card middleCharCard;
 	private Card middleWeapCard;
 	
-	private ArrayList<Card> roomCards = new ArrayList<Card>();
-	private ArrayList<Card> charCards = new ArrayList<Card>();
-	private ArrayList<Card> weapChard = new ArrayList<Card>();
-	
 	public void setCards(ArrayList<Card> cards){
 		this.cards = cards;
 	}
@@ -145,30 +141,6 @@ public class Data {
 
 	public void setMWeapCard(Card middleWeapCard) {
 		this.middleWeapCard = middleWeapCard;
-	}
-
-	public ArrayList<Card> getRoomCards() {
-		return roomCards;
-	}
-
-	public void setRoomCards(ArrayList<Card> roomCards) {
-		this.roomCards = roomCards;
-	}
-
-	public ArrayList<Card> getCharCards() {
-		return charCards;
-	}
-
-	public void setCharCards(ArrayList<Card> charCards) {
-		this.charCards = charCards;
-	}
-
-	public ArrayList<Card> getWeapChard() {
-		return weapChard;
-	}
-
-	public void setWeapChard(ArrayList<Card> weapChard) {
-		this.weapChard = weapChard;
 	}
 
 }

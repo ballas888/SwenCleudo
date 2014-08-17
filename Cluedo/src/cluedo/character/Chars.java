@@ -2,6 +2,7 @@ package cluedo.character;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Chars {
 	private Point position;
@@ -10,6 +11,7 @@ public class Chars {
 	private Boolean playable = false;
 	private Boolean playing = false;
 	private BufferedImage sprite;
+	private ArrayList<Card> cards = new ArrayList<Card>();
 	
 	public void nowPlaying(){
 		this.playing = true;
@@ -54,5 +56,13 @@ public class Chars {
 	}
 	public BufferedImage getSprite(){
 		return this.sprite;
+	}
+
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
 	}
 }
