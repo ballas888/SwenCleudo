@@ -80,19 +80,19 @@ public class LoadMap {
 					}else if(data[i].equalsIgnoreCase("a")){
 						tiles[tile_count][i].set_room(Room.KITCHEN);
 						tiles[tile_count][i].set_trap(true);
-						tiles[tile_count][i].set_trap_location(new Point(22,21));
+						tiles[tile_count][i].set_trap_location(new Point(23,23));
 					}else if(data[i].equalsIgnoreCase("b")){
 						tiles[tile_count][i].set_room(Room.STUDY);
 						tiles[tile_count][i].set_trap(true);
-						tiles[tile_count][i].set_trap_location(new Point(4,1));
+						tiles[tile_count][i].set_trap_location(new Point(0,2));
 					}else if(data[i].equalsIgnoreCase("c")){
 						tiles[tile_count][i].set_room(Room.LOUNGE);
 						tiles[tile_count][i].set_trap(true);
-						tiles[tile_count][i].set_trap_location(new Point(21,5));
+						tiles[tile_count][i].set_trap_location(new Point(22,1));
 					}else if(data[i].equalsIgnoreCase("d")){
 						tiles[tile_count][i].set_room(Room.CONSERVATORY);
 						tiles[tile_count][i].set_trap(true);
-						tiles[tile_count][i].set_trap_location(new Point(1,19));
+						tiles[tile_count][i].set_trap_location(new Point(0,23));
 					}else{
 						tiles[tile_count][i].set_room(get_room(data[i]));
 					}

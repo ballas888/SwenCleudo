@@ -69,11 +69,11 @@ public class LoadCards {
 		
 		for(int i = 0; i < chars.size();i++){
 			Chars c = chars.get(i);
-			System.out.println(c.get_name());
+			//System.out.println(c.get_name());
 			ArrayList<Card> cs = c.getCards();
 			for(int j = 0; j < cs.size();j++){
 				Card crd = cs.get(j);
-				System.out.println("	"+crd.getName());
+				//System.out.println("	"+crd.getName());
 			}
 		}
 	}

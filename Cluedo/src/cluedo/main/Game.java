@@ -154,7 +154,7 @@ public class Game implements KeyListener, MouseListener{
 		//let users select their players
 		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
 		//populate the playable list with the choosen ones
-		data.populateChoosen(data, mainFrame);
+		data.populateChoosen(data);
 		
 		new LoadCards().loadCard(data);
 		this.updateCardHud();
@@ -287,11 +287,31 @@ public class Game implements KeyListener, MouseListener{
 							e1.printStackTrace();
 						}
 					}
+					Chars c = data.getCurrentPlayer();
+					Tile tile = tiles[c.getPosition().y][c.getPosition().y];
+					if(tile.is_trap()){
+						if(useTrap()){
+							tile.setHasChar(false);
+							c.setPosition(tile.get_trap_loc());
+							Tile newTile = tiles[c.getPosition().y][c.getPosition().x];
+							newTile.setHasChar(true);
+						}
+					}
+					if(tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.FLOOR || tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.NULL){
+						this.updateHUDButtons(true, false, false,true);
+					}else{
+						this.updateHUDButtons(true, true, true,true);
+					}
 				}
 			}
 			screen.render(data);
 
 
+	}
+	
+	private boolean useTrap(){
+		//TODO ask user if they want to use the trap door.
+		return true;
 	}
 	
 	private void updateCurDice(){
@@ -303,9 +323,9 @@ public class Game implements KeyListener, MouseListener{
 		}else if(d2 >0){
 			c.setDieRolled(c.getDieRolled(2)-1, 2);
 		}else{
-			System.out.println("You are dead bitch");
+			System.out.println("You are dead");
 		}
-		System.out.println("here updateDice");
+		//System.out.println("here updateDice");
 		this.updateInfoHud();
 	}
 
@@ -331,7 +351,16 @@ public class Game implements KeyListener, MouseListener{
 			}else{
 				this.updateHUDButtons(true, true, true,true);
 			}
-			updateCurDice();
+			updateCurDice();			
+			Tile tile = tiles[c.getPosition().y][c.getPosition().x];
+			if(tile.is_trap()){
+				if(useTrap()){
+					tile.setHasChar(false);
+					c.setPosition(tile.get_trap_loc());
+					Tile newTile = tiles[c.getPosition().y][c.getPosition().x];
+					newTile.setHasChar(true);
+				}
+			}
 		}
 		screen.render(data);
 	}
