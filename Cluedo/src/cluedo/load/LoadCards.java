@@ -1,10 +1,12 @@
 package cluedo.load;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cluedo.character.Card;
 import cluedo.character.CardName;
 import cluedo.character.CardType;
+import cluedo.main.Data;
 
 public class LoadCards {
 	
@@ -12,26 +14,41 @@ public class LoadCards {
 			CardName.LIBRARY, CardName.LOUNGE, CardName.HALL, CardName.STUDY, CardName.MRS_WHITE_C, CardName.MISS_SCARLET_C, CardName.COLONEL_MUSTARD_C, CardName.REVEREND_GREEN_C,
 			CardName.MRS_PEACOCK_C, CardName.PROFESSOR_PLUM_C, CardName.CANDLESTICK, CardName.DAGGER, CardName.LEAD_PIPE, CardName.REVOLVER, CardName.ROPE, CardName.SPANNER};
 	
-	public ArrayList<Card> LoadCards(){
-		ArrayList<Card> cards = new ArrayList<Card>();
+	public void loadCard(Data data){
+		ArrayList<Card> rooms = new ArrayList<Card>();
+		ArrayList<Card> chars = new ArrayList<Card>();
+		ArrayList<Card> weapons = new ArrayList<Card>();
 		for(int i = 0; i<names.length; i++){
 			if(i>=0 && i <9){
 				Card card = new Card(names[i],CardType.ROOM_CARD);
 				card.setImage(new LoadImage().load_image(card.getName()));
-				cards.add(card);
+				rooms.add(card);
 			}else if(i>=9 && i<15){
 				Card card = new Card(names[i],CardType.CHAR_CARD);
 				card.setImage(new LoadImage().load_image(card.getName()));
-				cards.add(card);
+				chars.add(card);
 			}else{
 				Card card = new Card(names[i],CardType.WEAPON_CARD);
 				card.setImage(new LoadImage().load_image(card.getName()));
-				cards.add(card);
+				weapons.add(card);
 			}
 		}
-		for(Card c : cards){
-			System.out.println(c.getName() + " TYPE: " + c.getType());
-		}
-		return cards;
+		int roomRan = (int)(Math.random()*rooms.size());
+		int charsRan = (int)(Math.random()*chars.size());
+		int weaponsRan = (int)(Math.random()*weapons.size());
+		Card middleRoomCard = rooms.remove(roomRan);
+		Card middleCharCard = chars.remove(charsRan);
+		Card middleWeaponCard = weapons.remove(weaponsRan);
+		
+		data.setMRoomCard(middleRoomCard);
+		data.setMCharCard(middleCharCard);
+		data.setMWeapCard(middleWeaponCard);
+		
+		data.setRoomCards(rooms);
+		data.setCharCards(chars);
+		data.setWeapChard(weapons);
+		
 	}
+	
+	
 }

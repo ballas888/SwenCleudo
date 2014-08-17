@@ -21,6 +21,13 @@ public class Data {
 	private ArrayList<Point> mousePath = new ArrayList<Point>();
 	private boolean isSearching = false;
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private Card middleRoomCard;
+	private Card middleCharCard;
+	private Card middleWeapCard;
+	
+	private ArrayList<Card> roomCards = new ArrayList<Card>();
+	private ArrayList<Card> charCards = new ArrayList<Card>();
+	private ArrayList<Card> weapChard = new ArrayList<Card>();
 	
 	public void setCards(ArrayList<Card> cards){
 		this.cards = cards;
@@ -114,6 +121,54 @@ public class Data {
 
 	public void setSearching(boolean isSearching) {
 		this.isSearching = isSearching;
+	}
+
+	public Card getMRoomCard() {
+		return middleRoomCard;
+	}
+
+	public void setMRoomCard(Card middleRoomCard) {
+		this.middleRoomCard = middleRoomCard;
+	}
+
+	public Card getMCharCard() {
+		return middleCharCard;
+	}
+
+	public void setMCharCard(Card middleCharCard) {
+		this.middleCharCard = middleCharCard;
+	}
+
+	public Card getMWeapCard() {
+		return middleWeapCard;
+	}
+
+	public void setMWeapCard(Card middleWeapCard) {
+		this.middleWeapCard = middleWeapCard;
+	}
+
+	public ArrayList<Card> getRoomCards() {
+		return roomCards;
+	}
+
+	public void setRoomCards(ArrayList<Card> roomCards) {
+		this.roomCards = roomCards;
+	}
+
+	public ArrayList<Card> getCharCards() {
+		return charCards;
+	}
+
+	public void setCharCards(ArrayList<Card> charCards) {
+		this.charCards = charCards;
+	}
+
+	public ArrayList<Card> getWeapChard() {
+		return weapChard;
+	}
+
+	public void setWeapChard(ArrayList<Card> weapChard) {
+		this.weapChard = weapChard;
 	}
 
 }

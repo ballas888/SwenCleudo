@@ -158,7 +158,7 @@ public class Game implements KeyListener, MouseListener{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
-		data.setCards(new LoadCards().LoadCards());
+		new LoadCards().loadCard(data);
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 
