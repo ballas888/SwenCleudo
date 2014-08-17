@@ -28,7 +28,7 @@ public class Dice {
 	
 	public BufferedImage getDie(int num){
 		assert(num >=1 && num <=6);
-		Class c = this.getClass();
+		Class<? extends Dice> c = this.getClass();
 		try {
 			Field f = c.getDeclaredField("die"+num);
 			return (BufferedImage) f.get(this);
