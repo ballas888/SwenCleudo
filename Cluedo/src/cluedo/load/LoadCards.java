@@ -9,6 +9,7 @@ import cluedo.character.CardName;
 import cluedo.character.CardType;
 import cluedo.character.Chars;
 import cluedo.main.Data;
+//Richard
 
 public class LoadCards {
 	

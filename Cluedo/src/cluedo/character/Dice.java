@@ -1,4 +1,5 @@
 package cluedo.character;
+//Richard
 
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;

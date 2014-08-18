@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import cluedo.character.CardName;
 import cluedo.character.CharsName;
 import cluedo.character.DiceType;
+//Richard
 
 public class LoadImage {
 	public BufferedImage load_map_image(String map){

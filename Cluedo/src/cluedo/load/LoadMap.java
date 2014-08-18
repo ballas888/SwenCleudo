@@ -11,6 +11,7 @@ import cluedo.character.CharsName;
 import cluedo.main.Game.Room;
 import cluedo.main.Tile.Direction;
 import cluedo.main.Tile;
+//Richard
 
 public class LoadMap {
 	private int width = 0;

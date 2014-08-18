@@ -1,5 +1,5 @@
 package cluedo.character;
-
+//Richard
 import java.awt.image.BufferedImage;
 
 public class Card {

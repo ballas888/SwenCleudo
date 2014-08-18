@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cluedo.main.Game.Room;
+//Richard
 
 public class Tile {
 	private Point2D pos;

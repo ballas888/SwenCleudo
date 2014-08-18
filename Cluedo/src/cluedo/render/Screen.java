@@ -16,6 +16,7 @@ import java.util.Random;
 import cluedo.character.Chars;
 import cluedo.main.Data;
 import cluedo.main.Tile;
+//Richard
 
 public class Screen extends Canvas{
 
