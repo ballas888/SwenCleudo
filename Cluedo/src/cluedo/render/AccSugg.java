@@ -108,7 +108,7 @@ public class AccSugg{
 		selection.add(pan3);
 		acc.setContentPane(selection);
 		acc.setTitle("Make A Suggestion");
-
+		acc.setModal(true);
 		acc.setVisible(true);
 	}
 
@@ -229,12 +229,14 @@ public class AccSugg{
 			if(found){
 				System.out.println("FoundCard: "+ isCard);
 				foundDialog(isCard, true);
+			}else{
+				foundDialog(isCard, false);
 			}
 		}else{
 			if(foundRoom && foundChar && foundWeap){
-
+				accPopUp(false);
 			}else{
-
+				accPopUp(true);
 			}
 		}
 
@@ -242,25 +244,92 @@ public class AccSugg{
 
 	}
 
-	private void foundDialog(CardName isCard, boolean isFound){
-		 d = new JDialog(data.getFrame());
+	private void accPopUp(boolean isDead){
+		d = new JDialog(data.getFrame());
 		JPanel p = new JPanel(null);
-		JLabel label = new JLabel("Theory Disproven",SwingConstants.CENTER);
-		//label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		label.setSize(new Dimension(140,50));
+		String text = "You're the Weakest Link";
+		if(!isDead){
+			text = "You Win";
+		}
+		JLabel label = new JLabel(text, SwingConstants.CENTER);
+		label.setSize(new Dimension(140,70));
+		label.setLocation(0, 2);
+		label.setVisible(true);
+
+		JPanel p1 = new JPanel(null);
+		p.setPreferredSize(new Dimension(140,100));
+		p1.setSize(140, 100);
+		if(isDead){
+			label.setSize(new Dimension(200,70));
+			p.setPreferredSize(new Dimension(200,100));
+			p1.setSize(200, 100);
+		}
+
+
+		p1.setBackground(Color.white);
+
+		JButton b = new JButton("OK!");
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					d.dispose();
+					acc.dispose();
+			}
+		});
+		b.setSize(p1.getWidth(),30);
+		b.setLocation(0, p1.getHeight()-30);
+
+		p1.add(label);
+		p1.add(b);
+
+		d.setLayout(null);
+		d.setContentPane(p);
+		p.add(p1);
+		d.setResizable(false);
+		d.pack();
+		d.setLocationRelativeTo(null);
+		d.setModal(true);
+		d.setVisible(true);
+
+	}
+
+	private void foundDialog(CardName isCard, boolean isFound){
+
+		d = new JDialog(data.getFrame());
+		JPanel p = new JPanel(null);
+		String text = "Theory Disproven";
+		if(!isFound){
+			StringBuilder sb = new StringBuilder(64);
+	        sb.append("<html><div style=\"text-align: center;\">" + "Theory Not Disproved:").append("<br>No card found<br>").append("to disprove Theory"+"</html>");
+			text = sb.toString();
+		}
+		JLabel label = new JLabel(text,SwingConstants.CENTER);
+		if(!isFound){
+			label.setSize(new Dimension(140,70));
+		}else{
+			label.setSize(new Dimension(140,50));
+		}
+
 		label.setLocation(0, 2);
 		label.setBackground(Color.black);
 		label.setVisible(true);
-		if(isFound){
-			p.setPreferredSize(new Dimension(140,315));
-			p.setBackground(Color.black);
-			//d.setPreferredSize(new Dimension(210,400));
-			JPanel p1 = new JPanel(null);
-			p1.setSize(new Dimension(140,315));
-			p1.setBackground(Color.white);
-			d.setLayout(null);
-			d.setContentPane(p);
 
+		if(!isFound){
+			p.setPreferredSize(new Dimension(140,100));
+		}else{
+			p.setPreferredSize(new Dimension(140,315));
+		}
+
+		JPanel p1 = new JPanel(null);
+		if(!isFound){
+			p1.setSize(new Dimension(140,100));
+		}else{
+			p1.setSize(new Dimension(140,315));
+		}
+
+		p1.setBackground(Color.white);
+
+		if(isFound){
 			JLabel j = new JLabel();
 			j.setSize(new Dimension(140,230) );
 			j.setLocation(5, 52);
@@ -269,28 +338,29 @@ public class AccSugg{
 			Image scale = printS.getScaledInstance(261/2, 468/2, java.awt.Image.SCALE_SMOOTH);
 			print = new ImageIcon(scale);
 			j.setIcon(print);
-			JButton b = new JButton("OK!");
-			b.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-						d.dispose();
-						acc.dispose();
-				}
-			});
-
-			b.setSize(p1.getWidth(),30);
-			b.setLocation(0, p1.getHeight()-30);
 			p1.add(j);
-			p1.add(b);
-			p1.add(label);
-			p.add(p1);
-			d.setResizable(false);
-			d.pack();
-			d.setLocationRelativeTo(null);
-			d.setVisible(true);
-		}else{
-
 		}
+		JButton b = new JButton("OK!");
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					d.dispose();
+					acc.dispose();
+			}
+		});
+		b.setSize(p1.getWidth(),30);
+		b.setLocation(0, p1.getHeight()-30);
+
+		p1.add(label);
+		p1.add(b);
+
+		d.setLayout(null);
+		d.setContentPane(p);
+		p.add(p1);
+		d.setResizable(false);
+		d.pack();
+		d.setLocationRelativeTo(null);
+		d.setVisible(true);
 	}
 
 
@@ -358,7 +428,8 @@ public class AccSugg{
 		Data data = new Data();
 		data.setFrame(frame);
 		AccSugg aug = new AccSugg(data);
-		aug.foundDialog(CardName.BALL_ROOM,true);
+		aug.accPopUp(true);
+		//aug.foundDialog(CardName.BALL_ROOM,false);
 
 	}
 
