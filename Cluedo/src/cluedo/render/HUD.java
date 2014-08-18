@@ -29,7 +29,7 @@ public class HUD extends JPanel{
 	private Data data;
 	private Screen screen;
 	private int width;
-	
+
 	private HUDData hudData;
 
 
@@ -51,18 +51,18 @@ public class HUD extends JPanel{
 		this.validate();
 		this.setVisible(true);
 	}
-	
+
 	public void updateHUD(){
 		changeColor();
 	}
-	
+
 	public void updateHUDButtons(boolean die, boolean sug, boolean acc,boolean end){
 		roll.setEnabled(die);
 		sugg.setEnabled(sug);
 		accu.setEnabled(acc);
 		endTurn.setEnabled(end);
 	}
-	
+
 	private void changeColor() {
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
 			this.setBackground(new Color(246, 135, 135));
@@ -78,10 +78,11 @@ public class HUD extends JPanel{
 			this.setBackground(new Color(202, 188, 208));
 		}
 	}
-	
+
 	private void setUpRoll(){
 		roll.setPreferredSize(new Dimension(this.width-2,60));
 		roll.setContentAreaFilled(false);
+		roll.setFocusable(false);
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				data.getCurrentPlayer().rollDice();
@@ -122,7 +123,7 @@ public class HUD extends JPanel{
 	public void setHudData(HUDData hudData){
 		this.hudData = hudData;
 	}
-	
+
 	private void setUpEndTurn() {
 
 		  endTurn.setPreferredSize(new Dimension(this.width-2,60));
@@ -130,7 +131,7 @@ public class HUD extends JPanel{
 
 		endTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				data.nextPlayer();	
+				data.nextPlayer();
 				roll.setEnabled(true);
 				data.getCurrentPlayer().setDieRolled(0, 1);
 				data.getCurrentPlayer().setDieRolled(0, 2);

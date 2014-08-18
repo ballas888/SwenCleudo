@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.ActionMapUIResource;
 
 import cluedo.character.Card;
@@ -32,48 +33,49 @@ import cluedo.main.Game.Room;
 import cluedo.main.Tile;
 
 public class AccSugg{
-	
+
 	private Data data;
 	private int width = 350;
 	private int height = 300;
 	private final JButton cancel = new JButton("Cancel");
 	private final JButton suggest = new JButton("Suggest");
-	
+
 	//pop up window
 	private JDialog acc;
-	
+	private JDialog d;
+
 	//holds the selection panels
 	private JPanel selection = new JPanel(new FlowLayout());
 	private JPanel pan1 = new JPanel();
 	private JPanel pan2 = new JPanel();
 	private JPanel pan3 = new JPanel();
 
-	
+
 	//button groups to hold selections
 	private ButtonGroup charsGroup = new ButtonGroup();
 	private	ButtonGroup weaponsGroup = new ButtonGroup();
-	
+
 	//panels to hold radio buttons
-	private JPanel chars = new JPanel(new GridLayout(0,1,1,1));	
+	private JPanel chars = new JPanel(new GridLayout(0,1,1,1));
 	private JPanel weapons = new JPanel(new GridLayout(0,1,1,1));
-	
+
 	private final JRadioButtonMenuItem MS = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem CM = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem MW = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem RG = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem MP = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem PP = new JRadioButtonMenuItem();
-	
+
 	private final JRadioButtonMenuItem Dagger = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem Candlestick =  new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem LeadPipe = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem Revolver = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem Rope = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem Spanner = new JRadioButtonMenuItem();
-	
+
 	private JPanel title1 = new JPanel();
 	private JPanel title2 = new JPanel();
-	
+
 	private JLabel car = new JLabel("Characters");
 	private JLabel wep = new JLabel("Weapons");
 
@@ -81,20 +83,20 @@ public class AccSugg{
 		acc = new JDialog(data.getFrame());
 		acc.setSize(new Dimension(width, height));
 		acc.setLocationRelativeTo(null);
-		
+
 		this.data = data;
-		
+
 		title1.add(car);
-		
+
 		title2.add(wep);
 		setUpButtons();
 		setUpWeapons();
 		setUpChars();
-		
+
 		pan1.setSize(width,20);
 		pan2.setPreferredSize(new Dimension(width,150));
 		pan3.setSize(width, 20);
-		
+
 		pan1.add(title1);
 		pan1.add(title2);
 		pan2.add(weapons);
@@ -105,6 +107,8 @@ public class AccSugg{
 		selection.add(pan2);
 		selection.add(pan3);
 		acc.setContentPane(selection);
+		acc.setTitle("Make A Suggestion");
+
 		acc.setVisible(true);
 	}
 
@@ -117,7 +121,7 @@ public class AccSugg{
 			public void actionPerformed(ActionEvent e) {
 				CardName chars = CardName.MISS_SCARLET_C;
 				CardName weap = CardName.CANDLESTICK;
-				
+
 				if(MS.isSelected()){
 					chars = CardName.MISS_SCARLET_C;
 				}else if(CM.isSelected()){
@@ -131,7 +135,7 @@ public class AccSugg{
 				}else if(PP.isSelected()){
 					chars = CardName.PROFESSOR_PLUM_C;
 				}
-				
+
 				if(Dagger.isSelected()){
 					weap = CardName.DAGGER;
 				}else if(Candlestick.isSelected()){
@@ -158,38 +162,38 @@ public class AccSugg{
 				cards.add(room);
 				checkResult(cards, true);
 			}
-			
+
 		});
-		
+
 		cancel.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				acc.dispose();
 			}
-			
+
 		});
 	}
-	
+
 	private void checkResult(ArrayList<CardName> cards, boolean isSug){
 		ArrayList<Chars> players = data.getPlayChars();
 		CardName chars = cards.get(0);
 		CardName weap = cards.get(1);
 		CardName room = cards.get(2);
-		
+
 		CardName isCard = CardName.BALL_ROOM;
 		boolean foundRoom = false;
 		boolean foundWeap = false;
 		boolean foundChar = false;
 		boolean found = false;
 		int i = data.getCurrentPlayerPos();
-		
+
 		loop: while(i<players.size()){
-			ArrayList<Card> crds = players.get(i).getCards(); 
+			ArrayList<Card> crds = players.get(i).getCards();
 			for(Card crd: crds){
-				if(crd.getName() == chars){				
+				if(crd.getName() == chars){
 					found = true;
-					isCard = chars;	
+					isCard = chars;
 					foundChar = true;
 					if(isSug){
 						break loop;
@@ -209,18 +213,18 @@ public class AccSugg{
 						break loop;
 					}
 				}
-			}				
-			
+			}
+
 			if(i >= players.size()){
 				System.out.println(i);
 				i = 0;
 				continue;
 			}else if (i+1 == data.getCurrentPlayerPos()){
 				break;
-			}	
+			}
 			i++;
 		}
-		
+
 		if(isSug){
 			if(found){
 				System.out.println("FoundCard: "+ isCard);
@@ -228,57 +232,64 @@ public class AccSugg{
 			}
 		}else{
 			if(foundRoom && foundChar && foundWeap){
-				
+
 			}else{
-				
+
 			}
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	private void foundDialog(CardName isCard, boolean isFound){
-		JDialog d = new JDialog(data.getFrame());
+		 d = new JDialog(data.getFrame());
 		JPanel p = new JPanel(null);
+		JLabel label = new JLabel("Theory Disproven",SwingConstants.CENTER);
+		//label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		label.setSize(new Dimension(140,50));
+		label.setLocation(0, 2);
+		label.setBackground(Color.black);
+		label.setVisible(true);
 		if(isFound){
-			p.setPreferredSize(new Dimension(140,265));		
+			p.setPreferredSize(new Dimension(140,315));
 			p.setBackground(Color.black);
 			//d.setPreferredSize(new Dimension(210,400));
 			JPanel p1 = new JPanel(null);
-			p1.setSize(new Dimension(140,265));
+			p1.setSize(new Dimension(140,315));
 			p1.setBackground(Color.white);
 			d.setLayout(null);
 			d.setContentPane(p);
-			
+
 			JLabel j = new JLabel();
 			j.setSize(new Dimension(140,230) );
-			j.setLocation(5, 2);
+			j.setLocation(5, 52);
 			ImageIcon print = new ImageIcon(new LoadImage().load_image(isCard));
 			Image printS = print.getImage();
 			Image scale = printS.getScaledInstance(261/2, 468/2, java.awt.Image.SCALE_SMOOTH);
 			print = new ImageIcon(scale);
 			j.setIcon(print);
 			JButton b = new JButton("OK!");
-			b.addActionListener(new ActionListener() {				
+			b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-										
+						d.dispose();
+						acc.dispose();
 				}
 			});
-			
+
 			b.setSize(p1.getWidth(),30);
 			b.setLocation(0, p1.getHeight()-30);
 			p1.add(j);
 			p1.add(b);
+			p1.add(label);
 			p.add(p1);
-			d.setTitle("Disproven");
 			d.setResizable(false);
 			d.pack();
 			d.setLocationRelativeTo(null);
 			d.setVisible(true);
 		}else{
-			
+
 		}
 	}
 
@@ -290,14 +301,14 @@ public class AccSugg{
 		RG.setText("The Reverend Green");
 		MP.setText("Mrs. Peacock");
 		PP.setText("Professor Plum");
-		
+
 		charsGroup.add(MS);
 		charsGroup.add(CM);
 		charsGroup.add(MW);
 		charsGroup.add(RG);
 		charsGroup.add(MP);
 		charsGroup.add(PP);
-		
+
 		chars.add(MS);
 		chars.add(CM);
 		chars.add(MW);
@@ -308,8 +319,8 @@ public class AccSugg{
 		chars.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(Color.gray, 1),
 				BorderFactory.createEmptyBorder()));
-				
-		
+
+
 	}
 
 
@@ -320,14 +331,14 @@ public class AccSugg{
 		Revolver.setText("Revolver");
 		Rope.setText("Rope");
 		Spanner.setText("Spanner");
-		
+
 		weaponsGroup.add(Dagger);
 		weaponsGroup.add(Candlestick);
 		weaponsGroup.add(LeadPipe);
 		weaponsGroup.add(Revolver);
 		weaponsGroup.add(Rope);
 		weaponsGroup.add(Spanner);
-		
+
 		weapons.add(Dagger);
 		weapons.add(Candlestick);
 		weapons.add(LeadPipe);
@@ -339,18 +350,18 @@ public class AccSugg{
 		weapons.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(Color.gray, 1),
 				BorderFactory.createEmptyBorder()));
-		
+
 	}
-	
+
 	public static void main(String[] ee){
 		JFrame frame = new JFrame();
 		Data data = new Data();
 		data.setFrame(frame);
 		AccSugg aug = new AccSugg(data);
 		aug.foundDialog(CardName.BALL_ROOM,true);
-		
+
 	}
-	
+
 //	private void changeColor() {
 //		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
 //			this.setBackground(new Color(246, 135, 135));
