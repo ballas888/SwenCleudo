@@ -32,7 +32,10 @@ import cluedo.load.LoadImage;
 import cluedo.main.Data;
 import cluedo.main.Game.Room;
 import cluedo.main.Tile;
-
+/*
+ * Represents the panel for players to accuse or suggest
+ * theories on other players
+ */
 public class AccSugg{
 
 	private Data data;
@@ -64,7 +67,7 @@ public class AccSugg{
 	private JPanel weapons = new JPanel(new GridLayout(0,1,1,1));
 	private JPanel rooms = new JPanel(new GridLayout(0,1,1,1));
 
-
+	//player radio buttons
 	private final JRadioButtonMenuItem MS = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem CM = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem MW = new JRadioButtonMenuItem();
@@ -107,7 +110,7 @@ public class AccSugg{
 		}
 	}
 
-
+	//user is accusing
 	private void buildAcc() {
 		int spacing = 100;
 		acc = new JDialog(data.getFrame());
@@ -123,7 +126,6 @@ public class AccSugg{
 		setUpChars();
 		setUpRooms();
 
-		//title1.setPreferredSize(new Dimension(width/2,50));
 		pan1.setPreferredSize(new Dimension(width+spacing,20));
 		pan2.setPreferredSize(new Dimension(width+spacing,160));
 		pan3.setPreferredSize(new Dimension(width+spacing,30));
@@ -134,9 +136,6 @@ public class AccSugg{
 		weapons.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(),
 				BorderFactory.createEmptyBorder()));
-
-//		cancel.setPreferredSize(new Dimension(175,20));
-//		suggest.setPreferredSize(new Dimension(175,20));
 
 		pan1.add(title1);
 		pan1.add(title2);
@@ -156,7 +155,7 @@ public class AccSugg{
 		acc.setVisible(true);
 	}
 
-
+	//user is suggesting
 	private void buildSugg() {
 		acc = new JDialog(data.getFrame());
 		acc.setSize(new Dimension(width, height));
@@ -168,7 +167,6 @@ public class AccSugg{
 		setUpWeapons();
 		setUpChars();
 
-		//title1.setPreferredSize(new Dimension(width/2,50));
 		pan1.setPreferredSize(new Dimension(width,20));
 		pan2.setPreferredSize(new Dimension(width,160));
 		pan3.setPreferredSize(new Dimension(width,30));
@@ -179,9 +177,6 @@ public class AccSugg{
 		weapons.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(),
 				BorderFactory.createEmptyBorder()));
-
-//		cancel.setPreferredSize(new Dimension(175,20));
-//		suggest.setPreferredSize(new Dimension(175,20));
 
 		pan1.add(title1);
 		pan1.add(title2);
@@ -340,7 +335,6 @@ public class AccSugg{
 		weapons.add(Revolver);
 		weapons.add(Rope);
 		weapons.add(Spanner);
-		//weapons.setPreferredSize(new Dimension(width/2,30));
 
 		weapons.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(Color.gray, 1),
@@ -369,7 +363,8 @@ public class AccSugg{
 		rooms.add(Lounge);
 		rooms.add(Study);
 	}
-
+	
+	//try and disprove the user
 	private void checkResult(ArrayList<CardName> cards, boolean isSug){
 		ArrayList<Chars> players = data.getPlayChars();
 		CardName chars = cards.get(0);
@@ -414,15 +409,19 @@ public class AccSugg{
 			}
 		}else{
 			if(chars == data.getMCharCard().getName() && weap == data.getMWeapCard().getName() && room == data.getMRoomCard().getName()){
+				//accusation is correct
 				accPopUp(false);
 			}else{
+				//accusation is wrong
 				accPopUp(true);
 			}
 		}
 		if(isSug){
 			if(found){
+				//suggestion is proven wrong
 				foundDialog(isCard, true);
 			}else{
+				//suggestion isnt proven wrong
 				foundDialog(isCard, false);
 			}
 		}
@@ -431,6 +430,7 @@ public class AccSugg{
 
 	}
 
+	//notify user if their accusation is right or wrong
 	private void accPopUp(boolean isDead){
 		d = new JDialog(acc);
 		d.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -496,6 +496,7 @@ public class AccSugg{
 
 	}
 
+	//notify user if their suggestion could be correct
 	private void foundDialog(CardName isCard, boolean isFound){
 
 		d = new JDialog(acc);
@@ -580,19 +581,4 @@ public class AccSugg{
 
 	}
 
-//	private void changeColor() {
-//		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
-//			this.setBackground(new Color(246, 135, 135));
-//		}else if(data.getCurrentPlayer().get_name() == CharsName.COLONEL_MUSTARD){
-//			this.setBackground(new Color(244, 212, 137));
-//		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_WHITE){
-//			this.setBackground(new Color(255,255,255));
-//		}else if(data.getCurrentPlayer().get_name() == CharsName.REVEREND_GREEN){
-//			this.setBackground(new Color(135, 191, 165));
-//		}else if(data.getCurrentPlayer().get_name() == CharsName.MRS_PEACOCK){
-//			this.setBackground(new Color(185, 205, 228));
-//		}else if(data.getCurrentPlayer().get_name() == CharsName.PROFESSOR_PLUM){
-//			this.setBackground(new Color(202, 188, 208));
-//		}
-//	}
 }

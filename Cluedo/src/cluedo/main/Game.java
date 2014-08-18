@@ -176,6 +176,7 @@ public class Game implements KeyListener, MouseListener{
 		th = new Thread(new renderThread());
 
 	}
+	//Various update hud methods
 	public void updateHUDButtons(boolean sugg){
 		((HUD) hud).updateHUDButtons(sugg);
 	}

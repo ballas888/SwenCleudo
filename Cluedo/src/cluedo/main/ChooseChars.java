@@ -26,7 +26,7 @@ import cluedo.character.Chars;
 import cluedo.character.CharsName;
 
 /*
- * Sets up the players using a button selected
+ * Sets up the players using a button selection panel
  */
 
 public class ChooseChars {
@@ -43,8 +43,8 @@ public class ChooseChars {
 	private final JPanel charPanel = new JPanel(new GridLayout(0,1,1,1));
 
 	//buttons
-	private final JButton select = new JButton("Select");
-	private final JButton done = new JButton("Done");
+	private final JButton select = new JButton("Setup Player");
+	private final JButton done = new JButton("Start Game");
 
 	//where players enter their name
 	private JTextField pName = new JTextField();
@@ -61,20 +61,8 @@ public class ChooseChars {
 	private String PPName = null;
 	private int numSelec = 0;
 
-//	private TheChars MSName = new TheChars(CharsName.MISS_SCARLET);
-//	private ArrayList<TheChars> the_chars = new ArrayList<TheChars>();
-
 	private JDialog dialog;
 	private JFrame frame;
-
-//	public class TheChars{
-//		public CharsName name;
-//		public String pname;
-//
-//		public TheChars(CharsName name){
-//			this.name = name;
-//		}
-//	}
 
 	public ChooseChars(ArrayList<Chars> allChars, JFrame frame){
 		this.charList = allChars;
@@ -84,15 +72,6 @@ public class ChooseChars {
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				if (numSelec > 0) {//FOR TESTING
-				//add selected to the list
-//					for(int i = 0; i < the_chars.size();i++){
-//						for(int j = 0; j < charList.size();j++){
-//							if(the_chars.get(i).name == charList.get(j).get_name()){
-//								charList.get(j).setPlayName(the_chars.get(i).pname);
-//							}
-//						}
-//					}
-
 					for(Chars c : charList){
 						if(MSName != null && !MSName.isEmpty() && c.get_name().equals(CharsName.MISS_SCARLET)){
 							c.setPlayName(MSName);
@@ -133,7 +112,6 @@ public class ChooseChars {
 					nameError();
 
 				//name is longer than 15 chars
-				//TODO: unlimited size
 				}else if(pName.getText().length() > 15){
 					nameErrorLeng();
 
@@ -191,11 +169,6 @@ public class ChooseChars {
 
 
 	public void choosePlayers() {
-		// JFrame guiFrame = new JFrame();
-		// guiFrame.setContentPane(panel2);
-		// guiFrame.setBounds(0, 0, 200, 200);
-		// guiFrame.setVisible(true);
-
 		MS.setText("Miss Scarlett");
 		CM.setText("Colonol Mustard");
 		MW.setText("Mrs White");
@@ -267,6 +240,7 @@ public class ChooseChars {
 	/**
 	 * Various user logic errors to throw in their face
 	 */
+	//User hasnt selected 3 players
 	private void doneError(){
 		final JDialog notify = new JDialog(dialog);
 		JLabel label = new JLabel("You Must Choose At Least 3 Players",SwingConstants.CENTER);
@@ -293,6 +267,7 @@ public class ChooseChars {
 		notify.setVisible(true);
 	}
 
+	//user has selected a character but not a name
 	private void nameError(){
 		final JDialog notify = new JDialog(dialog);
 		JLabel label = new JLabel("Please Enter Name",SwingConstants.CENTER);
@@ -324,6 +299,7 @@ public class ChooseChars {
 
 	}
 
+	//user has entered a name but not a character
 	private void charselectError(){
 		final JDialog notify = new JDialog(dialog);
 		JLabel label = new JLabel("Please Select A Character",SwingConstants.CENTER);
@@ -351,6 +327,7 @@ public class ChooseChars {
 
 	}
 
+	//users name is more than 15 characters
 	private void nameErrorLeng() {
 		final JDialog notify = new JDialog(dialog);
 		JLabel label = new JLabel("Name Cannot Be More Than 15 Characters",SwingConstants.CENTER);

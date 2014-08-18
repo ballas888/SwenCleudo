@@ -17,7 +17,10 @@ import javax.swing.border.LineBorder;
 import cluedo.character.CharsName;
 import cluedo.main.Data;
 import cluedo.main.Game;
-
+/*
+ * Represents the players hud panel with what buttons are available to them 
+ * at that given moment
+ */
 public class HUD extends JPanel{
 
 	private final JButton endTurn = new JButton("End Turn");

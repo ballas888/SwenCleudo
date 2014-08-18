@@ -13,7 +13,11 @@ import javax.swing.JTextField;
 import cluedo.character.CharsName;
 import cluedo.character.Dice;
 import cluedo.main.Data;
-
+/*
+ * Represents the players information hud
+ * which contains their name and the amount
+ * of steps they have left
+ */
 public class InfoHUD extends JPanel{
 	
 	private Data data;
@@ -67,6 +71,7 @@ public class InfoHUD extends JPanel{
 		this.setVisible(true);
 	}
 	
+	//Shows how many steps they have left
 	private void drawDice(){
 		this.setVisible(false);
 		int d1Value = data.getCurrentPlayer().getDieRolled(1);

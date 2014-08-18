@@ -9,7 +9,9 @@ import javax.swing.JMenuItem;
 
 import cluedo.main.Data;
 import cluedo.main.Game;
-
+/*
+ * Menu bar on the canvas
+ */
 public class MenuBar extends JMenuBar{
 	private Data data;
 	public MenuBar(Data data){
@@ -23,7 +25,6 @@ public class MenuBar extends JMenuBar{
 	}
 
 	private JMenuItem addExit() {
-		// TODO Auto-generated method stub
 		JMenuItem exit = new JMenuItem("Exit");
 
 		exit.addActionListener(new ActionListener() {
@@ -37,7 +38,6 @@ public class MenuBar extends JMenuBar{
 
 	}
 	private JMenuItem addNewGame() {
-		// TODO Auto-generated method stub
 		JMenuItem newGame = new JMenuItem("New Game");
 
 		newGame.addActionListener(new ActionListener() {

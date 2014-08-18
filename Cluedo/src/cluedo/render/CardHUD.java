@@ -14,7 +14,10 @@ import javax.swing.JPanel;
 import cluedo.character.Card;
 import cluedo.character.CharsName;
 import cluedo.main.Data;
-
+/*
+ * Represents the players card panel
+ * with their cards in a scrollable panel
+ */
 public class CardHUD extends JPanel{
 	
 	//private Data data;

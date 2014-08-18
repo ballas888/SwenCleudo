@@ -37,6 +37,11 @@ public class Data {
 	private HUDData hud;
 	private Screen screen;
 
+	/*
+	 * Eliminates a player from the game
+	 * first by divying up their cards
+	 * then removing them from the play list
+	 */
 	public void eliminate(){
 		ArrayList<Card> divide = playChars.get(currentPlayer).getCards();
 		playChars.remove(currentPlayer);
@@ -112,6 +117,10 @@ public class Data {
 		return this.mousePath;
 	}
 
+	/*
+	 * Moves to next player in the list
+	 * If reaching the end of the list, loop back around
+	 */
 	public void nextPlayer() {
 		if(currentPlayer < 0){
 			currentPlayer = 0;

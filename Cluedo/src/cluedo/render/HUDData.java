@@ -1,7 +1,10 @@
 package cluedo.render;
 
 import javax.swing.JPanel;
-
+/*
+ * Holds the 3 panels together so and can update them
+ * at any given time
+ */
 public class HUDData {
 	private JPanel HUD;
 	private JPanel CardHUD;
