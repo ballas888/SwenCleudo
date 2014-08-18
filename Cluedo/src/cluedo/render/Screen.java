@@ -25,7 +25,6 @@ public class Screen extends Canvas{
 
 	public Screen(int width, int height){
 		Dimension size = new Dimension(width,height);
-		System.out.println("Dimension: "+width +" "+height);
 		setSize(size);
 		setFocusable(true);
 		setBackground(new Color(200,200,200));
@@ -85,13 +84,13 @@ public class Screen extends Canvas{
 	private void render_path(Graphics2D g, Data da){
 		ArrayList<Point> points = da.getMousePath();
 		Tile[][] tiles = da.getTiles();
-		
+
 		if(points.size()>0){
 			for(int i = 0; i < points.size();i++){
 				Point point = points.get(i);
 				Tile tile = tiles[point.y][point.x];
 				double ox = tile.getPos().getX();
-				double oy = tile.getPos().getY();				
+				double oy = tile.getPos().getY();
 				if(i == 0){
 					double pSize = da.getTileSize()/2;
 					g.setColor(Color.BLUE);
@@ -100,13 +99,13 @@ public class Screen extends Canvas{
 					g.fill(r2);
 				}else{
 					double pSize = da.getTileSize()/3;
-					g.setColor(Color.GREEN);					
+					g.setColor(Color.GREEN);
 					double p = da.getTileSize()/2-pSize/2;
 					Rectangle2D r2 = new Rectangle2D.Double(p+ox,p+oy,pSize,pSize);
 					g.fill(r2);
 				}
-				
-				
+
+
 			}
 		}
 	}

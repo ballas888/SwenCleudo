@@ -16,15 +16,17 @@ import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import cluedo.character.Chars;
 import cluedo.character.CharsName;
 
 /*
- * Sets up the players using a button selected 
+ * Sets up the players using a button selected
  */
 
 public class ChooseChars {
@@ -35,21 +37,21 @@ public class ChooseChars {
 	private JRadioButtonMenuItem RG = new JRadioButtonMenuItem();
 	private JRadioButtonMenuItem MP = new JRadioButtonMenuItem();
 	private JRadioButtonMenuItem PP = new JRadioButtonMenuItem();
-	
+
 	//radio button group
 	private final ButtonGroup bj = new ButtonGroup();
 	private final JPanel charPanel = new JPanel(new GridLayout(0,1,1,1));
-	
+
 	//buttons
 	private final JButton select = new JButton("Select");
 	private final JButton done = new JButton("Done");
-	
+
 	//where players enter their name
 	private JTextField pName = new JTextField();
 
 	//list of playable players
 	private ArrayList<Chars> charList;
-	
+
 	//temp player name strings
 	private String MSName = null;
 	private String CMName = null;
@@ -58,27 +60,27 @@ public class ChooseChars {
 	private String MPName = null;
 	private String PPName = null;
 	private int numSelec = 0;
-	
+
 //	private TheChars MSName = new TheChars(CharsName.MISS_SCARLET);
 //	private ArrayList<TheChars> the_chars = new ArrayList<TheChars>();
-	
+
 	private JDialog dialog;
 	private JFrame frame;
-	
+
 //	public class TheChars{
 //		public CharsName name;
 //		public String pname;
-//		
+//
 //		public TheChars(CharsName name){
 //			this.name = name;
 //		}
 //	}
-	
+
 	public ChooseChars(ArrayList<Chars> allChars, JFrame frame){
 		this.charList = allChars;
 		this.frame = frame;
 		 dialog = new JDialog(this.frame);
-		
+
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				if (numSelec > 0) {//FOR TESTING
@@ -90,7 +92,7 @@ public class ChooseChars {
 //							}
 //						}
 //					}
-					
+
 					for(Chars c : charList){
 						if(MSName != null && !MSName.isEmpty() && c.get_name().equals(CharsName.MISS_SCARLET)){
 							c.setPlayName(MSName);
@@ -113,81 +115,81 @@ public class ChooseChars {
 						}
 					}
 					dialog.dispose();
-					
+
 				} else {
 					doneError();
 				}
 			}
 		});
-		
-		
+
+
 		select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				//get what has been selected
 				ButtonModel b = bj.getSelection();
-				
+
 				//user hasnt entered name
 				if(pName.getText() == null || pName.getText().isEmpty()){
 					nameError();
-					
+
 				//name is longer than 15 chars
 				//TODO: unlimited size
-				}else if(pName.getText().length() > 100){
-					nameErrorLeng();	
-					
+				}else if(pName.getText().length() > 15){
+					nameErrorLeng();
+
 				//user hasnt selected anything!
 				}else if(b == null){
 					charselectError();
-					
+
 				//everything checks out so move on
 				}else if (MS.isSelected()) {
-					MS.setEnabled(false);					
+					MS.setEnabled(false);
 					MSName = pName.getText();
 					numSelec++;
-					
+
 				} else if (CM.isSelected()) {
 					CM.setEnabled(false);
 					CMName = pName.getText();
 					numSelec++;
-					
+
 				} else if (MW.isSelected()) {
 					MW.setEnabled(false);
 					MWName = pName.getText();
 					numSelec++;
-					
+
 				} else if (RG.isSelected()) {
 					RG.setEnabled(false);
 					RGName = pName.getText();
 					numSelec++;
-					
+
 				} else if (MP.isSelected()) {
 					MP.setEnabled(false);
 					MPName = pName.getText();
 					numSelec++;
-					
-				} else if (PP.isSelected()) {					
+
+				} else if (PP.isSelected()) {
 					PP.setEnabled(false);
 					PPName = pName.getText();
 					numSelec++;
-				} 				
+				}
 				pName.setText(null);
 				bj.clearSelection();
 				pName.requestFocus();
 			}
 
-			
+
 		});
-		
+
 		dialog.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		
+
 		choosePlayers();
 	}
-	
-	
+
+
 	public void choosePlayers() {
 		// JFrame guiFrame = new JFrame();
 		// guiFrame.setContentPane(panel2);
@@ -233,17 +235,17 @@ public class ChooseChars {
 
 		dialog.setContentPane(charPanel);
 		charPanel.add(pName);
-		
+
 		charPanel.setBackground(Color.white);
-		
-		
+
+
 		bj.add(MS);
 		bj.add(CM);
 		bj.add(MW);
 		bj.add(RG);
 		bj.add(MP);
 		bj.add(PP);
-		
+
 		charPanel.add(MS);
 		charPanel.add(CM);
 		charPanel.add(MW);
@@ -261,130 +263,118 @@ public class ChooseChars {
 		dialog.setVisible(true);
 
 	}
-	
+
 	/**
 	 * Various user logic errors to throw in their face
 	 */
 	private void doneError(){
 		final JDialog notify = new JDialog(dialog);
-		JButton ok = new JButton("OK!");
+		JLabel label = new JLabel("You Must Choose At Least 3 Players",SwingConstants.CENTER);
+		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				notify.dispose();							
-			}						
+				notify.dispose();
+			}
 		});
-		JPanel dPanel = new JPanel();
-		notify.setTitle("Warning");
+		JPanel dPanel = new JPanel(new GridLayout(2,0));
 		notify.setVisible(true);
-		JTextField notification = new JTextField();
-		notification.setText(" You must choose at least 3 players! ");
-		notification.setEditable(false);
-		notification.setBorder(BorderFactory.createEmptyBorder()
-				);
-		notification.setBackground(Color.white);
-		dPanel.add(notification);
+
+		dPanel.add(label);
 		dPanel.add(ok);
 		dPanel.setBackground(Color.white);
-		notify.add(dPanel);					
+
+		notify.setContentPane(dPanel);
 		notify.setBackground(Color.white);
-		notify.setSize(new Dimension(250, 100));
+		notify.setSize(new Dimension(280, 100));
 		notify.setResizable(false);
 		notify.setLocationRelativeTo(dialog);
 		notify.setModal(true);
 		notify.setVisible(true);
 	}
-	
+
 	private void nameError(){
 		final JDialog notify = new JDialog(dialog);
-		JButton ok = new JButton("OK!");
+		JLabel label = new JLabel("Please Enter Name",SwingConstants.CENTER);
+		JButton ok = new JButton("OK");
+
 		ok.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				notify.dispose();							
-			}						
+				notify.dispose();
+			}
 		});
-		JPanel dPanel = new JPanel();
-		notify.setTitle("Warning");
+
+		JPanel dPanel = new JPanel(new GridLayout(2,0));
 		notify.setVisible(true);
-		JTextField notification = new JTextField();
-		notification.setText("Please Enter Name!");		
-		notification.setEditable(false);
-		notification.setBorder(BorderFactory.createEmptyBorder()
-				);
-		notification.setBackground(Color.white);
-		dPanel.add(notification);
+
+		label.setBackground(Color.white);
+		dPanel.add(label);
 		dPanel.add(ok);
 		dPanel.setBackground(Color.white);
-		notify.add(dPanel);					
+
+		notify.setContentPane(dPanel);
 		notify.setBackground(Color.white);
-		notify.setSize(new Dimension(150, 100));
+		notify.setSize(new Dimension(160, 100));
 		notify.setResizable(false);
+		notify.toFront();
 		notify.setLocationRelativeTo(dialog);
 		notify.setModal(true);
 		notify.setVisible(true);
-	
+
 	}
-	
+
 	private void charselectError(){
 		final JDialog notify = new JDialog(dialog);
-		JButton ok = new JButton("OK!");
+		JLabel label = new JLabel("Please Select A Character",SwingConstants.CENTER);
+
+		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				notify.dispose();							
-			}						
+				notify.dispose();
+			}
 		});
-		JPanel dPanel = new JPanel();
-		notify.setTitle("Warning");
+		JPanel dPanel = new JPanel(new GridLayout(2,0));
 		notify.setVisible(true);
-		JTextField notification = new JTextField();
-		notification.setText("Please Select a Character!");		
-		notification.setEditable(false);
-		notification.setBorder(BorderFactory.createEmptyBorder()
-				);
-		notification.setBackground(Color.white);
-		dPanel.add(notification);
+		dPanel.add(label);
 		dPanel.add(ok);
 		dPanel.setBackground(Color.white);
-		notify.add(dPanel);					
+
+		notify.setContentPane(dPanel);
 		notify.setBackground(Color.white);
-		notify.setSize(new Dimension(200, 100));
+		notify.setSize(new Dimension(210, 100));
 		notify.setResizable(false);
 		notify.setLocationRelativeTo(dialog);
 		notify.setModal(true);
 		notify.setVisible(true);
-	
+
 	}
-	
+
 	private void nameErrorLeng() {
 		final JDialog notify = new JDialog(dialog);
-		JButton ok = new JButton("OK!");
+		JLabel label = new JLabel("Name Cannot Be More Than 15 Characters",SwingConstants.CENTER);
+
+		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				notify.dispose();							
-			}						
+				notify.dispose();
+			}
 		});
-		JPanel dPanel = new JPanel();
-		notify.setTitle("Warning");
+		JPanel dPanel = new JPanel(new GridLayout(2,0));
 		notify.setVisible(true);
-		JTextField notification = new JTextField();
-		notification.setText("The Name Entered is to long. It must be 15 or less characters");		
-		notification.setEditable(false);
-		notification.setBorder(BorderFactory.createEmptyBorder()
-				);
-		notification.setBackground(Color.white);
-		dPanel.add(notification);
+		dPanel.add(label);
 		dPanel.add(ok);
 		dPanel.setBackground(Color.white);
-		notify.add(dPanel);					
+
+		notify.setContentPane(dPanel);
 		notify.setBackground(Color.white);
-		notify.setSize(new Dimension(400, 100));
+		notify.setSize(new Dimension(310, 100));
 		notify.setResizable(false);
 		notify.setLocationRelativeTo(dialog);
 		notify.setModal(true);
 		notify.setVisible(true);
-		
+
 	}
 }
