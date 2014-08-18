@@ -1,8 +1,12 @@
 package cluedo.main;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import cluedo.character.Card;
 import cluedo.character.Chars;
@@ -37,7 +41,7 @@ public class Data {
 		this.mousePath = points;
 	}
 
-	public void populateChoosen(Data data){
+	public void populateChoosen(Data data, JFrame frame){
 		Tile[][] tiles = data.getTiles();
 		for(int i = 0;i < allChars.size(); i++){
 			if(allChars.get(i).isPlayable()){
@@ -46,6 +50,16 @@ public class Data {
 				playChars.add(allChars.get(i));
 			}
 		}
+		JDialog d = new JDialog(frame);
+		d.setSize(new Dimension(200,200));
+		d.setLocationRelativeTo(null);
+		int max = 0;
+		int charPos = 0;
+		for(int i = 0; i<playChars.size();i++){
+			
+		}
+		d.setVisible(true);
+		
 		playChars.get(0).nowPlaying();
 	}
 

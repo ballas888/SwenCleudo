@@ -81,7 +81,7 @@ public class ChooseChars {
 		
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				if (numSelec >= 0) {//FOR TESTING
+				if (numSelec > 0) {//FOR TESTING
 				//add selected to the list
 //					for(int i = 0; i < the_chars.size();i++){
 //						for(int j = 0; j < charList.size();j++){
@@ -113,6 +113,7 @@ public class ChooseChars {
 						}
 					}
 					dialog.dispose();
+					
 				} else {
 					doneError();
 				}
