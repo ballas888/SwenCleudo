@@ -14,32 +14,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cluedo.character.Chars;
-import cluedo.character.PlayerKey;
-import cluedo.character.PlayerMouse;
 import cluedo.main.Data;
 import cluedo.main.Tile;
 
 public class Screen extends Canvas{
-	private PlayerKey key;
-	private PlayerMouse mouse;
+
 
 	public Screen(int width, int height){
 		Dimension size = new Dimension(width,height);
 		setSize(size);
 		setFocusable(true);
 		setBackground(new Color(200,200,200));
-		key = new PlayerKey();
-		mouse = new PlayerMouse();
-		addKeyListener(key);
-		addMouseListener(mouse);
-	}
-
-	public PlayerKey get_key(){
-		return this.key;
-	}
-
-	public PlayerMouse get_mouse(){
-		return this.mouse;
 	}
 
 	public void createBStrategy(){
