@@ -245,7 +245,7 @@ public class AccSugg{
 	}
 
 	private void accPopUp(boolean isDead){
-		d = new JDialog(data.getFrame());
+		d = new JDialog(acc);
 		JPanel p = new JPanel(null);
 		String text = "You're the Weakest Link";
 		if(!isDead){
@@ -287,7 +287,7 @@ public class AccSugg{
 		p.add(p1);
 		d.setResizable(false);
 		d.pack();
-		d.setLocationRelativeTo(null);
+		d.setLocationRelativeTo(acc);
 		d.setModal(true);
 		d.setVisible(true);
 
@@ -295,7 +295,7 @@ public class AccSugg{
 
 	private void foundDialog(CardName isCard, boolean isFound){
 
-		d = new JDialog(data.getFrame());
+		d = new JDialog(acc);
 		JPanel p = new JPanel(null);
 		String text = "Theory Disproven";
 		if(!isFound){
