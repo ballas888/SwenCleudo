@@ -576,7 +576,6 @@ public class AccSugg{
 		Data data = new Data();
 		data.setFrame(frame);
 		AccSugg aug = new AccSugg(data,true);
-		//aug.accPopUp(true);
 		aug.foundDialog(CardName.BALL_ROOM,false);
 
 	}

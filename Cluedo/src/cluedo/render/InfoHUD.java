@@ -53,16 +53,12 @@ public class InfoHUD extends JPanel{
 		this.add(d1);
 		this.add(d2);
 		this.add(title);
-		//title.setBackground((Color.black));
-		//this.add(current);
 		this.validate();
 		this.setVisible(true);
 	}
 	
 	public void drawInfo(){
-		this.setVisible(false);
-		//this.removeAll();
-		
+		this.setVisible(false);		
 		changeColor();
 		updateName();
 		drawDice();
@@ -92,7 +88,6 @@ public class InfoHUD extends JPanel{
 	
 	private void updateName(){
 		current.setVisible(false);
-		//current.removeAll();
         StringBuilder sb = new StringBuilder(64);
         sb.append("<html><div style=\"text-align: center;\">" + data.getCurrentPlayer().getPlayName()).append("<br>Playing As:<br>").append(data.getCurrentPlayer().get_name()+"</html>");
 		current.setText(sb.toString());
