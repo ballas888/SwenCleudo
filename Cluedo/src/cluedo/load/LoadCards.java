@@ -46,6 +46,10 @@ public class LoadCards {
 		data.setMCharCard(middleCharCard);
 		data.setMWeapCard(middleWeaponCard);
 		
+		System.out.println(middleRoomCard.getName());
+		System.out.println(middleCharCard.getName());
+		System.out.println(middleWeaponCard.getName());
+		
 		ArrayList<Card> cards = new ArrayList<Card>();
 		cards.addAll(rooms);
 		cards.addAll(chars);

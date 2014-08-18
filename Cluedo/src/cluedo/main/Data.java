@@ -36,6 +36,10 @@ public class Data {
 		this.frame = frame;
 	}
 	
+	public int getCurrentPlayerPos(){
+		return this.currentPlayer;
+	}
+	
 	public JFrame getFrame(){
 		return this.frame;
 	}

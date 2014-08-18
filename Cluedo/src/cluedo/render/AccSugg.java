@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -17,10 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import javax.swing.plaf.ActionMapUIResource;
 
+import cluedo.character.Card;
 import cluedo.character.CardName;
 import cluedo.character.Chars;
 import cluedo.character.CharsName;
+import cluedo.load.LoadImage;
 import cluedo.main.Data;
 import cluedo.main.Game.Room;
 import cluedo.main.Tile;
@@ -106,6 +112,7 @@ public class AccSugg{
 	private void setUpButtons() {
 		suggest.addActionListener(new ActionListener(){
 
+			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CardName chars = CardName.MISS_SCARLET_C;
@@ -145,6 +152,11 @@ public class AccSugg{
 				CardName room = CardName.BALL_ROOM;
 				room = room.valueOf(rm.toString());
 				System.out.println(room + " " + chars + " " + weap);
+				ArrayList<CardName> cards = new ArrayList<CardName>();
+				cards.add(chars);
+				cards.add(weap);
+				cards.add(room);
+				checkResult(cards, true);
 			}
 			
 		});
@@ -157,6 +169,117 @@ public class AccSugg{
 			}
 			
 		});
+	}
+	
+	private void checkResult(ArrayList<CardName> cards, boolean isSug){
+		ArrayList<Chars> players = data.getPlayChars();
+		CardName chars = cards.get(0);
+		CardName weap = cards.get(1);
+		CardName room = cards.get(2);
+		
+		CardName isCard = CardName.BALL_ROOM;
+		boolean foundRoom = false;
+		boolean foundWeap = false;
+		boolean foundChar = false;
+		boolean found = false;
+		int i = data.getCurrentPlayerPos();
+		
+		loop: while(i<players.size()){
+			ArrayList<Card> crds = players.get(i).getCards(); 
+			for(Card crd: crds){
+				if(crd.getName() == chars){				
+					found = true;
+					isCard = chars;	
+					foundChar = true;
+					if(isSug){
+						break loop;
+					}
+				}if(crd.getName() ==weap){
+					found = true;
+					isCard = weap;
+					foundWeap = true;
+					if(isSug){
+						break loop;
+					}
+				}if(crd.getName() ==room){
+					found = true;
+					isCard = room;
+					foundRoom = true;
+					if(isSug){
+						break loop;
+					}
+				}
+			}				
+			
+			if(i >= players.size()){
+				System.out.println(i);
+				i = 0;
+				continue;
+			}else if (i+1 == data.getCurrentPlayerPos()){
+				break;
+			}	
+			i++;
+		}
+		
+		if(isSug){
+			if(found){
+				System.out.println("FoundCard: "+ isCard);
+				foundDialog(isCard, true);
+			}
+		}else{
+			if(foundRoom && foundChar && foundWeap){
+				
+			}else{
+				
+			}
+		}
+		
+		
+		
+	}
+	
+	private void foundDialog(CardName isCard, boolean isFound){
+		JDialog d = new JDialog(data.getFrame());
+		JPanel p = new JPanel(null);
+		if(isFound){
+			p.setPreferredSize(new Dimension(140,265));		
+			p.setBackground(Color.black);
+			//d.setPreferredSize(new Dimension(210,400));
+			JPanel p1 = new JPanel(null);
+			p1.setSize(new Dimension(140,265));
+			p1.setBackground(Color.white);
+			d.setLayout(null);
+			d.setContentPane(p);
+			
+			JLabel j = new JLabel();
+			j.setSize(new Dimension(140,230) );
+			j.setLocation(5, 2);
+			ImageIcon print = new ImageIcon(new LoadImage().load_image(isCard));
+			Image printS = print.getImage();
+			Image scale = printS.getScaledInstance(261/2, 468/2, java.awt.Image.SCALE_SMOOTH);
+			print = new ImageIcon(scale);
+			j.setIcon(print);
+			JButton b = new JButton("OK!");
+			b.addActionListener(new ActionListener() {				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+										
+				}
+			});
+			
+			b.setSize(p1.getWidth(),30);
+			b.setLocation(0, p1.getHeight()-30);
+			p1.add(j);
+			p1.add(b);
+			p.add(p1);
+			d.setTitle("Disproven");
+			d.setResizable(false);
+			d.pack();
+			d.setLocationRelativeTo(null);
+			d.setVisible(true);
+		}else{
+			
+		}
 	}
 
 
@@ -219,6 +342,14 @@ public class AccSugg{
 		
 	}
 	
+	public static void main(String[] ee){
+		JFrame frame = new JFrame();
+		Data data = new Data();
+		data.setFrame(frame);
+		AccSugg aug = new AccSugg(data);
+		aug.foundDialog(CardName.BALL_ROOM,true);
+		
+	}
 	
 //	private void changeColor() {
 //		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
