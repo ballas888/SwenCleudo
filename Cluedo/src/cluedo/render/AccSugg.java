@@ -435,9 +435,9 @@ public class AccSugg{
 		d = new JDialog(acc);
 		d.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		JPanel p = new JPanel(null);
-		String text = "You're the Weakest Link";
+		String text = "<html><div style=\"text-align: center;\">You're Accusation Is Wrong<br> You Have Been Eliminated</html>";
 		if(!isDead){
-			text = "You Win";
+			text = "You Win!";
 		}
 		JLabel label = new JLabel(text, SwingConstants.CENTER);
 		label.setSize(new Dimension(140,70));
@@ -464,6 +464,7 @@ public class AccSugg{
 					data.eliminate();
 					d.dispose();
 					acc.dispose();
+					data.getHud().updateHUDRoll(true);
 					if(data.getPlayChars().size() == 1){
 						accPopUp(false);
 					}
@@ -575,7 +576,7 @@ public class AccSugg{
 		JFrame frame = new JFrame();
 		Data data = new Data();
 		data.setFrame(frame);
-		AccSugg aug = new AccSugg(data,true);
+		AccSugg aug = new AccSugg(data,false);
 		aug.foundDialog(CardName.BALL_ROOM,false);
 
 	}

@@ -62,6 +62,9 @@ public class HUD extends JPanel{
 	public void updateHUDButtons(boolean sug){
 		sugg.setEnabled(sug);
 	}
+	public void updateHUDRoll(boolean rol){
+		roll.setEnabled(rol);
+	}
 
 	private void changeColor() {
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){

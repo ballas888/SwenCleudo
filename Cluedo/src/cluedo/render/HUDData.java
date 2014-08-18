@@ -46,6 +46,10 @@ public class HUDData {
 	public void updateHUDButtons(boolean sugg){
 		((HUD) HUD).updateHUDButtons(sugg);
 	}
+	
+	public void updateHUDRoll(boolean roll){
+		((HUD) HUD).updateHUDRoll(roll);
+	}
 
 
 	public void setInfoHud(JPanel infoHud) {
