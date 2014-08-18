@@ -79,8 +79,8 @@ public class Chars {
 	}
 	
 	public void rollDice(){
-		int d1 = (int)Math.round(1+Math.random()*6);
-		int d2 = (int)Math.round(1+Math.random()*6);
+		int d1 = (int)Math.round(1+Math.random()*5);
+		int d2 = (int)Math.round(1+Math.random()*5);
 		
 		die1rolled = d1;
 		die2rolled = d2;		
