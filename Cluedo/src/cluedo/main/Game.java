@@ -241,13 +241,17 @@ public class Game implements KeyListener, MouseListener{
 
 			double tileX = ((targetX-ofset_x)/size);
 			double tileY = ((targetY-ofset_y)/size);
-			Stack<Point> points = new Stack<Point>();
+			Stack<Point> points = new Stack<Point>();			
 			ArrayList<Point> pnts = new ArrayList<Point>();
 			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
 				int x =(int) tileX;
 				int y = (int) tileY;								
 				if(tiles[y][x].get_room()!= Room.NULL && !tiles[y][x].HasChar()){
 					points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
+					if(points.size()>data.getCurrentPlayer().getDieRolled(1)
+							+data.getCurrentPlayer().getDieRolled(2)){
+						return;
+					}
 					pnts = new ArrayList<Point>();
 					while(!points.isEmpty()){
 						Point p = points.pop();
@@ -264,6 +268,7 @@ public class Game implements KeyListener, MouseListener{
 						data.setMousePath(pnts);
 						pnts = new ArrayList<Point>();
 						screen.render(data);
+						updateCurDice();
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -276,9 +281,27 @@ public class Game implements KeyListener, MouseListener{
 
 
 	}
+	
+	private void updateCurDice(){
+		Chars c = data.getCurrentPlayer();
+		int d1 = c.getDieRolled(1);
+		int d2 = c.getDieRolled(2);
+		if(d1 > 0){
+			c.setDieRolled(c.getDieRolled(1)-1, 1);
+		}else if(d2 >0){
+			c.setDieRolled(c.getDieRolled(2)-1, 2);
+		}else{
+			System.out.println("You are dead bitch");
+		}
+		System.out.println("here updateDice");
+		this.updateInfoHud();
+	}
 
 	public void keyPressed(KeyEvent e) {
 		boolean updated = false;
+		if(data.getCurrentPlayer().getDieRolled(1)+data.getCurrentPlayer().getDieRolled(2)<=0){
+			return;
+		}
 		if(e.getKeyCode() == KeyEvent.VK_UP){
 			updated = updatePlayerMove.updatePlayerMove(mFunc.MOVE_UP, data);
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -295,7 +318,8 @@ public class Game implements KeyListener, MouseListener{
 				this.updateHUDButtons(true, false, false);
 			}else{
 				this.updateHUDButtons(true, true, true);
-			}
+			}		
+			updateCurDice();
 		}
 		screen.render(data);
 	}
@@ -315,8 +339,7 @@ public class Game implements KeyListener, MouseListener{
 	public class renderThread implements Runnable{
 
 		@Override
-		public void run() {
-			// TODO Auto-generated method stub
+		public void run() {			
 			long time = System.currentTimeMillis();
 			while(true){
 			screen.render(data);
