@@ -7,13 +7,15 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-
 import javax.swing.JFrame;
 
 import cluedo.character.Card;
 import cluedo.character.Chars;
 import cluedo.load.LoadImage;
 import cluedo.load.LoadMap;
+import cluedo.main.Game.Room;
+import cluedo.render.HUDData;
+import cluedo.render.Screen;
 
 public class Data {
 	private JFrame frame;
@@ -31,23 +33,48 @@ public class Data {
 	private Card middleRoomCard;
 	private Card middleCharCard;
 	private Card middleWeapCard;
-	
+	private HUDData hud;
+	private Screen screen;
+
+	public void eliminate(){
+		ArrayList<Card> divide = playChars.get(currentPlayer).getCards();
+		playChars.remove(currentPlayer);
+		divideCards(divide);
+		this.currentPlayer--;
+		this.nextPlayer();
+		this.hud.updateCards();
+		this.hud.updateHUD();
+		this.hud.updateInfo();
+		screen.render(this);
+	}
+
+	private void divideCards(ArrayList<Card> list) {
+		ArrayList<Card> cards = list;
+		while(!cards.isEmpty()){
+			for(int i = 0; i < playChars.size();i++){
+				if(!cards.isEmpty()){
+					playChars.get(i).getCards().add(cards.remove(cards.size()-1));
+				}
+			}
+		}
+		}
+
 	public void setFrame(JFrame frame){
 		this.frame = frame;
 	}
-	
+
 	public int getCurrentPlayerPos(){
 		return this.currentPlayer;
 	}
-	
+
 	public JFrame getFrame(){
 		return this.frame;
 	}
-	
+
 	public void setCards(ArrayList<Card> cards){
 		this.cards = cards;
 	}
-	
+
 	public ArrayList<Card> getCards(){
 		return this.cards;
 	}
@@ -64,7 +91,7 @@ public class Data {
 				tiles[c.getPosition().y][c.getPosition().x].setHasChar(true);
 				playChars.add(allChars.get(i));
 			}
-		}		
+		}
 		int max = 0;
 		int charPos = 0;
 		for(int i = 0; i<playChars.size();i++){
@@ -85,6 +112,9 @@ public class Data {
 	}
 
 	public void nextPlayer() {
+		if(currentPlayer < 0){
+			currentPlayer = 0;
+		}
 		//set current player to not playing
 		playChars.get(currentPlayer).notPlaying();
 
@@ -96,6 +126,15 @@ public class Data {
 		}
 		//set current player to playing
 		playChars.get(currentPlayer).nowPlaying();
+		Tile[][] tiles = this.getTiles();
+		Chars c = playChars.get(currentPlayer);
+		Tile tile = tiles[c.getPosition().y][c.getPosition().x];
+		if(tile.get_room() == Room.FLOOR || tile.get_room() == Room.NULL){
+			this.hud.updateHUDButtons(false);
+		}else{
+			this.hud.updateHUDButtons(true);
+		}
+
 	}
 
 	public Chars getCurrentPlayer() {
@@ -172,6 +211,22 @@ public class Data {
 
 	public void setMWeapCard(Card middleWeapCard) {
 		this.middleWeapCard = middleWeapCard;
+	}
+
+	public HUDData getHud() {
+		return hud;
+	}
+
+	public void setHud(HUDData hud) {
+		this.hud = hud;
+	}
+
+	public Screen getScreen() {
+		return screen;
+	}
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;
 	}
 
 }

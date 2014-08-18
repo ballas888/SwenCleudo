@@ -56,11 +56,8 @@ public class HUD extends JPanel{
 		changeColor();
 	}
 
-	public void updateHUDButtons(boolean die, boolean sug, boolean acc,boolean end){
-		roll.setEnabled(die);
+	public void updateHUDButtons(boolean sug){
 		sugg.setEnabled(sug);
-		accu.setEnabled(acc);
-		endTurn.setEnabled(end);
 	}
 
 	private void changeColor() {
@@ -100,7 +97,7 @@ public class HUD extends JPanel{
 		sugg.setContentAreaFilled(false);
 		sugg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				AccSugg as = new AccSugg(data);
+				AccSugg as = new AccSugg(data,true);
 				screen.requestFocus();
 
 			}
@@ -109,11 +106,12 @@ public class HUD extends JPanel{
 	}
 
 	private void setUpAccu(){
-		accu.setEnabled(false);
+		accu.setEnabled(true);
 		accu.setPreferredSize(new Dimension(this.width-2,60));
 		accu.setContentAreaFilled(false);
 		accu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
+				AccSugg as = new AccSugg(data,false);
 				screen.requestFocus();
 			}
 		});

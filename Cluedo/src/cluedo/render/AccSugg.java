@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.plaf.ActionMapUIResource;
 
 import cluedo.character.Card;
@@ -35,8 +36,9 @@ import cluedo.main.Tile;
 public class AccSugg{
 
 	private Data data;
-	private int width = 350;
-	private int height = 300;
+	private int width = 400;
+	private int height = 260;
+	private boolean sugg;
 	private final JButton cancel = new JButton("Cancel");
 	private final JButton suggest = new JButton("Suggest");
 
@@ -46,18 +48,22 @@ public class AccSugg{
 
 	//holds the selection panels
 	private JPanel selection = new JPanel(new FlowLayout());
-	private JPanel pan1 = new JPanel();
-	private JPanel pan2 = new JPanel();
-	private JPanel pan3 = new JPanel();
+	private JPanel pan1 = new JPanel(new GridLayout(1,0,1,1));
+	private JPanel pan2 = new JPanel(new GridLayout(1,0,1,1));
+	private JPanel pan3 = new JPanel(new GridLayout(1,0,1,1));
 
 
 	//button groups to hold selections
 	private ButtonGroup charsGroup = new ButtonGroup();
 	private	ButtonGroup weaponsGroup = new ButtonGroup();
+	private	ButtonGroup roomsGroup = new ButtonGroup();
+
 
 	//panels to hold radio buttons
 	private JPanel chars = new JPanel(new GridLayout(0,1,1,1));
 	private JPanel weapons = new JPanel(new GridLayout(0,1,1,1));
+	private JPanel rooms = new JPanel(new GridLayout(0,1,1,1));
+
 
 	private final JRadioButtonMenuItem MS = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem CM = new JRadioButtonMenuItem();
@@ -73,36 +79,116 @@ public class AccSugg{
 	private final JRadioButtonMenuItem Rope = new JRadioButtonMenuItem();
 	private final JRadioButtonMenuItem Spanner = new JRadioButtonMenuItem();
 
+	private final JRadioButtonMenuItem Ball = new JRadioButtonMenuItem("Ball Room");
+	private final JRadioButtonMenuItem Billard  =  new JRadioButtonMenuItem("Billard Room");
+	private final JRadioButtonMenuItem Conservatory = new JRadioButtonMenuItem("Conservatory");
+	private final JRadioButtonMenuItem Dining  = new JRadioButtonMenuItem("Dining Room");
+	private final JRadioButtonMenuItem Hall = new JRadioButtonMenuItem("Hall");
+	private final JRadioButtonMenuItem Kitchen = new JRadioButtonMenuItem("Kitchen");
+	private final JRadioButtonMenuItem Library = new JRadioButtonMenuItem("Library");
+	private final JRadioButtonMenuItem Lounge = new JRadioButtonMenuItem("Lounge");
+	private final JRadioButtonMenuItem Study = new JRadioButtonMenuItem("Study");
+
 	private JPanel title1 = new JPanel();
 	private JPanel title2 = new JPanel();
+	private JPanel title3 = new JPanel();
 
-	private JLabel car = new JLabel("Characters");
-	private JLabel wep = new JLabel("Weapons");
+	private JLabel car = new JLabel("Characters",SwingConstants.LEFT);
+	private JLabel wep = new JLabel("Weapons",SwingConstants.LEFT);
+	private JLabel roo = new JLabel("Rooms",SwingConstants.LEFT);
 
-	public AccSugg(Data data){
+	public AccSugg(Data data, boolean sugg){
+		this.sugg = sugg;
+		this.data = data;
+		if(this.sugg){
+			buildSugg();
+		}else{
+			buildAcc();
+		}
+	}
+
+
+	private void buildAcc() {
+		int spacing = 100;
+		acc = new JDialog(data.getFrame());
+		acc.setSize(new Dimension(width+spacing, height));
+		acc.setLocationRelativeTo(null);
+
+		title1.add(car);
+		title2.add(wep);
+		title3.add(roo);
+		suggest.setText("Accuse");
+		setUpButtons();
+		setUpWeapons();
+		setUpChars();
+		setUpRooms();
+
+		//title1.setPreferredSize(new Dimension(width/2,50));
+		pan1.setPreferredSize(new Dimension(width+spacing,20));
+		pan2.setPreferredSize(new Dimension(width+spacing,160));
+		pan3.setPreferredSize(new Dimension(width+spacing,30));
+
+		chars.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createEmptyBorder(),
+				BorderFactory.createEmptyBorder()));
+		weapons.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createEmptyBorder(),
+				BorderFactory.createEmptyBorder()));
+
+//		cancel.setPreferredSize(new Dimension(175,20));
+//		suggest.setPreferredSize(new Dimension(175,20));
+
+		pan1.add(title1);
+		pan1.add(title2);
+		pan1.add(title3);
+		pan2.add(weapons);
+		pan2.add(chars);
+		pan2.add(rooms);
+		pan3.add(suggest);
+
+		pan3.add(cancel);
+		selection.add(pan1);
+		selection.add(pan2);
+		selection.add(pan3);
+		acc.setContentPane(selection);
+		acc.setTitle("Make An Accusation");
+		acc.setModal(true);
+		acc.setVisible(true);
+	}
+
+
+	private void buildSugg() {
 		acc = new JDialog(data.getFrame());
 		acc.setSize(new Dimension(width, height));
 		acc.setLocationRelativeTo(null);
 
-		this.data = data;
-
 		title1.add(car);
-
 		title2.add(wep);
 		setUpButtons();
 		setUpWeapons();
 		setUpChars();
 
-		pan1.setSize(width,20);
-		pan2.setPreferredSize(new Dimension(width,150));
-		pan3.setSize(width, 20);
+		//title1.setPreferredSize(new Dimension(width/2,50));
+		pan1.setPreferredSize(new Dimension(width,20));
+		pan2.setPreferredSize(new Dimension(width,160));
+		pan3.setPreferredSize(new Dimension(width,30));
+
+		chars.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createEmptyBorder(),
+				BorderFactory.createEmptyBorder()));
+		weapons.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createEmptyBorder(),
+				BorderFactory.createEmptyBorder()));
+
+//		cancel.setPreferredSize(new Dimension(175,20));
+//		suggest.setPreferredSize(new Dimension(175,20));
 
 		pan1.add(title1);
 		pan1.add(title2);
 		pan2.add(weapons);
 		pan2.add(chars);
-		pan3.add(cancel);
 		pan3.add(suggest);
+		pan3.add(cancel);
 		selection.add(pan1);
 		selection.add(pan2);
 		selection.add(pan3);
@@ -121,6 +207,7 @@ public class AccSugg{
 			public void actionPerformed(ActionEvent e) {
 				CardName chars = CardName.MISS_SCARLET_C;
 				CardName weap = CardName.CANDLESTICK;
+				CardName room = CardName.BALL_ROOM;
 
 				if(MS.isSelected()){
 					chars = CardName.MISS_SCARLET_C;
@@ -149,18 +236,45 @@ public class AccSugg{
 				}else if(Spanner.isSelected()){
 					weap = CardName.SPANNER;
 				}
-				Chars c = data.getCurrentPlayer();
-				Tile[][] tiles = data.getTiles();
-				Tile tile = tiles[c.getPosition().y][c.getPosition().x];
-				Room rm = tile.get_room();
-				CardName room = CardName.BALL_ROOM;
-				room = room.valueOf(rm.toString());
-				System.out.println(room + " " + chars + " " + weap);
+
+
+				if(sugg){
+					Chars c = data.getCurrentPlayer();
+					Tile[][] tiles = data.getTiles();
+					Tile tile = tiles[c.getPosition().y][c.getPosition().x];
+					Room rm = tile.get_room();
+					room = room.valueOf(rm.toString());
+					System.out.println(room + " " + chars + " " + weap);
+				}else{
+					if(Ball.isSelected()){
+						room = CardName.BALL_ROOM;
+					}else if(Billard.isSelected()){
+						room = CardName.BILLARD_ROOM;
+					}else if(Conservatory.isSelected()){
+						room = CardName.CONSERVATORY;
+					}else if(Dining.isSelected()){
+						room = CardName.DINING_ROOM;
+					}else if(Hall.isSelected()){
+						room = CardName.HALL;
+					}else if(Kitchen.isSelected()){
+						room = CardName.KITCHEN;
+					}else if(Library.isSelected()){
+						room = CardName.LIBRARY;
+					}else if(Lounge.isSelected()){
+						room = CardName.LOUNGE;
+					}else if(Study.isSelected()){
+						room = CardName.STUDY;
+					}
+				}
 				ArrayList<CardName> cards = new ArrayList<CardName>();
 				cards.add(chars);
 				cards.add(weap);
 				cards.add(room);
-				checkResult(cards, true);
+				if(sugg){
+					checkResult(cards, true);
+				}else{
+					checkResult(cards, false);
+				}
 			}
 
 		});
@@ -175,6 +289,87 @@ public class AccSugg{
 		});
 	}
 
+	private void setUpChars() {
+		MS.setText("Miss Scarlet");
+		CM.setText("Colonel Mustard");
+		MW.setText("Mrs. White");
+		RG.setText("The Reverend Green");
+		MP.setText("Mrs. Peacock");
+		PP.setText("Professor Plum");
+
+		charsGroup.add(MS);
+		charsGroup.add(CM);
+		charsGroup.add(MW);
+		charsGroup.add(RG);
+		charsGroup.add(MP);
+		charsGroup.add(PP);
+
+		chars.add(MS);
+		chars.add(CM);
+		chars.add(MW);
+		chars.add(RG);
+		chars.add(MP);
+		chars.add(PP);
+		//chars.setPreferredSize(new Dimension(width/2,30));
+		chars.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.gray, 1),
+				BorderFactory.createEmptyBorder()));
+
+
+	}
+
+
+	private void setUpWeapons() {
+		Dagger.setText("Dagger");
+		Candlestick.setText("Candlestick");
+		LeadPipe.setText("LeadPipe");
+		Revolver.setText("Revolver");
+		Rope.setText("Rope");
+		Spanner.setText("Spanner");
+
+		weaponsGroup.add(Dagger);
+		weaponsGroup.add(Candlestick);
+		weaponsGroup.add(LeadPipe);
+		weaponsGroup.add(Revolver);
+		weaponsGroup.add(Rope);
+		weaponsGroup.add(Spanner);
+
+		weapons.add(Dagger);
+		weapons.add(Candlestick);
+		weapons.add(LeadPipe);
+		weapons.add(Revolver);
+		weapons.add(Rope);
+		weapons.add(Spanner);
+		//weapons.setPreferredSize(new Dimension(width/2,30));
+
+		weapons.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.gray, 1),
+				BorderFactory.createEmptyBorder()));
+
+	}
+
+	private void setUpRooms(){
+		roomsGroup.add(Ball);
+		roomsGroup.add(Billard);
+		roomsGroup.add(Conservatory);
+		roomsGroup.add(Dining);
+		roomsGroup.add(Hall);
+		roomsGroup.add(Kitchen);
+		roomsGroup.add(Library);
+		roomsGroup.add(Lounge);
+		roomsGroup.add(Study);
+
+		rooms.add(Ball);
+		rooms.add(Billard);
+		rooms.add(Conservatory);
+		rooms.add(Dining);
+		rooms.add(Hall);
+		rooms.add(Kitchen);
+		rooms.add(Library);
+		rooms.add(Lounge);
+		rooms.add(Study);
+	}
+
 	private void checkResult(ArrayList<CardName> cards, boolean isSug){
 		ArrayList<Chars> players = data.getPlayChars();
 		CardName chars = cards.get(0);
@@ -187,56 +382,48 @@ public class AccSugg{
 		boolean foundChar = false;
 		boolean found = false;
 		int i = data.getCurrentPlayerPos();
-
-		loop: while(i<players.size()){
-			ArrayList<Card> crds = players.get(i).getCards();
-			for(Card crd: crds){
-				if(crd.getName() == chars){
-					found = true;
-					isCard = chars;
-					foundChar = true;
-					if(isSug){
-						break loop;
-					}
-				}if(crd.getName() ==weap){
-					found = true;
-					isCard = weap;
-					foundWeap = true;
-					if(isSug){
-						break loop;
-					}
-				}if(crd.getName() ==room){
-					found = true;
-					isCard = room;
-					foundRoom = true;
-					if(isSug){
-						break loop;
-					}
-				}
-			}
-
-			if(i >= players.size()){
-				System.out.println(i);
-				i = 0;
-				continue;
-			}else if (i+1 == data.getCurrentPlayerPos()){
-				break;
-			}
-			i++;
-		}
-
 		if(isSug){
-			if(found){
-				System.out.println("FoundCard: "+ isCard);
-				foundDialog(isCard, true);
-			}else{
-				foundDialog(isCard, false);
+			loop: while(i<players.size()){
+				ArrayList<Card> crds = players.get(i).getCards();
+				for(Card crd: crds){
+					if(crd.getName() == chars){
+						found = true;
+						isCard = chars;
+						break loop;
+
+					}else if(crd.getName() ==weap){
+						found = true;
+						isCard = weap;
+						break loop;
+
+					}else if(crd.getName() ==room){
+						found = true;
+						isCard = room;
+						foundRoom = true;
+						break loop;
+						}
+					}
+				if(i >= players.size()){
+					System.out.println(i);
+					i = 0;
+					continue loop;
+				}else if (i+1 == data.getCurrentPlayerPos()){
+					break;
+				}
+				i++;
 			}
 		}else{
-			if(foundRoom && foundChar && foundWeap){
+			if(chars == data.getMCharCard().getName() && weap == data.getMWeapCard().getName() && room == data.getMRoomCard().getName()){
 				accPopUp(false);
 			}else{
 				accPopUp(true);
+			}
+		}
+		if(isSug){
+			if(found){
+				foundDialog(isCard, true);
+			}else{
+				foundDialog(isCard, false);
 			}
 		}
 
@@ -246,6 +433,7 @@ public class AccSugg{
 
 	private void accPopUp(boolean isDead){
 		d = new JDialog(acc);
+		d.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		JPanel p = new JPanel(null);
 		String text = "You're the Weakest Link";
 		if(!isDead){
@@ -269,13 +457,28 @@ public class AccSugg{
 		p1.setBackground(Color.white);
 
 		JButton b = new JButton("OK!");
-		b.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		if(isDead){
+			b.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					data.eliminate();
 					d.dispose();
 					acc.dispose();
-			}
-		});
+					if(data.getPlayChars().size() == 1){
+						accPopUp(false);
+					}
+				}
+			});
+		}else{
+			b.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					d.dispose();
+					acc.dispose();
+					System.exit(0);
+				}
+			});
+		}
 		b.setSize(p1.getWidth(),30);
 		b.setLocation(0, p1.getHeight()-30);
 
@@ -346,6 +549,10 @@ public class AccSugg{
 			public void actionPerformed(ActionEvent e) {
 					d.dispose();
 					acc.dispose();
+					data.nextPlayer();
+					data.getHud().updateCards();
+					data.getHud().updateHUD();
+					data.getHud().updateInfo();
 			}
 		});
 		b.setSize(p1.getWidth(),30);
@@ -363,73 +570,13 @@ public class AccSugg{
 		d.setVisible(true);
 	}
 
-
-	private void setUpChars() {
-		MS.setText("Miss Scarlet");
-		CM.setText("Colonel Mustard");
-		MW.setText("Mrs. White");
-		RG.setText("The Reverend Green");
-		MP.setText("Mrs. Peacock");
-		PP.setText("Professor Plum");
-
-		charsGroup.add(MS);
-		charsGroup.add(CM);
-		charsGroup.add(MW);
-		charsGroup.add(RG);
-		charsGroup.add(MP);
-		charsGroup.add(PP);
-
-		chars.add(MS);
-		chars.add(CM);
-		chars.add(MW);
-		chars.add(RG);
-		chars.add(MP);
-		chars.add(PP);
-		chars.setSize(new Dimension(width/2,200));
-		chars.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(Color.gray, 1),
-				BorderFactory.createEmptyBorder()));
-
-
-	}
-
-
-	private void setUpWeapons() {
-		Dagger.setText("Dagger");
-		Candlestick.setText("Candlestick");
-		LeadPipe.setText("LeadPipe");
-		Revolver.setText("Revolver");
-		Rope.setText("Rope");
-		Spanner.setText("Spanner");
-
-		weaponsGroup.add(Dagger);
-		weaponsGroup.add(Candlestick);
-		weaponsGroup.add(LeadPipe);
-		weaponsGroup.add(Revolver);
-		weaponsGroup.add(Rope);
-		weaponsGroup.add(Spanner);
-
-		weapons.add(Dagger);
-		weapons.add(Candlestick);
-		weapons.add(LeadPipe);
-		weapons.add(Revolver);
-		weapons.add(Rope);
-		weapons.add(Spanner);
-		weapons.setSize(new Dimension(width/2,200));
-
-		weapons.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(Color.gray, 1),
-				BorderFactory.createEmptyBorder()));
-
-	}
-
 	public static void main(String[] ee){
 		JFrame frame = new JFrame();
 		Data data = new Data();
 		data.setFrame(frame);
-		AccSugg aug = new AccSugg(data);
-		aug.accPopUp(true);
-		//aug.foundDialog(CardName.BALL_ROOM,false);
+		AccSugg aug = new AccSugg(data,true);
+		//aug.accPopUp(true);
+		aug.foundDialog(CardName.BALL_ROOM,false);
 
 	}
 

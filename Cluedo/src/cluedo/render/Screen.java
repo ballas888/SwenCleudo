@@ -127,16 +127,16 @@ public class Screen extends Canvas{
 	}
 
 	private void render_chars(Graphics2D g, Data as){
-		ArrayList<Chars> chars = as.getAllChars();
+		ArrayList<Chars> chars = as.getPlayChars();
 		Tile[][] tiles = as.getTiles();
 		//System.out.println("here render char");
 		for(Chars c : chars){
-			if(c.isPlayable()){
+			//if(c.isPlayable()){
 				Tile t = tiles[c.getPosition().y][c.getPosition().x];
 				int x = (int)Math.round(t.getPos().getX());
 				int y = (int)Math.round(t.getPos().getY());
 				g.drawImage(c.getSprite(),x,y,(int)as.getTileSize(),(int)as.getTileSize(),null);
-			}
+			//}
 		}
 	}
 

@@ -47,7 +47,7 @@ public class Game implements KeyListener, MouseListener{
 	private int cardHudX = ((mainWidth - screenWidth)/2) + screenWidth;
 	private int cardHudY = 0;//mainHeight - cardHudHeight;
 	private JScrollPane scroll;
-	
+
 	private int infoSize = 25;
 
 	//infoHud math
@@ -55,13 +55,13 @@ public class Game implements KeyListener, MouseListener{
 	private int infoHudWidth = (mainWidth - screenWidth)/2;
 	private int infoHudX = 0;
 	private int infoHudY = 0;//mainHeight - screenHeight;
-	
+
 	//asHUD math
 	private int asHudHeight = screenHeight;
 	private int asHudWidth = (mainWidth - screenWidth)/2;
 	private int asHudX = 0;
 	private int asHudY = 0;
-	
+
 	private static HUDData hudData;
 
 	private Thread thread;
@@ -76,9 +76,9 @@ public class Game implements KeyListener, MouseListener{
 	private JPanel cardHud;
 	private JPanel infoHud;
 	private JMenuBar menu;
-	
+
 	//Thread
-	private Thread th;
+	public Thread th;
 
 
 	public Game(){
@@ -87,7 +87,7 @@ public class Game implements KeyListener, MouseListener{
 		mainFrame = new JFrame();
 		mainFrame.setResizable(false);
 		mainFrame.setTitle("Cluedo");
-		
+
 		data.setFrame(mainFrame);
 
 		mainPanel = new JPanel(null);
@@ -98,7 +98,7 @@ public class Game implements KeyListener, MouseListener{
 		screen.setLocation(mainWidth/2-screenWidth/2,0);
 		screen.addKeyListener(this);
 		screen.addMouseListener(this);
-		
+
 		hudData = new HUDData();
 
 		//HUD
@@ -108,7 +108,7 @@ public class Game implements KeyListener, MouseListener{
 		//Pass through card data, which will have chars, which have the cards
 		cardHud = new CardHUD(cardHudWidth, cardHudHeight, data, screen);
 		//cardHud.setLocation(cardHudX, cardHudY);
-		
+
 		scroll = new JScrollPane();
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.getVerticalScrollBar().setUnitIncrement(16);
@@ -117,27 +117,28 @@ public class Game implements KeyListener, MouseListener{
 		scroll.setLocation(cardHudX, cardHudY+infoSize);
 		//scroll.setPreferredSize(new Dimension(cardHudWidth, cardHudHeight));
 		scroll.setSize(new Dimension(cardHudWidth, cardHudHeight-infoSize));
-		
+
 		JPanel cardName = new JPanel();
 		JLabel name = new JLabel("Cards In Hand:");
 		cardName.add(name);
 		cardName.setSize(cardHudWidth, infoSize);
 		cardName.setLocation(cardHudX, cardHudY);
-		
+
 		//InfoHUD
 		infoHud = new InfoHUD(cardHudWidth, cardHudHeight, data, screen);
 		infoHud.setLocation(infoHudX, infoHudY);
-		
-		//AccSuggHUD
-		
-		
+
+
+
 		hudData.setHUD(hud);
 		hudData.setCardHUD(cardHud);
 		hudData.setInfoHud(infoHud);
-		
+		data.setHud(hudData);
+		data.setScreen(screen);
+
 		((HUD) hud).setHudData(hudData);
 
-		menu = new MenuBar();
+		menu = new MenuBar(data);
 
 		mainPanel.add(hud);
 		mainPanel.add(scroll);
@@ -148,19 +149,19 @@ public class Game implements KeyListener, MouseListener{
 
 		mainPanel.add(screen);
 
-		
+
 		setUpLoad();
 
 		//let users select their players
 		ChooseChars ch = new ChooseChars(data.getAllChars(), mainFrame);
 		//populate the playable list with the choosen ones
 		data.populateChoosen(data);
-		
+
 		new LoadCards().loadCard(data);
 		this.updateCardHud();
 		this.updateInfoHud();
 		this.updateHUD();
-		
+
 		setUpTilesPos();
 
 		mainFrame.pack();
@@ -168,24 +169,24 @@ public class Game implements KeyListener, MouseListener{
 		mainFrame.setLocationRelativeTo(null);
 		screen.setVisible(true);
 		mainFrame.setVisible(true);
-	
+
 		screen.createBStrategy();
 		screen.requestFocus();
 		th = new Thread(new renderThread());
-		
+
 	}
-	public void updateHUDButtons(boolean die, boolean sugg, boolean accu, boolean end){
-		((HUD) hud).updateHUDButtons(die,sugg,accu,end);
+	public void updateHUDButtons(boolean sugg){
+		((HUD) hud).updateHUDButtons(sugg);
 	}
-	
+
 	public void updateHUD(){
 		((HUD) hud).updateHUD();
 	}
-	
+
 	public void updateCardHud(){
 		((CardHUD) cardHud).updateCards();
 	}
-	
+
 	public void updateInfoHud(){
 		((InfoHUD) infoHud).drawInfo();
 	}
@@ -223,7 +224,7 @@ public class Game implements KeyListener, MouseListener{
 		data.setTiles(data.loadMap.get_tiles());
 		data.setAllChars(data.loadMap.getChars());
 		data.setMap_image(data.loadImage.load_map_image("CluedoBigMod.png"));
-		
+
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
 
@@ -253,11 +254,11 @@ public class Game implements KeyListener, MouseListener{
 
 			double tileX = ((targetX-ofset_x)/size);
 			double tileY = ((targetY-ofset_y)/size);
-			Stack<Point> points = new Stack<Point>();			
+			Stack<Point> points = new Stack<Point>();
 			ArrayList<Point> pnts = new ArrayList<Point>();
 			if(tileX >=0 && tileX <t_w_i && tileY >= 0 && tileY <t_h_i){
 				int x =(int) tileX;
-				int y = (int) tileY;								
+				int y = (int) tileY;
 				if(tiles[y][x].get_room()!= Room.NULL && !tiles[y][x].HasChar()){
 					points = updatePlayerMove.updatePlayerMove(mFunc.MOVE_MOUSE, data, new Point(x, y));
 					if(points.size()>data.getCurrentPlayer().getDieRolled(1)
@@ -273,7 +274,7 @@ public class Game implements KeyListener, MouseListener{
 						data.getCurrentPlayer().setPosition(p);
 						c = data.getCurrentPlayer();
 						tiles[c.getPosition().y][c.getPosition().x].setHasChar(true);
-						
+
 						for(Point pn : points){
 							pnts.add(pn);
 						}
@@ -298,9 +299,9 @@ public class Game implements KeyListener, MouseListener{
 						}
 					}
 					if(tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.FLOOR || tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.NULL){
-						this.updateHUDButtons(true, false, false,true);
+						this.updateHUDButtons(false);
 					}else{
-						this.updateHUDButtons(true, true, true,true);
+						this.updateHUDButtons(true);
 					}
 				}
 			}
@@ -308,12 +309,12 @@ public class Game implements KeyListener, MouseListener{
 
 
 	}
-	
+
 	private boolean useTrap(){
 		//TODO ask user if they want to use the trap door.
 		return true;
 	}
-	
+
 	private void updateCurDice(){
 		Chars c = data.getCurrentPlayer();
 		int d1 = c.getDieRolled(1);
@@ -347,11 +348,11 @@ public class Game implements KeyListener, MouseListener{
 			Tile[][] tiles = data.getTiles();
 			Chars c = data.getCurrentPlayer();
 			if(tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.FLOOR || tiles[c.getPosition().y][c.getPosition().x].get_room() == Room.NULL){
-				this.updateHUDButtons(true, false, false,true);
+				this.updateHUDButtons(false);
 			}else{
-				this.updateHUDButtons(true, true, true,true);
+				this.updateHUDButtons(true);
 			}
-			updateCurDice();			
+			updateCurDice();
 			Tile tile = tiles[c.getPosition().y][c.getPosition().x];
 			if(tile.is_trap()){
 				if(useTrap()){
@@ -376,11 +377,11 @@ public class Game implements KeyListener, MouseListener{
 		//game.screen.render(game.data);
 		game.th.start();
 	}
-	
+
 	public class renderThread implements Runnable{
 
 		@Override
-		public void run() {			
+		public void run() {
 			long time = System.currentTimeMillis();
 			while(true){
 			screen.render(data);
@@ -388,7 +389,7 @@ public class Game implements KeyListener, MouseListener{
 			if(newTime > 600){break;}
 			}
 		}
-		
+
 	}
 
 	public void mouseEntered(MouseEvent e) {}
