@@ -43,7 +43,9 @@ public class CardHUD extends JPanel{
 		drawCards();
 		changeColor();
 	}
-	
+	/**
+	 * Changes the theme to correspond with the current player
+	 */
 	private void changeColor() {
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
 			this.setBackground(new Color(246, 135, 135));
@@ -59,7 +61,9 @@ public class CardHUD extends JPanel{
 			this.setBackground(new Color(202, 188, 208));
 		}
 	}
-	
+	/**
+	 * Draws the currents players cards
+	 */
 	private void drawCards(){
 		this.setVisible(false);
 		this.removeAll();

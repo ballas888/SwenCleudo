@@ -23,7 +23,9 @@ public class MenuBar extends JMenuBar{
 
 		this.add(file);
 	}
-
+	/*
+	 * Adds exit button to the menu
+	 */
 	private JMenuItem addExit() {
 		JMenuItem exit = new JMenuItem("Exit");
 
@@ -37,6 +39,9 @@ public class MenuBar extends JMenuBar{
 		return exit;
 
 	}
+	/*
+	 * Adds new game option
+	 */
 	private JMenuItem addNewGame() {
 		JMenuItem newGame = new JMenuItem("New Game");
 

@@ -364,7 +364,11 @@ public class AccSugg{
 		rooms.add(Study);
 	}
 	
-	//try and disprove the user
+	/**
+	 * Try disprove the user
+	 * @param cards: the user selected cards
+	 * @param isSug: is it a suggestion or accusation
+	 */
 	private void checkResult(ArrayList<CardName> cards, boolean isSug){
 		ArrayList<Chars> players = data.getPlayChars();
 		CardName chars = cards.get(0);
@@ -429,8 +433,10 @@ public class AccSugg{
 
 
 	}
-
-	//notify user if their accusation is right or wrong
+	/**
+	 * notify user if their accusation is right or wrong
+	 * @param isDead: is the user wrong
+	 */
 	private void accPopUp(boolean isDead){
 		d = new JDialog(acc);
 		d.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -497,7 +503,11 @@ public class AccSugg{
 
 	}
 
-	//notify user if their suggestion could be correct
+	/**
+	 * notify user if their suggestion could be correct
+	 * @param isCard: the card is found, this is the one that proves them wrong
+	 * @param isFound: if the card is found or not
+	 */
 	private void foundDialog(CardName isCard, boolean isFound){
 
 		d = new JDialog(acc);

@@ -88,7 +88,10 @@ public class Data {
 	public void setMousePath(ArrayList<Point> points) {
 		this.mousePath = points;
 	}
-
+	/*
+	 * Gets the selected characters, and populates
+	 * the play list with those characters
+	 */
 	public void populateChoosen(Data data){
 		Tile[][] tiles = data.getTiles();
 		for(int i = 0;i < allChars.size(); i++){
