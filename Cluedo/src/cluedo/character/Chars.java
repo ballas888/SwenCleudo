@@ -12,8 +12,8 @@ public class Chars {
 	private Boolean playing = false;
 	private BufferedImage sprite;
 	private ArrayList<Card> cards = new ArrayList<Card>();
-	private int die1rolled = 6;
-	private int die2rolled = 6;
+	private int die1rolled = 0;
+	private int die2rolled = 0;
 	
 	public void nowPlaying(){
 		this.playing = true;
@@ -76,6 +76,14 @@ public class Chars {
 			return die2rolled;
 		}
 		
+	}
+	
+	public void rollDice(){
+		int d1 = (int)Math.round(1+Math.random()*6);
+		int d2 = (int)Math.round(1+Math.random()*6);
+		
+		die1rolled = d1;
+		die2rolled = d2;		
 	}
 
 	public void setDieRolled(int rolled, int die) {

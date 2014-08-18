@@ -84,6 +84,9 @@ public class HUD extends JPanel{
 		roll.setContentAreaFilled(false);
 		roll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
+				data.getCurrentPlayer().rollDice();
+				roll.setEnabled(false);
+				hudData.updateInfo();
 				screen.requestFocus();
 
 			}
@@ -129,7 +132,10 @@ public class HUD extends JPanel{
 
 		endTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				data.nextPlayer();
+				data.nextPlayer();	
+				roll.setEnabled(true);
+				data.getCurrentPlayer().setDieRolled(0, 1);
+				data.getCurrentPlayer().setDieRolled(0, 2);
 				hudData.updateCards();
 				hudData.updateInfo();
 				hudData.updateHUD();

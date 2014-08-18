@@ -52,7 +52,7 @@ public class Data {
 		this.mousePath = points;
 	}
 
-	public void populateChoosen(Data data, JFrame frame){
+	public void populateChoosen(Data data){
 		Tile[][] tiles = data.getTiles();
 		for(int i = 0;i < allChars.size(); i++){
 			if(allChars.get(i).isPlayable()){
@@ -60,18 +60,20 @@ public class Data {
 				tiles[c.getPosition().y][c.getPosition().x].setHasChar(true);
 				playChars.add(allChars.get(i));
 			}
-		}
-		JDialog d = new JDialog(frame);
-		d.setSize(new Dimension(200,200));
-		d.setLocationRelativeTo(null);
+		}		
 		int max = 0;
 		int charPos = 0;
 		for(int i = 0; i<playChars.size();i++){
-			
+			double d1 = 1+Math.random()*6;
+			double d2 = 1+Math.random()*6;
+			int total = (int)(Math.round(d1)+Math.round(d2));
+			if(max < total){
+				max = total;
+				charPos = i;
+			}
 		}
-		d.setVisible(true);
-		
-		playChars.get(0).nowPlaying();
+		currentPlayer = charPos;
+		playChars.get(charPos).nowPlaying();
 	}
 
 	public ArrayList<Point> getMousePath() {
