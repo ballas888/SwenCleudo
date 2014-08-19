@@ -85,7 +85,9 @@ public class InfoHUD extends JPanel{
 		d1.setIcon(d1Icon);
 		d2.setIcon(d2Icon);		
 	}
-	
+	/*
+	 * Updates the panel to show the current users name
+	 */
 	private void updateName(){
 		current.setVisible(false);
         StringBuilder sb = new StringBuilder(64);

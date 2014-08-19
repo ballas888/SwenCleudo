@@ -62,6 +62,9 @@ public class HUD extends JPanel{
 	public void updateHUDButtons(boolean sug){
 		sugg.setEnabled(sug);
 	}
+	public void updateHUDRoll(boolean rol){
+		roll.setEnabled(rol);
+	}
 
 	private void changeColor() {
 		if(data.getCurrentPlayer().get_name() == CharsName.MISS_SCARLET){
@@ -79,6 +82,13 @@ public class HUD extends JPanel{
 		}
 	}
 
+	/*
+	 * **************************************************************
+	 * The following set up the various buttons and their listeners:*
+	 * **************************************************************
+	 */
+	
+	
 	private void setUpRoll(){
 		roll.setPreferredSize(new Dimension(this.width-2,60));
 		roll.setContentAreaFilled(false);
