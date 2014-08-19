@@ -2,7 +2,7 @@ package cluedo.character;
 //Richard
 import java.awt.image.BufferedImage;
 /**
- * This Card class is used to hold a card object for each player *
+ * This Card class is used to hold a card object for each player 
  */
 public class Card {
 	private BufferedImage cardImg;
