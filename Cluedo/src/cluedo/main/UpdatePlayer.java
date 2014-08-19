@@ -11,15 +11,21 @@ import cluedo.main.Game.Room;
 import cluedo.main.Tile.Direction;
 import cluedo.search.Search;
 /**
- * This handles players moves either with the mouse or keys.
- *
+ * This handles players moves either with the mouse or keys. *
  */
 public class UpdatePlayer {
 	public enum mFunc {
 		MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_MOUSE
 	}
 	
-	
+	/**
+	 * This gets the Mouse input position and the calls Astar search to find a path 
+	 * for the player
+	 * @param mFunc
+	 * @param Data object that holds it all
+	 * @param The point of the mouse.
+	 * @return returns the path for the player
+	 */
 	public Stack<Point> updatePlayerMove(mFunc func, Data data,Point point){
 		Stack<Point> points = new Stack<Point>();
 
@@ -36,7 +42,12 @@ public class UpdatePlayer {
 		}
 		return points;
 	}
-
+	/**
+	 * Updates the player move based on the key direction pressed
+	 * @param mFunc
+	 * @param Data object that holds it all
+	 * @return Returns true if a move was done successfully
+	 */
 	public boolean updatePlayerMove(mFunc func, Data data) {
 		boolean updated = false;
 		Tile currTile = null;

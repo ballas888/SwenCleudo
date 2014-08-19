@@ -1,5 +1,7 @@
 package cluedo.search;
-
+/**
+ * Is used for the A* search as the queue for the fringe
+ */
 public class PQueue {
 	private QNode[] priorityQ;
 	private int maxSize = 100;

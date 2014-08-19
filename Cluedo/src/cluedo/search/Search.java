@@ -10,12 +10,23 @@ import cluedo.main.Data;
 import cluedo.main.Tile;
 import cluedo.main.Tile.Direction;
 
+/**
+ * A* search that is used to find the shortest path when the user clicks
+ * on the map.
+ */
 public class Search {
 	private double totalCostToGoal;
 	private QNode currentObj = null;
 	private QNode goal;
 	private Stack<Point> points = new Stack<Point>();
 
+	/**
+	 * Does the search then returns the path
+	 * @param from tile
+	 * @param to tile
+	 * @param data the object that holds everything
+	 * @return the path
+	 */
 	public Stack<Point> search(Tile from, Tile to, Data data){
 		data.setSearching(true);
 		clearTile(data);
