@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cluedo.main.Game.Room;
-//Richard
+/**
+ * Tile Object that holds the info of the tile and its position *
+ */
 
 public class Tile {
 	private Point2D pos;

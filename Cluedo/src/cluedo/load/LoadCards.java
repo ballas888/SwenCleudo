@@ -17,6 +17,10 @@ public class LoadCards {
 			CardName.LIBRARY, CardName.LOUNGE, CardName.HALL, CardName.STUDY, CardName.MRS_WHITE_C, CardName.MISS_SCARLET_C, CardName.COLONEL_MUSTARD_C, CardName.REVEREND_GREEN_C,
 			CardName.MRS_PEACOCK_C, CardName.PROFESSOR_PLUM_C, CardName.CANDLESTICK, CardName.DAGGER, CardName.LEAD_PIPE, CardName.REVOLVER, CardName.ROPE, CardName.SPANNER};
 	
+	
+	/**
+	 * This is used to Load Cards to be used by the players
+	 */
 	public void loadCard(Data data){
 		ArrayList<Card> rooms = new ArrayList<Card>();
 		ArrayList<Card> chars = new ArrayList<Card>();
@@ -61,7 +65,11 @@ public class LoadCards {
 		
 		
 	}
-	
+	/**
+	 * This is used to deal the cards between the players
+	 * @param Data object that holds most of everything
+	 * @param The list of all the cards to be split up
+	 */
 	private void divideCards(Data data, ArrayList<Card> cards){
 		ArrayList<Chars> chars = data.getPlayChars();
 		while(!cards.isEmpty()){

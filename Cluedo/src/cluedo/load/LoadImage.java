@@ -30,21 +30,36 @@ public class LoadImage {
 		return img;
 	}
 	
+	/**
+	 * The main method for loading image. 
+	 * @param CharsName
+	 * @return returns image.
+	 */
 	public BufferedImage load_image(CharsName name){
 		String n = name.toString();
 		return load_img(n);
 	}
 	
+	/**
+	 * The main method for loading image. The 
+	 * @param CardName
+	 * @return returns image.
+	 */
 	public BufferedImage load_image(CardName name){
 		String n = name.toString();
 		return load_img(n);
 	}
 	
+	/**
+	 * The main method for loading image. The 
+	 * @param DiceType
+	 * @return returns image. 
+	 */
 	public BufferedImage load_image(DiceType name){
 		String n = name.toString();
 		return load_img(n);
 	}
-	
+		
 	private BufferedImage load_img(String name){
 		BufferedImage img = null;
 		ClassLoader classLoader = getClass().getClassLoader();

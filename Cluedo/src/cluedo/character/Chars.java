@@ -3,7 +3,10 @@ package cluedo.character;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
+/**
+ * This is used to hold the information of the character
+ * the player is using 
+ */
 public class Chars {
 	private Point position;
 	private CharsName name;

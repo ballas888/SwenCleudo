@@ -20,7 +20,13 @@ public class LoadMap {
 	private int tile_count = 0;
 	private Tile[][] tiles;
 	private ArrayList<Chars> chars = new ArrayList<Chars>();
-
+	
+	/**
+	 * Reads the map file and construct the tiles that will be used in 
+	 * an array
+	 * @param col
+	 * @param rooms
+	 */
 	public void loadMap(String col, String rooms){
 		try {
 			Scanner scan = new Scanner(new File(col));
@@ -140,7 +146,12 @@ public class LoadMap {
 	public Tile[][] get_tiles(){
 		return this.tiles;
 	}
-
+	
+	/**
+	 * Returns a room to be used to make a tile
+	 * @param Data object that holds it all
+	 * @return Returns a Room
+	 */
 	private Room get_room(String data){
 		Room room = Room.FLOOR;
 		int d = Integer.parseInt(data);		
@@ -169,7 +180,13 @@ public class LoadMap {
 
 		return room;
 	}
-
+	/**
+	 * Creates a tile that the will be used in an array
+	 * @param The x position of the tile in the array;
+	 * @param The y position of the tile in the array;
+	 * @param Data object that hold it all
+	 * @return A tile that can be inserted into the array
+	 */
 	private Tile create_tile(int x, int y, String data){
 		int d = Integer.parseInt(data);
 		Tile tile = new Tile(new Point(x,y));

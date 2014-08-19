@@ -10,13 +10,16 @@ import cluedo.character.Chars;
 import cluedo.main.Game.Room;
 import cluedo.main.Tile.Direction;
 import cluedo.search.Search;
-//Richard
-
+/**
+ * This handles players moves either with the mouse or keys.
+ *
+ */
 public class UpdatePlayer {
 	public enum mFunc {
 		MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_MOUSE
 	}
-
+	
+	
 	public Stack<Point> updatePlayerMove(mFunc func, Data data,Point point){
 		Stack<Point> points = new Stack<Point>();
 

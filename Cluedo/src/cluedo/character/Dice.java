@@ -5,8 +5,13 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
 
 import cluedo.load.LoadImage;
-
+/**
+ * This is a Dice object that returns a image based
+ * on the number that is passed in. *
+ */
+@SuppressWarnings("unused")
 public class Dice {
+	
 	private BufferedImage die1;
 	private BufferedImage die2;
 	private BufferedImage die3;
@@ -29,6 +34,13 @@ public class Dice {
 		die0 = new LoadImage().load_image(DiceType.DIE_0);
 	}
 	
+	/**
+	 * 
+	 * @param This is the number to be parsed in. The number should
+	 * be between 0 <= n <=6. if its more than 6 or less than 0 it
+	 * just returns die0 image 
+	 * @return It returns image based on the number in the parameter
+	 */
 	public BufferedImage getDie(int num){
 		if(num >=1 && num <=6){
 			Class<? extends Dice> c = this.getClass();
