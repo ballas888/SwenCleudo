@@ -229,7 +229,11 @@ public class Game implements KeyListener, MouseListener{
 
 		//data.setCurrentPlayer(data.getAllChars().get(0));
 	}
-
+	
+	/**
+	 * Gets the point of where the mouse is then convert the position to get the
+	 * tile its on. it uses this tile as a goal tile for astar
+	 */
 	public void mouseReleased(MouseEvent e) {
 			int targetX = e.getX();
 			int targetY = e.getY();
@@ -316,7 +320,10 @@ public class Game implements KeyListener, MouseListener{
 		//TODO ask user if they want to use the trap door.
 		return true;
 	}
-
+	
+	/**
+	 * Updates the current player dice when the player moves
+	 */
 	private void updateCurDice(){
 		Chars c = data.getCurrentPlayer();
 		int d1 = c.getDieRolled(1);
@@ -331,7 +338,10 @@ public class Game implements KeyListener, MouseListener{
 		//System.out.println("here updateDice");
 		this.updateInfoHud();
 	}
-
+	
+	/**
+	 * Updates the player move by getting what direction button is pressed 
+	 */
 	public void keyPressed(KeyEvent e) {
 		boolean updated = false;
 		if(data.getCurrentPlayer().getDieRolled(1)+data.getCurrentPlayer().getDieRolled(2)<=0){
